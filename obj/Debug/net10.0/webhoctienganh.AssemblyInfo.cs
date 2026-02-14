@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("webhoctienganh")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+230dd642381966bf0923ad267a7fe7868d6577c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("webhoctienganh")]
 [assembly: System.Reflection.AssemblyTitleAttribute("webhoctienganh")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
