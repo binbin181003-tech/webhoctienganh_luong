@@ -1,0 +1,27 @@
+@page "/dang_nhap"
+@model webhoctienganh.Pages.dang_nhapModel
+
+<h1>Dang Nhap</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<form method="post">
+    <div>
+        <label>Email:</label><br>
+        <input type="email" name="email" required />
+    </div>
+    <br>
+    <div>
+        <label>Mat Khau:</label><br>
+        <input type="password" name="mat_khau" required />
+    </div>
+    <br>
+    <button type="submit">Dang Nhap</button>
+</form>
+
+<br>
+<a href="/trang_vang_lai">Quay lai</a>

@@ -1,0 +1,58 @@
+@page "/student/dang_ky_khoa_hoc"
+@model webhoctienganh.Pages.student.dang_ky_khoa_hocModel
+
+<h1>Dang Ky Khoa Hoc</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:green;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma Lop</th>
+        <th>Khoa Hoc</th>
+        <th>Trinh Do</th>
+        <th>Giao Vien</th>
+        <th>Bat Dau</th>
+        <th>Ket Thuc</th>
+        <th>Hoc Phi</th>
+        <th>Da Dang Ky</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var item in Model.DanhSach)
+    {
+        <tr>
+            <td>@item.MaLop</td>
+            <td>@item.TenKhoaHoc</td>
+            <td>@item.TrinhDo</td>
+            <td>@item.TenGiaoVien</td>
+            <td>@item.NgayBatDau.ToString("dd/MM/yyyy")</td>
+            <td>@item.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+            <td>@item.HocPhi.ToString("N0")</td>
+            <td>@item.SoLuongDaDangKy</td>
+            <td>
+                @if (item.DaDangKy)
+                {
+                    <span>Da dang ky</span>
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="DangKy" style="display:inline;">
+                        <input type="hidden" name="lopId" value="@item.MaLop" />
+                        <button type="submit">Dang Ky</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co lop hoc nao dang mo.</p>
+}
+
+<br>
+<a href="/trang_chu">Quay lai</a>

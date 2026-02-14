@@ -1,0 +1,48 @@
+@page "/admin/quan_ly_giao_vien"
+@model webhoctienganh.Pages.admin.quan_ly_giao_vienModel
+
+<h1>Quan Ly Giao Vien</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ho Ten</th>
+        <th>Email</th>
+        <th>So Dien Thoai</th>
+        <th>Trang Thai</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var u in Model.DanhSach)
+    {
+        <tr>
+            <td>@u.HoTen</td>
+            <td>@u.Email</td>
+            <td>@u.SoDienThoai</td>
+            <td>@u.TrangThai</td>
+            <td>
+                @if (u.TrangThai == "active")
+                {
+                    <form method="post" asp-page-handler="Khoa" style="display:inline;">
+                        <input type="hidden" name="id" value="@u.MaNguoiDung" />
+                        <button type="submit">Vo hieu</button>
+                    </form>
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="MoKhoa" style="display:inline;">
+                        <input type="hidden" name="id" value="@u.MaNguoiDung" />
+                        <button type="submit">Khoi phuc</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co giao vien.</p>
+}
+
+<br>
+<a href="/admin/tong_quan">Quay lai</a>

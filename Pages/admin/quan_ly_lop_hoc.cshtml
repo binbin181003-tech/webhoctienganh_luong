@@ -1,0 +1,53 @@
+@page "/admin/quan_ly_lop_hoc"
+@model webhoctienganh.Pages.admin.quan_ly_lop_hocModel
+
+<h1>Quan Ly Lop Hoc</h1>
+<hr>
+
+<a href="/admin/tao_lop_hoc"><button>+ Tao Lop Hoc Moi</button></a>
+<br><br>
+
+@if (Model.ThongBao != "")
+{
+    <p style="color:green;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma Lop</th>
+        <th>Khoa Hoc</th>
+        <th>Giao Vien</th>
+        <th>Bat Dau</th>
+        <th>Ket Thuc</th>
+        <th>Si So Toi Da</th>
+        <th>Trang Thai</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var lh in Model.DanhSach)
+    {
+        <tr>
+            <td>@lh.ma_lop_hoc</td>
+            <td>@lh.khoa_hoc?.ten_khoa_hoc</td>
+            <td>@lh.giao_vien?.ho_ten</td>
+            <td>@lh.ngay_bat_dau.ToString("dd/MM/yyyy")</td>
+            <td>@lh.ngay_ket_thuc.ToString("dd/MM/yyyy")</td>
+            <td>@lh.so_luong_toi_da</td>
+            <td>@lh.trang_thai</td>
+            <td>
+                <a href="/admin/danh_sach_hoc_vien?lop=@lh.ma_lop_hoc">Xem HV</a> |
+                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+                    <input type="hidden" name="id" value="@lh.ma_lop_hoc" />
+                    <button type="submit" onclick="return confirm('Xoa lop hoc nay?')">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co lop hoc nao.</p>
+}
+
+<br>
+<a href="/admin/tong_quan">Quay lai</a>

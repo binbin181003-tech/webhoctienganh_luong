@@ -1,0 +1,31 @@
+@page "/student/ket_qua_kiem_tra"
+@model webhoctienganh.Pages.student.ket_qua_kiem_traModel
+
+<h1>Ket Qua Kiem Tra</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Bai Kiem Tra</th>
+        <th>Khoa Hoc</th>
+        <th>Diem</th>
+        <th>Ngay Lam</th>
+    </tr>
+    @foreach (var k in Model.DanhSach)
+    {
+        <tr>
+            <td>@k.TieuDe</td>
+            <td>@k.TenKhoaHoc</td>
+            <td>@k.DiemSo</td>
+            <td>@k.NgayLam.ToString("dd/MM/yyyy")</td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co ket qua nao.</p>
+}
+
+<br>
+<a href="/trang_chu">Quay lai</a>

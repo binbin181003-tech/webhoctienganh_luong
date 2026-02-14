@@ -1,0 +1,72 @@
+@page "/teacher/sua_bai_hoc"
+@model webhoctienganh.Pages.teacher.sua_bai_hocModel
+
+<h1>Sua Bai Hoc</h1>
+<hr>
+
+@if (Model.ThongBao != "")
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+@if (Model.BaiHoc != null)
+{
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+        <div>
+            <label>Tieu De:</label><br>
+            <input type="text" name="tieu_de" value="@Model.BaiHoc.tieu_de" required />
+        </div>
+        <br>
+        <div>
+            <label>Noi Dung:</label><br>
+            <textarea name="noi_dung" rows="6">@Model.BaiHoc.noi_dung</textarea>
+        </div>
+        <br>
+        <button type="submit">Luu</button>
+    </form>
+
+    <hr>
+    <h3>Tai Lieu Dinh Kem</h3>
+
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Duong Dan</th>
+            <th>Loai</th>
+            <th>Hanh Dong</th>
+        </tr>
+        @foreach (var tl in Model.DsTaiLieu)
+        {
+            <tr>
+                <td>@tl.duong_dan_file</td>
+                <td>@tl.loai_tai_lieu</td>
+                <td>
+                    <form method="post" asp-page-handler="XoaTaiLieu" style="display:inline;">
+                        <input type="hidden" name="taiLieuId" value="@tl.ma_tai_lieu" />
+                        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+                        <button type="submit">Xoa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <br>
+    <form method="post" asp-page-handler="ThemTaiLieu">
+        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+        <div>
+            <label>Duong Dan File:</label><br>
+            <input type="text" name="duong_dan_file" required />
+        </div>
+        <br>
+        <div>
+            <label>Loai Tai Lieu:</label><br>
+            <input type="text" name="loai_tai_lieu" placeholder="pdf, video, audio..." required />
+        </div>
+        <br>
+        <button type="submit">Them Tai Lieu</button>
+    </form>
+}
+
+<br>
+<a href="/teacher/quan_ly_bai_hoc">Quay lai</a>

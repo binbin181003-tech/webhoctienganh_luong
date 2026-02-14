@@ -1,0 +1,30 @@
+@page "/student/chi_tiet_bai_hoc"
+@model webhoctienganh.Pages.student.chi_tiet_bai_hocModel
+
+@if (Model.BaiHoc != null)
+{
+    <h1>@Model.BaiHoc.tieu_de</h1>
+    <p><b>Khoa hoc:</b> @Model.BaiHoc.khoa_hoc?.ten_khoa_hoc</p>
+    <p><b>Ngay tao:</b> @Model.BaiHoc.ngay_tao.ToString("dd/MM/yyyy")</p>
+    <hr>
+    <p>@Model.BaiHoc.noi_dung</p>
+
+    <hr>
+    <h3>Tai Lieu Dinh Kem</h3>
+    <ul>
+        @foreach (var tl in Model.DsTaiLieu)
+        {
+            <li>
+                <a href="@tl.duong_dan_file" download>@tl.duong_dan_file</a> (@tl.loai_tai_lieu)
+            </li>
+        }
+    </ul>
+
+    if (!Model.DsTaiLieu.Any())
+    {
+        <p>Khong co tai lieu.</p>
+    }
+}
+
+<br>
+<a href="/student/bai_hoc">Quay lai</a>

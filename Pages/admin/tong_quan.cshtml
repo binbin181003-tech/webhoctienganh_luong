@@ -1,0 +1,17 @@
+@page "/admin/tong_quan"
+@model webhoctienganh.Pages.admin.tong_quanModel
+
+<h1>Admin Dashboard</h1>
+<p>Xin chao: @Model.HoTen</p>
+<hr>
+
+<a href="/admin/quan_ly_khoa_hoc"><button>Quan Ly Khoa Hoc</button></a>
+<a href="/admin/quan_ly_lop_hoc"><button>Quan Ly Lop Hoc</button></a>
+<a href="/admin/duyet_dang_ky"><button>Duyet Dang Ky</button></a>
+<a href="/admin/quan_ly_hoc_vien"><button>Quan Ly Hoc Vien</button></a>
+<a href="/admin/quan_ly_giao_vien"><button>Quan Ly Giao Vien</button></a>
+
+<br><br>
+<form method="post" asp-page-handler="DangXuat">
+    <button type="submit">Dang Xuat</button>
+</form>

@@ -1,0 +1,33 @@
+@page "/admin/quan_ly_thanh_toan"
+@model webhoctienganh.Pages.admin.quan_ly_thanh_toanModel
+
+<h1>Quan Ly Thanh Toan</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Hoc Vien</th>
+        <th>Khoa Hoc</th>
+        <th>So Tien</th>
+        <th>Ngay TT</th>
+        <th>Phuong Thuc</th>
+    </tr>
+    @foreach (var t in Model.DanhSach)
+    {
+        <tr>
+            <td>@t.HoTen</td>
+            <td>@t.TenKhoaHoc</td>
+            <td>@t.SoTien.ToString("N0")</td>
+            <td>@t.NgayThanhToan.ToString("dd/MM/yyyy")</td>
+            <td>@t.PhuongThuc</td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co thanh toan nao.</p>
+}
+
+<br>
+<a href="/admin/tong_quan">Quay lai</a>

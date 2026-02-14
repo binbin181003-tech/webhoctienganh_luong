@@ -1,0 +1,87 @@
+@page "/teacher/quan_ly_cau_hoi"
+@model webhoctienganh.Pages.teacher.quan_ly_cau_hoiModel
+
+<h1>Quan Ly Cau Hoi</h1>
+
+@if (Model.BaiKiemTra != null)
+{
+    <p><b>Bai kiem tra:</b> @Model.BaiKiemTra.tieu_de</p>
+}
+
+<hr>
+
+@if (Model.ThongBao != "")
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Noi Dung</th>
+        <th>Dap An</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var q in Model.CauHois)
+    {
+        <tr>
+            <td>@q.noi_dung</td>
+            <td>
+                <ul>
+                    @foreach (var a in q.dap_ans)
+                    {
+                        <li>@a.noi_dung @(a.la_dap_an_dung ? "(Dung)" : "")</li>
+                    }
+                </ul>
+            </td>
+            <td>
+                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+                    <input type="hidden" name="cauHoiId" value="@q.ma_cau_hoi" />
+                    <input type="hidden" name="baiId" value="@Model.BaiId" />
+                    <button type="submit">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<hr>
+<h3>Them Cau Hoi</h3>
+
+<form method="post" asp-page-handler="Them">
+    <input type="hidden" name="baiId" value="@Model.BaiId" />
+
+    <div>
+        <label>Noi dung:</label><br>
+        <textarea name="noi_dung" rows="3" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label>Dap an 1:</label><br>
+        <input type="text" name="dap1" required />
+    </div>
+    <br>
+    <div>
+        <label>Dap an 2:</label><br>
+        <input type="text" name="dap2" required />
+    </div>
+    <br>
+    <div>
+        <label>Dap an 3:</label><br>
+        <input type="text" name="dap3" required />
+    </div>
+    <br>
+    <div>
+        <label>Dap an 4:</label><br>
+        <input type="text" name="dap4" required />
+    </div>
+    <br>
+    <div>
+        <label>Dap an dung (1-4):</label><br>
+        <input type="number" name="dap_dung" min="1" max="4" required />
+    </div>
+    <br>
+    <button type="submit">Them Cau Hoi</button>
+</form>
+
+<br>
+<a href="/teacher/quan_ly_bai_kiem_tra">Quay lai</a>

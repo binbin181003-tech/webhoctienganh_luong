@@ -1,0 +1,84 @@
+@page "/admin/tao_lop_hoc"
+@model webhoctienganh.Pages.admin.tao_lop_hocModel
+
+<h1>Tao Lop Hoc Moi</h1>
+<hr>
+
+@if (Model.ThongBao != "")
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<form method="post">
+    <div>
+        <label>Khoa Hoc:</label><br>
+        <select name="ma_khoa_hoc" required>
+            <option value="">-- Chon Khoa Hoc --</option>
+            @foreach (var kh in Model.DsKhoaHoc)
+            {
+                <option value="@kh.ma_khoa_hoc">@kh.ten_khoa_hoc (@kh.trinh_do)</option>
+            }
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Giao Vien:</label><br>
+        <select name="ma_giao_vien" required>
+            <option value="">-- Chon Giao Vien --</option>
+            @foreach (var gv in Model.DsGiaoVien)
+            {
+                <option value="@gv.ma_nguoi_dung">@gv.ho_ten (@gv.email)</option>
+            }
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Ngay Bat Dau:</label><br>
+        <input type="date" name="ngay_bat_dau" required />
+    </div>
+    <br>
+    <div>
+        <label>Ngay Ket Thuc:</label><br>
+        <input type="date" name="ngay_ket_thuc" required />
+    </div>
+    <br>
+    <div>
+        <label>So Luong Toi Da:</label><br>
+        <input type="number" name="so_luong_toi_da" min="1" required />
+    </div>
+    <hr>
+    <h3>Lich Hoc (Tuan)</h3>
+    <div>
+        <label>Thu:</label><br>
+        <select name="thu_trong_tuan" required>
+            <option value="">-- Chon --</option>
+            <option value="Mon">Thu 2</option>
+            <option value="Tue">Thu 3</option>
+            <option value="Wed">Thu 4</option>
+            <option value="Thu">Thu 5</option>
+            <option value="Fri">Thu 6</option>
+            <option value="Sat">Thu 7</option>
+            <option value="Sun">Chu Nhat</option>
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Gio Bat Dau:</label><br>
+        <input type="time" name="gio_bat_dau" required />
+    </div>
+    <br>
+    <div>
+        <label>Gio Ket Thuc:</label><br>
+        <input type="time" name="gio_ket_thuc" required />
+    </div>
+    <br>
+    <div>
+        <label>Link hoc online:</label><br>
+        <input type="text" name="phong_hoc" placeholder="https://meet.google.com/..." required />
+    </div>
+    <br>
+    <button type="submit">Tao Lop Hoc</button>
+</form>
+
+<br>
+<a href="/admin/quan_ly_lop_hoc">Quay lai</a>

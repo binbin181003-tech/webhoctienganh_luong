@@ -1,0 +1,11 @@
+@page "/student/tong_quan"
+@model webhoctienganh.Pages.student.tong_quanModel
+
+<h1>Student Dashboard</h1>
+<p>Xin chao: @Model.HoTen</p>
+<hr>
+<p>Cac chuc nang hoc vien se duoc them sau.</p>
+
+<form method="post" asp-page-handler="DangXuat">
+    <button type="submit">Dang Xuat</button>
+</form>

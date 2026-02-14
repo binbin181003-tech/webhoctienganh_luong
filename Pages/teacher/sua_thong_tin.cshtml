@@ -1,0 +1,32 @@
+@page "/teacher/sua_thong_tin"
+@model webhoctienganh.Pages.teacher.sua_thong_tinModel
+
+<h1>Sua Thong Tin</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<form method="post">
+    <input type="hidden" name="field" value="@Model.Field" />
+
+    <div>
+        <label>Nhap lai du lieu cu:</label><br>
+        <input type="text" name="gia_tri_cu" required />
+    </div>
+    <br>
+    <div>
+        <label>Nhap du lieu moi:</label><br>
+        <input type="text" name="gia_tri_moi" required />
+    </div>
+    <br>
+    <div>
+        <label>Xac nhan du lieu moi:</label><br>
+        <input type="text" name="xac_nhan" required />
+    </div>
+    <br>
+    <button type="submit">Xac nhan</button>
+    <a href="/teacher/thong_tin_ca_nhan"><button type="button">Quay lai</button></a>
+</form>

@@ -1,0 +1,47 @@
+@page "/teacher/quan_ly_bai_hoc"
+@model webhoctienganh.Pages.teacher.quan_ly_bai_hocModel
+
+<h1>Quan Ly Bai Hoc</h1>
+<hr>
+
+<a href="/teacher/tao_bai_hoc"><button>+ Tao Bai Hoc Moi</button></a>
+<br><br>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:green;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma</th>
+        <th>Tieu De</th>
+        <th>Khoa Hoc</th>
+        <th>Ngay Tao</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var b in Model.DanhSach)
+    {
+        <tr>
+            <td>@b.ma_bai_hoc</td>
+            <td>@b.tieu_de</td>
+            <td>@b.khoa_hoc?.ten_khoa_hoc</td>
+            <td>@b.ngay_tao.ToString("dd/MM/yyyy")</td>
+            <td>
+                <a href="/teacher/sua_bai_hoc?id=@b.ma_bai_hoc">Sua</a> |
+                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+                    <input type="hidden" name="id" value="@b.ma_bai_hoc" />
+                    <button type="submit" onclick="return confirm('Xoa bai hoc nay?')">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co bai hoc nao.</p>
+}
+
+<br>
+<a href="/teacher/tong_quan">Quay lai</a>

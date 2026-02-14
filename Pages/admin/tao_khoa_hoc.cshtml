@@ -1,0 +1,47 @@
+@page "/admin/tao_khoa_hoc"
+@model webhoctienganh.Pages.admin.tao_khoa_hocModel
+
+<h1>Tao Khoa Hoc Moi</h1>
+<hr>
+
+@if (Model.ThongBao != "")
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<form method="post">
+    <div>
+        <label>Ten Khoa Hoc:</label><br>
+        <input type="text" name="ten_khoa_hoc" required />
+    </div>
+    <br>
+    <div>
+        <label>Mo Ta:</label><br>
+        <textarea name="mo_ta" rows="3"></textarea>
+    </div>
+    <br>
+    <div>
+        <label>Hoc Phi (VND):</label><br>
+        <input type="number" name="hoc_phi" min="0" required />
+    </div>
+    <br>
+    <div>
+        <label>Trinh Do:</label><br>
+        <select name="trinh_do" required>
+            <option value="">-- Chon --</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Thoi Luong (tuan):</label><br>
+        <input type="number" name="thoi_luong_tuan" min="1" required />
+    </div>
+    <br>
+    <button type="submit">Tao Khoa Hoc</button>
+</form>
+
+<br>
+<a href="/admin/quan_ly_khoa_hoc">Quay lai</a>

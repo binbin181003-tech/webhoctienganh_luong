@@ -1,0 +1,58 @@
+@page "/student/thong_tin_ca_nhan"
+@model webhoctienganh.Pages.student.thong_tin_ca_nhanModel
+
+<h1>Thong Tin Ca Nhan (Hoc Vien)</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
+{
+    <img src="@Model.CurrentUser.anh_dai_dien" alt="Anh dai dien"
+         style="width:120px;height:120px;border-radius:50%;object-fit:cover;" />
+}
+else
+{
+    <p><i>Chua co anh dai dien</i></p>
+}
+
+<br><br>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Thong tin</th>
+        <th>Gia tri</th>
+        <th>Hanh dong</th>
+    </tr>
+    <tr>
+        <td>Ho ten</td>
+        <td>@Model.CurrentUser.ho_ten</td>
+        <td><a href="/student/sua_thong_tin?field=ho_ten">Sua</a></td>
+    </tr>
+    <tr>
+        <td>Email (khong doi)</td>
+        <td>@Model.CurrentUser.email</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>So dien thoai</td>
+        <td>@Model.CurrentUser.so_dien_thoai</td>
+        <td><a href="/student/sua_thong_tin?field=so_dien_thoai">Sua</a></td>
+    </tr>
+    <tr>
+        <td>Anh dai dien (link)</td>
+        <td>@Model.CurrentUser.anh_dai_dien</td>
+        <td><a href="/student/sua_thong_tin?field=anh_dai_dien">Sua</a></td>
+    </tr>
+    <tr>
+        <td>Mat khau</td>
+        <td>******</td>
+        <td><a href="/student/sua_thong_tin?field=mat_khau">Doi</a></td>
+    </tr>
+</table>
+
+<br>
+<a href="/trang_chu">Quay lai</a>

@@ -1,0 +1,38 @@
+@page "/teacher/tao_bai_hoc"
+@model webhoctienganh.Pages.teacher.tao_bai_hocModel
+
+<h1>Tao Bai Hoc</h1>
+<hr>
+
+@if (Model.ThongBao != "")
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<form method="post">
+    <div>
+        <label>Khoa Hoc:</label><br>
+        <select name="ma_khoa_hoc" required>
+            <option value="">-- Chon --</option>
+            @foreach (var kh in Model.DsKhoaHoc)
+            {
+                <option value="@kh.ma_khoa_hoc">@kh.ten_khoa_hoc (@kh.trinh_do)</option>
+            }
+        </select>
+    </div>
+    <br>
+    <div>
+        <label>Tieu De:</label><br>
+        <input type="text" name="tieu_de" required />
+    </div>
+    <br>
+    <div>
+        <label>Noi Dung:</label><br>
+        <textarea name="noi_dung" rows="5"></textarea>
+    </div>
+    <br>
+    <button type="submit">Tao Bai Hoc</button>
+</form>
+
+<br>
+<a href="/teacher/quan_ly_bai_hoc">Quay lai</a>

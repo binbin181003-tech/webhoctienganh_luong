@@ -1,0 +1,57 @@
+@page "/student/lam_bai_kiem_tra"
+@model webhoctienganh.Pages.student.lam_bai_kiem_traModel
+
+@if (Model.BaiKiemTra != null)
+{
+    <h1>@Model.BaiKiemTra.tieu_de</h1>
+    <p><b>Thoi luong:</b> @Model.BaiKiemTra.thoi_luong_phut phut</p>
+    <hr>
+
+    @if (!Model.DaNop)
+    {
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.BaiKiemTra.ma_bai_kiem_tra" />
+
+            @foreach (var q in Model.CauHois)
+            {
+                <div style="margin-bottom:15px;">
+                    <b>@q.noi_dung</b>
+                    <br>
+                    @foreach (var a in q.dap_ans)
+                    {
+                        <label>
+                            <input type="radio" name="answer_@q.ma_cau_hoi" value="@a.ma_dap_an" />
+                            @a.noi_dung
+                        </label>
+                        <br>
+                    }
+                </div>
+            }
+
+            <button type="submit">Nop Bai</button>
+        </form>
+    }
+    else
+    {
+        <h3>Ket Qua: @Model.DiemSo / 10</h3>
+
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Cau Hoi</th>
+                <th>Ban Chon</th>
+                <th>Dap An Dung</th>
+            </tr>
+            @foreach (var k in Model.ChiTiet)
+            {
+                <tr>
+                    <td>@k.NoiDung</td>
+                    <td>@k.DapAnChon</td>
+                    <td>@k.DapAnDung</td>
+                </tr>
+            }
+        </table>
+
+        <br>
+        <a href="/student/danh_sach_bai_kiem_tra">Quay lai</a>
+    }
+}

@@ -1,0 +1,64 @@
+@page "/admin/duyet_dang_ky"
+@model webhoctienganh.Pages.admin.duyet_dang_kyModel
+
+<h1>Duyet Dang Ky</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:green;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma DK</th>
+        <th>Hoc Vien</th>
+        <th>Email</th>
+        <th>Lop</th>
+        <th>Khoa Hoc</th>
+        <th>Ngay DK</th>
+        <th>Trang Thai</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var d in Model.DanhSach)
+    {
+        <tr>
+            <td>@d.MaDangKy</td>
+            <td>@d.HoTen</td>
+            <td>@d.Email</td>
+            <td>@d.MaLop</td>
+            <td>@d.TenKhoaHoc</td>
+            <td>@d.NgayDangKy.ToString("dd/MM/yyyy")</td>
+            <td>@d.TrangThai</td>
+            <td>
+                @if (d.TrangThai == "pending")
+                {
+                    <form method="post" asp-page-handler="Duyet" style="display:inline;">
+                        <input type="hidden" name="id" value="@d.MaDangKy" />
+                        <button type="submit">Duyet</button>
+                    </form>
+                    <form method="post" asp-page-handler="Huy" style="display:inline;">
+                        <input type="hidden" name="id" value="@d.MaDangKy" />
+                        <button type="submit">Huy</button>
+                    </form>
+                }
+                else if (d.TrangThai == "ChoThanhToan")
+                {
+                    <span>Cho thanh toan</span>
+                }
+                else if (d.TrangThai == "DaThanhToan")
+                {
+                    <span>Da thanh toan</span>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co dang ky nao.</p>
+}
+
+<br>
+<a href="/admin/tong_quan">Quay lai</a>

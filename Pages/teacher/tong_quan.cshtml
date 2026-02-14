@@ -1,0 +1,15 @@
+@page "/teacher/tong_quan"
+@model webhoctienganh.Pages.teacher.tong_quanModel
+
+<h1>Teacher Dashboard</h1>
+<p>Xin chao: @Model.HoTen</p>
+<hr>
+
+<a href="/teacher/quan_ly_bai_hoc"><button>Quan Ly Bai Hoc</button></a>
+<a href="/teacher/quan_ly_bai_kiem_tra"><button>Quan Ly Bai Kiem Tra</button></a>
+<a href="/teacher/thong_tin_ca_nhan"><button>Thong Tin Ca Nhan</button></a>
+
+<br><br>
+<form method="post" asp-page-handler="DangXuat">
+    <button type="submit">Dang Xuat</button>
+</form>

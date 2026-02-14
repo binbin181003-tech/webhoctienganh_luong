@@ -1,0 +1,33 @@
+@page "/student/danh_sach_bai_kiem_tra"
+@model webhoctienganh.Pages.student.danh_sach_bai_kiem_traModel
+
+<h1>Danh Sach Bai Kiem Tra</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma</th>
+        <th>Tieu De</th>
+        <th>Khoa Hoc</th>
+        <th>Thoi Luong</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var b in Model.DanhSach)
+    {
+        <tr>
+            <td>@b.ma_bai_kiem_tra</td>
+            <td>@b.tieu_de</td>
+            <td>@b.khoa_hoc?.ten_khoa_hoc</td>
+            <td>@b.thoi_luong_phut phut</td>
+            <td><a href="/student/lam_bai_kiem_tra?id=@b.ma_bai_kiem_tra">Lam Bai</a></td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co bai kiem tra nao.</p>
+}
+
+<br>
+<a href="/trang_chu">Quay lai</a>

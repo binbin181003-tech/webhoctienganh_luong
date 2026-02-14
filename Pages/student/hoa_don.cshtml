@@ -1,0 +1,47 @@
+@page "/student/hoa_don"
+@model webhoctienganh.Pages.student.hoa_donModel
+
+<h1>Hoa Don Cua Toi</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Khoa Hoc</th>
+        <th>So Tien</th>
+        <th>Trang Thai</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var h in Model.DanhSach)
+    {
+        <tr>
+            <td>@h.TenKhoaHoc</td>
+            <td>@h.SoTien.ToString("N0")</td>
+            <td>@h.TrangThai</td>
+            <td>
+                @if (h.TrangThai == "ChuaThanhToan")
+                {
+                    <form method="post" asp-page-handler="ThanhToan" style="display:inline;">
+                        <input type="hidden" name="hoaDonId" value="@h.MaHoaDon" />
+                        <select name="phuong_thuc_thanh_toan">
+                            <option value="TienMat">Tien Mat</option>
+                            <option value="ChuyenKhoan">Chuyen Khoan</option>
+                        </select>
+                        <button type="submit">Thanh Toan</button>
+                    </form>
+                }
+                else
+                {
+                    <span>Da thanh toan</span>
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co hoa don nao.</p>
+}
+
+<br>
+<a href="/trang_chu">Quay lai</a>

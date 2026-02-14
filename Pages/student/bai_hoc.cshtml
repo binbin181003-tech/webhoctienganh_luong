@@ -1,0 +1,33 @@
+@page "/student/bai_hoc"
+@model webhoctienganh.Pages.student.bai_hocModel
+
+<h1>Bai Hoc</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma</th>
+        <th>Tieu De</th>
+        <th>Khoa Hoc</th>
+        <th>Ngay Tao</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var b in Model.DanhSach)
+    {
+        <tr>
+            <td>@b.ma_bai_hoc</td>
+            <td>@b.tieu_de</td>
+            <td>@b.khoa_hoc?.ten_khoa_hoc</td>
+            <td>@b.ngay_tao.ToString("dd/MM/yyyy")</td>
+            <td><a href="/student/chi_tiet_bai_hoc?id=@b.ma_bai_hoc">Xem</a></td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Ban chua dang ky lop nao co bai hoc.</p>
+}
+
+<br>
+<a href="/trang_chu">Quay lai</a>

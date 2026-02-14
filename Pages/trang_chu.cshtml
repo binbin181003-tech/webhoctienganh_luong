@@ -1,0 +1,26 @@
+@page "/trang_chu"
+@model webhoctienganh.Pages.trang_chuModel
+
+<h1>Trang Chu</h1>
+<p>Xin chao: @Model.HoTen</p>
+<hr>
+
+<form method="post" asp-page-handler="DangXuat" style="display:inline;">
+    <button type="submit">Dang Xuat</button>
+</form>
+
+<br><br>
+
+<a href="/student/danh_sach_bai_kiem_tra"><button>Lam Bai Test</button></a>
+<button disabled>Danh Gia</button>
+<a href="/student/dang_ky_khoa_hoc"><button>Dang Ky Khoa Hoc</button></a>
+<button disabled>Thong Tin Ca Nhan</button>
+<button disabled>Thong Bao</button>
+<button disabled>Huong Dan Su Dung Web</button>
+<button disabled>Thu Vien</button>
+<a href="/student/bai_hoc"><button>Bai Hoc</button></a>
+<a href="/student/ket_qua_kiem_tra"><button>Ket Qua</button></a>
+<a href="/student/hoa_don"><button>Thanh Toan</button></a>
+<a href="/student/lich_su_thanh_toan"><button>Lich Su Thanh Toan</button></a>
+<a href="/student/lich_hoc"><button>Xem Lich Hoc</button></a>
+<a href="/student/thong_tin_ca_nhan"><button>Thong Tin Ca Nhan</button></a>
