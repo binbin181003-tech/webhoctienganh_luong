@@ -41,7 +41,10 @@ namespace webhoctienganh.Pages.student
             var lichHocs = _db.lich_hoc
                 .Include(l => l.lop_hoc)
                 .ThenInclude(lh => lh!.khoa_hoc)
-                .Where(l => lopHocIds.Contains(l.ma_lop_hoc))
+                .Where(l => lopHocIds.Contains(l.ma_lop_hoc)
+                    && l.lop_hoc != null
+                    && l.lop_hoc.ngay_bat_dau <= TuanKetThuc
+                    && l.lop_hoc.ngay_ket_thuc >= TuanBatDau)
                 .ToList();
 
             var dayMap = new Dictionary<DayOfWeek, string>

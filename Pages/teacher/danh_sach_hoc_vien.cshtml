@@ -1,0 +1,42 @@
+@page "/teacher/danh_sach_hoc_vien"
+@model webhoctienganh.Pages.teacher.danh_sach_hoc_vienModel
+
+<h1>Danh Sach Hoc Vien - Lop @Model.MaLop</h1>
+
+@if (Model.TenLop != "")
+{
+    <p><b>Khoa hoc:</b> @Model.TenKhoaHoc</p>
+}
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>STT</th>
+        <th>Ho Ten</th>
+        <th>Email</th>
+        <th>So Dien Thoai</th>
+        <th>Ngay Dang Ky</th>
+        <th>Trang Thai</th>
+    </tr>
+    @{ int stt = 0; }
+    @foreach (var hv in Model.DanhSach)
+    {
+        stt++;
+        <tr>
+            <td>@stt</td>
+            <td>@hv.HoTen</td>
+            <td>@hv.Email</td>
+            <td>@hv.SoDienThoai</td>
+            <td>@hv.NgayDangKy.ToString("dd/MM/yyyy")</td>
+            <td>@hv.TrangThai</td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co hoc vien nao dang ky lop nay.</p>
+}
+
+<br>
+<a href="/teacher/lop_dang_day">Quay lai</a>

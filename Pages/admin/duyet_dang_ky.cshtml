@@ -31,7 +31,7 @@
             <td>@d.NgayDangKy.ToString("dd/MM/yyyy")</td>
             <td>@d.TrangThai</td>
             <td>
-                @if (d.TrangThai == "pending")
+                @if (d.TrangThai == "Pending")
                 {
                     <form method="post" asp-page-handler="Duyet" style="display:inline;">
                         <input type="hidden" name="id" value="@d.MaDangKy" />
@@ -45,10 +45,18 @@
                 else if (d.TrangThai == "ChoThanhToan")
                 {
                     <span>Cho thanh toan</span>
+                    <form method="post" asp-page-handler="Huy" style="display:inline;">
+                        <input type="hidden" name="id" value="@d.MaDangKy" />
+                        <button type="submit">Huy</button>
+                    </form>
                 }
                 else if (d.TrangThai == "DaThanhToan")
                 {
                     <span>Da thanh toan</span>
+                }
+                else if (d.TrangThai == "Cancelled")
+                {
+                    <span>Da huy</span>
                 }
             </td>
         </tr>

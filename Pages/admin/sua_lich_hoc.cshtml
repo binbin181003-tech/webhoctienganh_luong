@@ -1,0 +1,42 @@
+@page "/admin/sua_lich_hoc"
+@model webhoctienganh.Pages.admin.sua_lich_hocModel
+
+<h1>Sua Lich Hoc</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+@if (Model.LichHoc != null)
+{
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.LichHoc.ma_lich_hoc" />
+
+        <div>
+            <label>Thu:</label><br>
+            <input type="text" name="thu_trong_tuan" value="@Model.LichHoc.thu_trong_tuan" required />
+        </div>
+        <br>
+        <div>
+            <label>Gio bat dau:</label><br>
+            <input type="time" name="gio_bat_dau" value="@Model.LichHoc.gio_bat_dau" required />
+        </div>
+        <br>
+        <div>
+            <label>Gio ket thuc:</label><br>
+            <input type="time" name="gio_ket_thuc" value="@Model.LichHoc.gio_ket_thuc" required />
+        </div>
+        <br>
+        <div>
+            <label>Phong hoc / Link:</label><br>
+            <input type="text" name="phong_hoc" value="@Model.LichHoc.phong_hoc" required />
+        </div>
+        <br>
+        <button type="submit">Luu</button>
+    </form>
+}
+
+<br>
+<a href="/admin/quan_ly_lich_hoc">Quay lai</a>

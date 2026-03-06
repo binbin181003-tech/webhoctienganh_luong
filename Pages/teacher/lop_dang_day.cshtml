@@ -1,0 +1,37 @@
+@page "/teacher/lop_dang_day"
+@model webhoctienganh.Pages.teacher.lop_dang_dayModel
+
+<h1>Danh Sach Lop Dang Day</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma Lop</th>
+        <th>Khoa Hoc</th>
+        <th>Bat Dau</th>
+        <th>Ket Thuc</th>
+        <th>Si So</th>
+        <th>Trang Thai</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var l in Model.DanhSach)
+    {
+        <tr>
+            <td>@l.MaLop</td>
+            <td>@l.TenKhoaHoc</td>
+            <td>@l.NgayBatDau.ToString("dd/MM/yyyy")</td>
+            <td>@l.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+            <td>@l.SoLuongDangKy / @l.SoLuongToiDa</td>
+            <td>@l.TrangThai</td>
+            <td><a href="/teacher/danh_sach_hoc_vien?lop=@l.MaLop">Xem hoc vien</a></td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co lop nao.</p>
+}
+
+<br>
+<a href="/teacher/tong_quan">Quay lai</a>

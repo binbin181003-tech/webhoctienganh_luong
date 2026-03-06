@@ -1,0 +1,32 @@
+@page "/teacher/sua_bai_kiem_tra"
+@model webhoctienganh.Pages.teacher.sua_bai_kiem_traModel
+
+<h1>Sua Bai Kiem Tra</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+@if (Model.BaiKiemTra != null)
+{
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.BaiKiemTra.ma_bai_kiem_tra" />
+
+        <div>
+            <label>Tieu de:</label><br>
+            <input type="text" name="tieu_de" value="@Model.BaiKiemTra.tieu_de" required />
+        </div>
+        <br>
+        <div>
+            <label>Thoi luong (phut):</label><br>
+            <input type="number" name="thoi_luong_phut" min="1" value="@Model.BaiKiemTra.thoi_luong_phut" required />
+        </div>
+        <br>
+        <button type="submit">Luu</button>
+    </form>
+}
+
+<br>
+<a href="/teacher/quan_ly_bai_kiem_tra">Quay lai</a>

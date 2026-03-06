@@ -1,0 +1,40 @@
+@page "/admin/tao_giao_vien"
+@model webhoctienganh.Pages.admin.tao_giao_vienModel
+
+<h1>Tao Tai Khoan Giao Vien</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<form method="post">
+    <div>
+        <label>Ho Ten:</label><br />
+        <input type="text" name="ho_ten" required />
+    </div>
+    <br />
+    <div>
+        <label>Email:</label><br />
+        <input type="email" name="email" required />
+    </div>
+    <br />
+    <div>
+        <label>So Dien Thoai:</label><br />
+        <input type="text" name="so_dien_thoai" required />
+    </div>
+    <br />
+    <div>
+        <label>Mat Khau:</label><br />
+        <input type="password" name="mat_khau" required />
+    </div>
+    <br />
+    <div>
+        <label>Nhap Lai Mat Khau:</label><br />
+        <input type="password" name="nhap_lai_mat_khau" required />
+    </div>
+    <br />
+    <button type="submit">Tao Tai Khoan</button>
+    <a href="/admin/quan_ly_giao_vien"><button type="button">Quay lai</button></a>
+</form>

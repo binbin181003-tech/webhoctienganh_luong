@@ -15,6 +15,7 @@ namespace webhoctienganh.Pages.student
         }
 
         public List<HoaDonView> DanhSach { get; set; } = new();
+        public string ThongBao { get; set; } = "";
 
         public IActionResult OnGet()
         {
@@ -40,23 +41,37 @@ namespace webhoctienganh.Pages.student
                 return Page();
             }
 
-            // Tao thanh toan
-            _db.thanh_toan.Add(new thanh_toan
+            // === FIX #5: Dung explicit transaction ===
+            using var transaction = _db.Database.BeginTransaction();
+            try
             {
-                ma_hoa_don = hoaDon.ma_hoa_don,
-                ngay_thanh_toan = DateTime.Now,
-                phuong_thuc_thanh_toan = phuong_thuc_thanh_toan,
-                trang_thai = "completed"
-            });
+                // Tao thanh toan
+                _db.thanh_toan.Add(new thanh_toan
+                {
+                    ma_hoa_don = hoaDon.ma_hoa_don,
+                    ngay_thanh_toan = DateTime.Now,
+                    phuong_thuc_thanh_toan = phuong_thuc_thanh_toan,
+                    trang_thai = "completed"
+                });
 
-            hoaDon.trang_thai = "DaThanhToan";
+                hoaDon.trang_thai = "DaThanhToan";
 
-            if (hoaDon.dang_ky != null)
+                if (hoaDon.dang_ky != null)
+                {
+                    hoaDon.dang_ky.trang_thai = "DaThanhToan";
+                }
+
+                _db.SaveChanges();
+                transaction.Commit();
+
+                ThongBao = "Thanh toan thanh cong!";
+            }
+            catch (Exception)
             {
-                hoaDon.dang_ky.trang_thai = "DaThanhToan";
+                transaction.Rollback();
+                ThongBao = "Thanh toan that bai, vui long thu lai!";
             }
 
-            _db.SaveChanges();
             LoadDanhSach();
             return Page();
         }

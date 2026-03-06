@@ -4,6 +4,22 @@
 <h1>Dang Ky Khoa Hoc</h1>
 <hr>
 
+<form method="get">
+    <label>Loc theo khoa hoc:</label>
+    <select name="khoaHocId">
+        <option value="">-- Tat ca --</option>
+        @foreach (var kh in Model.DsKhoaHoc)
+        {
+            <option value="@kh.ma_khoa_hoc" selected="@(Model.KhoaHocIdFilter == kh.ma_khoa_hoc)">
+                @kh.ten_khoa_hoc (@kh.trinh_do)
+            </option>
+        }
+    </select>
+    <button type="submit">Loc</button>
+</form>
+
+<br>
+
 @if (!string.IsNullOrEmpty(Model.ThongBao))
 {
     <p style="color:green;">@Model.ThongBao</p>
@@ -18,7 +34,8 @@
         <th>Bat Dau</th>
         <th>Ket Thuc</th>
         <th>Hoc Phi</th>
-        <th>Da Dang Ky</th>
+        <th>Si So</th>
+        <th>Trang Thai DK</th>
         <th>Hanh Dong</th>
     </tr>
     @foreach (var item in Model.DanhSach)
@@ -31,18 +48,28 @@
             <td>@item.NgayBatDau.ToString("dd/MM/yyyy")</td>
             <td>@item.NgayKetThuc.ToString("dd/MM/yyyy")</td>
             <td>@item.HocPhi.ToString("N0")</td>
-            <td>@item.SoLuongDaDangKy</td>
+            <td>@item.SoLuongDaDangKy / @item.SoLuongToiDa</td>
+            <td>@item.TrangThaiDangKy</td>
             <td>
-                @if (item.DaDangKy)
-                {
-                    <span>Da dang ky</span>
-                }
-                else
+                @if (item.TrangThaiDangKy == "Chua dang ky" || item.TrangThaiDangKy == "Cancelled")
                 {
                     <form method="post" asp-page-handler="DangKy" style="display:inline;">
                         <input type="hidden" name="lopId" value="@item.MaLop" />
+                        <input type="hidden" name="khoaHocId" value="@Model.KhoaHocIdFilter" />
                         <button type="submit">Dang Ky</button>
                     </form>
+                }
+                else if (item.TrangThaiDangKy == "Pending" || item.TrangThaiDangKy == "ChoThanhToan")
+                {
+                    <form method="post" asp-page-handler="Huy" style="display:inline;">
+                        <input type="hidden" name="lopId" value="@item.MaLop" />
+                        <input type="hidden" name="khoaHocId" value="@Model.KhoaHocIdFilter" />
+                        <button type="submit">Huy Dang Ky</button>
+                    </form>
+                }
+                else
+                {
+                    <span>-</span>
                 }
             </td>
         </tr>

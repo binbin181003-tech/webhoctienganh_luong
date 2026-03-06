@@ -1,7 +1,13 @@
 @page "/student/lam_bai_kiem_tra"
 @model webhoctienganh.Pages.student.lam_bai_kiem_traModel
 
-@if (Model.BaiKiemTra != null)
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+    <br>
+    <a href="/student/danh_sach_bai_kiem_tra">Quay lai</a>
+}
+else if (Model.BaiKiemTra != null)
 {
     <h1>@Model.BaiKiemTra.tieu_de</h1>
     <p><b>Thoi luong:</b> @Model.BaiKiemTra.thoi_luong_phut phut</p>

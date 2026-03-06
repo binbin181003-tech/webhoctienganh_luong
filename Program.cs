@@ -49,27 +49,6 @@ using (var scope = app.Services.CreateScope())
         });
     }
 
-    // === Seed Teacher ===
-    if (!db.nguoi_dung.Any(n => n.email == "teacher@web.com"))
-    {
-        var teacherId = "seed-teacher-001";
-        db.nguoi_dung.Add(new nguoi_dung
-        {
-            ma_nguoi_dung = teacherId,
-            ho_ten = "Giao Vien Mau",
-            email = "teacher@web.com",
-            so_dien_thoai = "0900000002",
-            mat_khau_hash = BCrypt.Net.BCrypt.HashPassword("234234"),
-            ngay_tao = DateTime.Now,
-            trang_thai = "active"
-        });
-        db.nguoi_dung_vai_tro.Add(new nguoi_dung_vai_tro
-        {
-            ma_nguoi_dung = teacherId,
-            ma_vai_tro = "teacher"
-        });
-    }
-
     db.SaveChanges();
 }
 

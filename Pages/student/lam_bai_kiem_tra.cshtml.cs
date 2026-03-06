@@ -19,11 +19,37 @@ namespace webhoctienganh.Pages.student
         public bool DaNop { get; set; }
         public decimal DiemSo { get; set; }
         public List<ChiTietKetQua> ChiTiet { get; set; } = new();
+        public string ThongBao { get; set; } = "";
+
+        // === FIX #4: Kiem tra quyen truy cap bai kiem tra ===
+        private bool KiemTraQuyenBaiKiemTra(int baiKiemTraId)
+        {
+            var maHocVien = HttpContext.Session.GetString("ma_nguoi_dung") ?? "";
+
+            var bai = _db.bai_kiem_tra.Find(baiKiemTraId);
+            if (bai == null) return false;
+
+            // Lay danh sach khoa_hoc ma hoc vien da thanh toan
+            var khoaHocIds = _db.dang_ky
+                .Where(d => d.ma_hoc_vien == maHocVien && d.trang_thai == "DaThanhToan")
+                .Include(d => d.lop_hoc)
+                .Select(d => d.lop_hoc!.ma_khoa_hoc)
+                .Distinct()
+                .ToList();
+
+            return khoaHocIds.Contains(bai.ma_khoa_hoc);
+        }
 
         public IActionResult OnGet(int id)
         {
             var check = KiemTraQuyen();
             if (check != null) return check;
+
+            if (!KiemTraQuyenBaiKiemTra(id))
+            {
+                ThongBao = "Ban khong co quyen truy cap bai kiem tra nay!";
+                return Page();
+            }
 
             LoadData(id);
             return Page();
@@ -33,6 +59,12 @@ namespace webhoctienganh.Pages.student
         {
             var check = KiemTraQuyen();
             if (check != null) return check;
+
+            if (!KiemTraQuyenBaiKiemTra(id))
+            {
+                ThongBao = "Ban khong co quyen truy cap bai kiem tra nay!";
+                return Page();
+            }
 
             LoadData(id);
 

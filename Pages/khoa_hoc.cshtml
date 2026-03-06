@@ -1,0 +1,35 @@
+@page "/khoa_hoc"
+@model webhoctienganh.Pages.khoa_hocModel
+
+<h1>Danh Sach Khoa Hoc</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma</th>
+        <th>Ten Khoa Hoc</th>
+        <th>Trinh Do</th>
+        <th>Hoc Phi</th>
+        <th>Danh Gia</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var kh in Model.DanhSach)
+    {
+        <tr>
+            <td>@kh.MaKhoaHoc</td>
+            <td>@kh.TenKhoaHoc</td>
+            <td>@kh.TrinhDo</td>
+            <td>@kh.HocPhi.ToString("N0")</td>
+            <td>@kh.DiemTrungBinh (@kh.SoLuongDanhGia)</td>
+            <td><a href="/chi_tiet_khoa_hoc?id=@kh.MaKhoaHoc">Xem</a></td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co khoa hoc nao.</p>
+}
+
+<br>
+<a href="/trang_vang_lai">Quay lai</a>

@@ -1,0 +1,45 @@
+@page "/admin/quan_ly_lich_hoc"
+@model webhoctienganh.Pages.admin.quan_ly_lich_hocModel
+
+<h1>Quan Ly Lich Hoc</h1>
+<hr>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ma</th>
+        <th>Lop</th>
+        <th>Khoa Hoc</th>
+        <th>Thu</th>
+        <th>Gio Bat Dau</th>
+        <th>Gio Ket Thuc</th>
+        <th>Phong Hoc</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var l in Model.DanhSach)
+    {
+        <tr>
+            <td>@l.MaLich</td>
+            <td>@l.MaLop</td>
+            <td>@l.TenKhoaHoc</td>
+            <td>@l.ThuTrongTuan</td>
+            <td>@l.GioBatDau</td>
+            <td>@l.GioKetThuc</td>
+            <td>@l.PhongHoc</td>
+            <td>
+                <a href="/admin/sua_lich_hoc?id=@l.MaLich">Sua</a> |
+                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+                    <input type="hidden" name="id" value="@l.MaLich" />
+                    <button type="submit" onclick="return confirm('Xoa lich hoc nay?')">Xoa</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co lich hoc nao.</p>
+}
+
+<br>
+<a href="/admin/tong_quan">Quay lai</a>

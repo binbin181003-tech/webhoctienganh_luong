@@ -1,0 +1,87 @@
+@page "/teacher/ket_qua_hoc_vien"
+@model webhoctienganh.Pages.teacher.ket_qua_hoc_vienModel
+
+<h1>Ket Qua Hoc Vien</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+<!-- Chon lop -->
+<form method="get">
+    <label>Chon lop:</label>
+    <select name="classId" onchange="this.form.submit()">
+        <option value="">-- Chon lop --</option>
+        @foreach (var lop in Model.DsLop)
+        {
+            <option value="@lop.MaLop" selected="@(Model.ClassId == lop.MaLop)">
+                @lop.MaLop - @lop.TenKhoaHoc (@lop.TrangThai)
+            </option>
+        }
+    </select>
+    <noscript><button type="submit">Xem</button></noscript>
+</form>
+
+@if (Model.ClassId.HasValue)
+{
+    <hr />
+    <h3>Hoc vien cua lop @Model.ClassId</h3>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Ho ten</th>
+            <th>Email</th>
+            <th>So dien thoai</th>
+            <th>Trang thai DK</th>
+            <th>Hanh dong</th>
+        </tr>
+        @foreach (var hv in Model.DsHocVien)
+        {
+            <tr>
+                <td>@hv.HoTen</td>
+                <td>@hv.Email</td>
+                <td>@hv.SoDienThoai</td>
+                <td>@hv.TrangThai</td>
+                <td>
+                    <a href="/teacher/ket_qua_hoc_vien?classId=@Model.ClassId&studentId=@hv.MaHocVien">Xem ket qua</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    @if (!Model.DsHocVien.Any())
+    {
+        <p>Chua co hoc vien (hoac chua thanh toan).</p>
+    }
+}
+
+@if (!string.IsNullOrEmpty(Model.StudentId))
+{
+    <hr />
+    <h3>Ket qua bai kiem tra - Hoc vien: @Model.StudentInfo</h3>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Bai kiem tra</th>
+            <th>Khoa hoc</th>
+            <th>Diem</th>
+            <th>Ngay lam</th>
+        </tr>
+        @foreach (var kq in Model.DsKetQua)
+        {
+            <tr>
+                <td>@kq.TieuDe</td>
+                <td>@kq.TenKhoaHoc</td>
+                <td>@kq.DiemSo</td>
+                <td>@kq.NgayLam.ToString("dd/MM/yyyy")</td>
+            </tr>
+        }
+    </table>
+
+    @if (!Model.DsKetQua.Any())
+    {
+        <p>Hoc vien chua co ket qua bai kiem tra.</p>
+    }
+}
+<br />
+<a href="/teacher/tong_quan">Quay lai</a>

@@ -42,11 +42,26 @@ namespace webhoctienganh.Pages.admin
                 return Page();
             }
 
-            if (dk.trang_thai == "pending")
+            if (dk.trang_thai == "Pending")
             {
                 dk.trang_thai = "ChoThanhToan";
+
+                // === FIX #1 + #2: Tao hoa don khi admin duyet, dung entity da track ===
+                var hoaDon = new Models.hoa_don
+                {
+                    ma_dang_ky = dk.ma_dang_ky, // dung truc tiep, khong query lai
+                    so_tien = dk.lop_hoc?.khoa_hoc?.hoc_phi ?? 0,
+                    ngay_tao = DateTime.Now,
+                    trang_thai = "ChuaThanhToan"
+                };
+                _db.hoa_don.Add(hoaDon);
+
                 _db.SaveChanges();
-                ThongBao = "Da duyet dang ky (Cho thanh toan)!";
+                ThongBao = "Da duyet dang ky va tao hoa don (Cho thanh toan)!";
+            }
+            else
+            {
+                ThongBao = $"Khong the duyet: trang thai hien tai la '{dk.trang_thai}'";
             }
 
             LoadDanhSach();
@@ -62,6 +77,14 @@ namespace webhoctienganh.Pages.admin
             if (dk != null)
             {
                 dk.trang_thai = "Cancelled";
+
+                // Huy hoa don lien quan (neu co)
+                var hoaDon = _db.hoa_don.FirstOrDefault(h => h.ma_dang_ky == dk.ma_dang_ky);
+                if (hoaDon != null && hoaDon.trang_thai == "ChuaThanhToan")
+                {
+                    hoaDon.trang_thai = "Huy";
+                }
+
                 _db.SaveChanges();
                 ThongBao = "Da huy dang ky!";
             }

@@ -4,17 +4,31 @@
 <h1>Thong Tin Ca Nhan (Giao Vien)</h1>
 <hr>
 
-@if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
-{
-    <img src="@Model.CurrentUser.anh_dai_dien" alt="Anh dai dien"
-         style="width:120px;height:120px;border-radius:50%;object-fit:cover;" />
-}
-else
-{
-    <p><i>Chua co anh dai dien</i></p>
-}
+<div>
+    @if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
+    {
+        <img src="@Model.CurrentUser.anh_dai_dien" alt="Anh dai dien"
+             style="width:120px;height:120px;border-radius:50%;object-fit:cover;" />
+    }
+    else
+    {
+        <p><i>Chua co anh dai dien</i></p>
+    }
+    <div style="margin-top:10px;">
+        <form method="post" asp-page-handler="UploadAvatar" enctype="multipart/form-data" style="display:inline;">
+            <input type="file" name="anh_dai_dien" accept="image/*" required />
+            <button type="submit">Tai anh</button>
+        </form>
+        @if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
+        {
+            <form method="post" asp-page-handler="DeleteAvatar" style="display:inline;margin-left:6px;">
+                <button type="submit">Xoa anh</button>
+            </form>
+        }
+    }
+</div>
 
-<br><br>
+<br>
 
 @if (!string.IsNullOrEmpty(Model.ThongBao))
 {
@@ -30,27 +44,17 @@ else
     <tr>
         <td>Ho ten</td>
         <td>@Model.CurrentUser.ho_ten</td>
-        <td><a href="/teacher/sua_thong_tin?field=ho_ten">Sua</a></td>
+        <td>-</td>
     </tr>
     <tr>
-        <td>Email (khong doi)</td>
+        <td>Email</td>
         <td>@Model.CurrentUser.email</td>
         <td>-</td>
     </tr>
     <tr>
         <td>So dien thoai</td>
         <td>@Model.CurrentUser.so_dien_thoai</td>
-        <td><a href="/teacher/sua_thong_tin?field=so_dien_thoai">Sua</a></td>
-    </tr>
-    <tr>
-        <td>Anh dai dien (link)</td>
-        <td>@Model.CurrentUser.anh_dai_dien</td>
-        <td><a href="/teacher/sua_thong_tin?field=anh_dai_dien">Sua</a></td>
-    </tr>
-    <tr>
-        <td>Mat khau</td>
-        <td>******</td>
-        <td><a href="/teacher/sua_thong_tin?field=mat_khau">Doi</a></td>
+        <td>-</td>
     </tr>
 </table>
 

@@ -1,42 +1,61 @@
 @page "/dang_ky"
 @model webhoctienganh.Pages.dang_kyModel
-
-<h1>Dang Ky</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Đăng ký";
 }
 
-<form method="post">
-    <div>
-        <label>Ho Ten:</label><br>
-        <input type="text" name="ho_ten" required />
-    </div>
-    <br>
-    <div>
-        <label>Email:</label><br>
-        <input type="email" name="email" required />
-    </div>
-    <br>
-    <div>
-        <label>So Dien Thoai:</label><br>
-        <input type="text" name="so_dien_thoai" required />
-    </div>
-    <br>
-    <div>
-        <label>Mat Khau:</label><br>
-        <input type="password" name="mat_khau" required />
-    </div>
-    <br>
-    <div>
-        <label>Nhap Lai Mat Khau:</label><br>
-        <input type="password" name="nhap_lai_mat_khau" required />
-    </div>
-    <br>
-    <button type="submit">Dang Ky</button>
-</form>
+<link rel="stylesheet" href="~/css/dang_ky.css" asp-append-version="true" />
 
-<br>
-<a href="/trang_vang_lai">Quay lai</a>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand">
+                <div class="brand-logo">WE</div>
+                <div class="brand-text">
+                    <span class="brand-title">Web Học Tiếng Anh</span>
+                    <span class="brand-sub">Tạo tài khoản mới</span>
+                </div>
+            </div>
+            <p class="welcome">Bắt đầu hành trình học tập ngay hôm nay.</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ThongBao))
+        {
+            <div class="alert error">@Model.ThongBao</div>
+        }
+
+        <form method="post" class="auth-form">
+            <label class="field">
+                <span>Họ tên</span>
+                <input type="text" name="ho_ten" placeholder="Nguyễn Văn A" required />
+            </label>
+
+            <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="email@domain.com" required />
+            </label>
+
+            <label class="field">
+                <span>Số điện thoại</span>
+                <input type="text" name="so_dien_thoai" placeholder="09xxxxxxxx" required />
+            </label>
+
+            <div class="row">
+                <label class="field flex-1">
+                    <span>Mật khẩu</span>
+                    <input type="password" name="mat_khau" placeholder="ít nhất 6 ký tự" required />
+                </label>
+                <label class="field flex-1">
+                    <span>Nhập lại mật khẩu</span>
+                    <input type="password" name="nhap_lai_mat_khau" placeholder="nhập lại mật khẩu" required />
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn primary">Đăng ký</button>
+                <a class="link" href="/dang_nhap">Đã có tài khoản? Đăng nhập</a>
+            </div>
+        </form>
+    </div>
+</div>

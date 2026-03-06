@@ -1,0 +1,73 @@
+@page "/chi_tiet_khoa_hoc"
+@model webhoctienganh.Pages.chi_tiet_khoa_hocModel
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+    <a href="/khoa_hoc">Quay lai</a>
+}
+else if (Model.KhoaHoc != null)
+{
+    <h1>@Model.KhoaHoc.ten_khoa_hoc</h1>
+    <p><b>Trinh do:</b> @Model.KhoaHoc.trinh_do</p>
+    <p><b>Hoc phi:</b> @Model.KhoaHoc.hoc_phi.ToString("N0")</p>
+    <p><b>Mo ta:</b> @Model.KhoaHoc.mo_ta</p>
+
+    <hr>
+    <h3>Danh Gia Khoa Hoc</h3>
+
+    <p><b>Diem trung binh:</b> @Model.DiemTrungBinh (@Model.SoLuongDanhGia danh gia)</p>
+
+    <ul>
+        @foreach (var dg in Model.DanhGia)
+        {
+            <li>
+                <b>@dg.HoTen</b> - @dg.SoSao sao<br />
+                @dg.NoiDung
+            </li>
+        }
+    </ul>
+
+    @if (!Model.DanhGia.Any())
+    {
+        <p>Chua co danh gia.</p>
+    }
+
+    <p>
+        <a href="/student/danh_gia_khoa_hoc?khoaHocId=@Model.KhoaHoc.ma_khoa_hoc">Danh gia khoa hoc</a>
+    </p>
+
+    <hr>
+    <h3>Danh sach lop dang mo</h3>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Ma Lop</th>
+            <th>Giao Vien</th>
+            <th>Bat Dau</th>
+            <th>Ket Thuc</th>
+            <th>Si So Toi Da</th>
+            <th>Trang Thai</th>
+        </tr>
+        @foreach (var l in Model.LopMo)
+        {
+            <tr>
+                <td>@l.MaLop</td>
+                <td>@l.TenGiaoVien</td>
+                <td>@l.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                <td>@l.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                <td>@l.SoLuongToiDa</td>
+                <td>@l.TrangThai</td>
+            </tr>
+        }
+    </table>
+
+    @if (!Model.LopMo.Any())
+    {
+        <p>Chua co lop nao dang mo.</p>
+    }
+
+    <br>
+    <a href="/student/dang_ky_khoa_hoc?khoaHocId=@Model.KhoaHoc.ma_khoa_hoc">Dang ky lop</a>
+    <br><br>
+    <a href="/khoa_hoc">Quay lai</a>
+}

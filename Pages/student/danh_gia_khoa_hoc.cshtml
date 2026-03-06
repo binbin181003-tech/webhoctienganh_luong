@@ -1,0 +1,42 @@
+@page "/student/danh_gia_khoa_hoc"
+@model webhoctienganh.Pages.student.danh_gia_khoa_hocModel
+
+<h1>Danh Gia Khoa Hoc</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+@if (Model.KhoaHoc != null)
+{
+    <p><b>Khoa hoc:</b> @Model.KhoaHoc.ten_khoa_hoc</p>
+
+    <form method="post">
+        <input type="hidden" name="khoaHocId" value="@Model.KhoaHoc.ma_khoa_hoc" />
+
+        <div>
+            <label>So sao (1-5):</label><br>
+            <input type="number" name="so_sao" min="1" max="5" value="@Model.SoSao" required />
+        </div>
+        <br>
+        <div>
+            <label>Noi dung:</label><br>
+            <textarea name="noi_dung" rows="4" required>@Model.NoiDung</textarea>
+        </div>
+        <br>
+        <button type="submit">Luu danh gia</button>
+    </form>
+
+    @if (Model.DaCoDanhGia)
+    {
+        <form method="post" asp-page-handler="Xoa" style="margin-top:10px;">
+            <input type="hidden" name="khoaHocId" value="@Model.KhoaHoc.ma_khoa_hoc" />
+            <button type="submit" onclick="return confirm('Xoa danh gia nay?')">Xoa danh gia</button>
+        </form>
+    }
+
+    <br>
+    <a href="/chi_tiet_khoa_hoc?id=@Model.KhoaHoc.ma_khoa_hoc">Quay lai</a>
+}

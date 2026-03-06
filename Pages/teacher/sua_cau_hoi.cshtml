@@ -1,0 +1,45 @@
+@page "/teacher/sua_cau_hoi"
+@model webhoctienganh.Pages.teacher.sua_cau_hoiModel
+
+<h1>Sua Cau Hoi</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+}
+
+@if (Model.CauHoi != null)
+{
+    <form method="post">
+        <input type="hidden" name="cauHoiId" value="@Model.CauHoi.ma_cau_hoi" />
+        <input type="hidden" name="baiId" value="@Model.BaiId" />
+
+        <div>
+            <label>Noi dung cau hoi:</label><br>
+            <textarea name="noi_dung" rows="3" required>@Model.CauHoi.noi_dung</textarea>
+        </div>
+        <br>
+
+        @for (int i = 0; i < Model.DapAns.Count; i++)
+        {
+            <input type="hidden" name="dap_an_id_@i" value="@Model.DapAns[i].MaDapAn" />
+            <div>
+                <label>Dap an @(i + 1):</label><br>
+                <input type="text" name="dap_an_noi_dung_@i" value="@Model.DapAns[i].NoiDung" required />
+            </div>
+            <br>
+        }
+
+        <div>
+            <label>Dap an dung (1-@Model.DapAns.Count):</label><br>
+            <input type="number" name="dap_dung" min="1" max="@Model.DapAns.Count" value="@Model.DapDungIndex" required />
+        </div>
+
+        <br>
+        <button type="submit">Luu</button>
+    </form>
+}
+
+<br>
+<a href="/teacher/quan_ly_cau_hoi?baiId=@Model.BaiId">Quay lai</a>

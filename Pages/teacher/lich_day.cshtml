@@ -1,0 +1,51 @@
+@page "/teacher/lich_day"
+@model webhoctienganh.Pages.teacher.lich_dayModel
+
+<h1>Lich Day</h1>
+<p><b>Tuan:</b> @Model.TuanBatDau.ToString("dd/MM/yyyy") - @Model.TuanKetThuc.ToString("dd/MM/yyyy")</p>
+<hr>
+
+<a href="/teacher/lich_day?week=@(Model.WeekOffset - 1)">← Tuan truoc</a> |
+<a href="/teacher/lich_day?week=@(Model.WeekOffset + 1)">Tuan sau →</a>
+
+<br /><br />
+
+<table border="1" cellpadding="10">
+    <tr>
+        @foreach (var d in Model.Tuan)
+        {
+            <th>
+                @d.ThuLabel<br />
+                @d.Ngay.ToString("dd/MM")
+            </th>
+        }
+    </tr>
+    <tr>
+        @foreach (var d in Model.Tuan)
+        {
+            <td style="vertical-align:top; min-width:160px;">
+                @if (d.LichHoc.Count == 0)
+                {
+                    <i>Khong co lop</i>
+                }
+                else
+                {
+                    <ul>
+                        @foreach (var l in d.LichHoc)
+                        {
+                            <li>
+                                <b>@l.TenKhoaHoc</b><br />
+                                Lop: @l.MaLop<br />
+                                @l.GioBatDau - @l.GioKetThuc<br />
+                                <a href="@l.LinkHoc" target="_blank">Mo link hoc</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </td>
+        }
+    </tr>
+</table>
+
+<br>
+<a href="/teacher/tong_quan">Quay lai</a>

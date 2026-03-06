@@ -1,27 +1,45 @@
 @page "/dang_nhap"
 @model webhoctienganh.Pages.dang_nhapModel
-
-<h1>Dang Nhap</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
+@{
+    Layout = "_Layout"; // giữ nguyên layout hiện tại
+    ViewData["Title"] = "Đăng nhập";
 }
 
-<form method="post">
-    <div>
-        <label>Email:</label><br>
-        <input type="email" name="email" required />
-    </div>
-    <br>
-    <div>
-        <label>Mat Khau:</label><br>
-        <input type="password" name="mat_khau" required />
-    </div>
-    <br>
-    <button type="submit">Dang Nhap</button>
-</form>
+<link rel="stylesheet" href="~/css/dang_nhap.css" asp-append-version="true" />
 
-<br>
-<a href="/trang_vang_lai">Quay lai</a>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand">
+                <div class="brand-logo">WE</div>
+                <div class="brand-text">
+                    <span class="brand-title">Web Học Tiếng Anh</span>
+                    <span class="brand-sub">Đăng nhập tài khoản của bạn</span>
+                </div>
+            </div>
+            <p class="welcome">Chào mừng trở lại!<br />Vui lòng đăng nhập để tiếp tục.</p>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ThongBao))
+        {
+            <div class="alert error">@Model.ThongBao</div>
+        }
+
+        <form method="post" class="auth-form">
+            <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="nhập email" required />
+            </label>
+
+            <label class="field">
+                <span>Mật khẩu</span>
+                <input type="password" name="mat_khau" placeholder="nhập mật khẩu" required />
+            </label>
+
+            <div class="form-actions">
+                <button type="submit" class="btn primary">Đăng nhập</button>
+                <a class="link" href="/dang_ky">Chưa có tài khoản? Đăng ký</a>
+            </div>
+        </form>
+    </div>
+</div>

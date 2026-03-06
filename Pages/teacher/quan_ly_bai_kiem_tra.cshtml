@@ -28,6 +28,7 @@
             <td>@b.khoa_hoc?.ten_khoa_hoc</td>
             <td>@b.thoi_luong_phut phut</td>
             <td>
+                <a href="/teacher/sua_bai_kiem_tra?id=@b.ma_bai_kiem_tra">Sua</a> |
                 <a href="/teacher/quan_ly_cau_hoi?baiId=@b.ma_bai_kiem_tra">Cau hoi</a> |
                 <form method="post" asp-page-handler="Xoa" style="display:inline;">
                     <input type="hidden" name="id" value="@b.ma_bai_kiem_tra" />

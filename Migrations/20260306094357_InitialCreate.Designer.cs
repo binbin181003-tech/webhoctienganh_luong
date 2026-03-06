@@ -11,7 +11,7 @@ using webhoctienganh.Data;
 namespace webhoctienganh.Migrations
 {
     [DbContext(typeof(du_lieu))]
-    [Migration("20260214152150_InitialCreate")]
+    [Migration("20260306094357_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

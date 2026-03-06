@@ -1,7 +1,12 @@
 @page "/student/chi_tiet_bai_hoc"
 @model webhoctienganh.Pages.student.chi_tiet_bai_hocModel
 
-@if (Model.BaiHoc != null)
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:red;">@Model.ThongBao</p>
+    <a href="/student/bai_hoc">Quay lai</a>
+}
+else if (Model.BaiHoc != null)
 {
     <h1>@Model.BaiHoc.tieu_de</h1>
     <p><b>Khoa hoc:</b> @Model.BaiHoc.khoa_hoc?.ten_khoa_hoc</p>
@@ -20,11 +25,11 @@
         }
     </ul>
 
-    if (!Model.DsTaiLieu.Any())
+    @if (!Model.DsTaiLieu.Any())
     {
         <p>Khong co tai lieu.</p>
     }
-}
 
-<br>
-<a href="/student/bai_hoc">Quay lai</a>
+    <br>
+    <a href="/student/bai_hoc">Quay lai</a>
+}

@@ -1,0 +1,49 @@
+@page "/admin/quan_ly_vai_tro"
+@model webhoctienganh.Pages.admin.quan_ly_vai_troModel
+
+<h1>Quan Ly Vai Tro</h1>
+<hr>
+
+@if (!string.IsNullOrEmpty(Model.ThongBao))
+{
+    <p style="color:green;">@Model.ThongBao</p>
+}
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Ho Ten</th>
+        <th>Email</th>
+        <th>Vai Tro Hien Tai</th>
+        <th>Hanh Dong</th>
+    </tr>
+    @foreach (var u in Model.DanhSach)
+    {
+        <tr>
+            <td>@u.HoTen</td>
+            <td>@u.Email</td>
+            <td>@u.VaiTro</td>
+            <td>
+                <form method="post" asp-page-handler="CapNhatVaiTro" style="display:inline;">
+                    <input type="hidden" name="id" value="@u.MaNguoiDung" />
+                    <select name="vai_tro">
+                        @foreach (var r in Model.DanhSachVaiTro)
+                        {
+                            <option value="@r.ma_vai_tro" selected="@(r.ma_vai_tro == u.VaiTro)">
+                                @r.ten_vai_tro
+                            </option>
+                        }
+                    </select>
+                    <button type="submit">Cap nhat</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (!Model.DanhSach.Any())
+{
+    <p>Chua co nguoi dung.</p>
+}
+
+<br>
+<a href="/admin/tong_quan">Quay lai</a>

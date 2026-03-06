@@ -50,6 +50,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5ccXVhbl9seV9raG9hX2hvYy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/quan_ly_lich_hoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5ccXVhbl9seV9saWNoX2hvYy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/quan_ly_lop_hoc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5ccXVhbl9seV9sb3BfaG9jLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -58,8 +62,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5ccXVhbl9seV90aGFuaF90b2FuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/quan_ly_vai_tro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5ccXVhbl9seV92YWlfdHJvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/sua_khoa_hoc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cc3VhX2tob2FfaG9jLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/sua_lich_hoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cc3VhX2xpY2hfaG9jLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/tao_giao_vien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cdGFvX2dpYW9fdmllbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/tao_khoa_hoc.cshtml]
@@ -70,8 +86,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cdGFvX2xvcF9ob2MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/thong_ke.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cdGhvbmdfa2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/admin/tong_quan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cdG9uZ19xdWFuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/chi_tiet_khoa_hoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcY2hpX3RpZXRfa2hvYV9ob2MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/dang_ky.cshtml]
@@ -88,6 +112,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/khoa_hoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNca2hvYV9ob2MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/Privacy.cshtml]
@@ -108,6 +136,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/student/dang_ky_khoa_hoc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcc3R1ZGVudFxkYW5nX2t5X2tob2FfaG9jLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/student/danh_gia_khoa_hoc.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcc3R1ZGVudFxkYW5oX2dpYV9raG9hX2hvYy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/student/danh_sach_bai_kiem_tra.cshtml]
@@ -146,6 +178,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcc3R1ZGVudFx0b25nX3F1YW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/danh_sach_hoc_vien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxkYW5oX3NhY2hfaG9jX3ZpZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/ket_qua_hoc_vien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxrZXRfcXVhX2hvY192aWVuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/lich_day.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxsaWNoX2RheS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/lop_dang_day.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxsb3BfZGFuZ19kYXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/quan_ly_bai_hoc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxxdWFuX2x5X2JhaV9ob2MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -160,6 +208,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/sua_bai_hoc.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxzdWFfYmFpX2hvYy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/sua_bai_kiem_tra.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxzdWFfYmFpX2tpZW1fdHJhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/sua_cau_hoi.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVhY2hlclxzdWFfY2F1X2hvaS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Tải xuống/vscode_file/con_me_no_tao_buc_vl/webhoctienganh/Pages/teacher/sua_thong_tin.cshtml]

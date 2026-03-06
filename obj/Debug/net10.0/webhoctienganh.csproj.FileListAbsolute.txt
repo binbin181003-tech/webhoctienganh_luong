@@ -213,3 +213,6 @@ D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\obj\Debug\net1
 D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\obj\Debug\net10.0\webhoctienganh.genruntimeconfig.cache
 D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\obj\Debug\net10.0\ref\webhoctienganh.dll
 D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\bin\Debug\net10.0\BCrypt.Net-Next.dll
+D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\obj\Debug\net10.0\webhoctienganh.sourcelink.json
+D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\obj\Debug\net10.0\compressed\efj6t7vz87-{0}-tfklzvfw7w-tfklzvfw7w.gz
+D:\Tải xuống\vscode_file\con_me_no_tao_buc_vl\webhoctienganh\obj\Debug\net10.0\compressed\e8py90q6r9-{0}-spz32pzui0-spz32pzui0.gz
