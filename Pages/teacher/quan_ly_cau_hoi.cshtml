@@ -1,60 +1,12 @@
 @page "/teacher/quan_ly_cau_hoi"
 @model webhoctienganh.Pages.teacher.quan_ly_cau_hoiModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" /> }
 
-<h1>Quan Ly Cau Hoi</h1>
-
-@if (Model.BaiKiemTra != null)
-{
-    <p><b>Bai kiem tra:</b> @Model.BaiKiemTra.tieu_de</p>
-}
-
-<hr>
-
-@if (Model.ThongBao != "")
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
-
-<h3>Them cau hoi</h3>
-<form method="post" asp-page-handler="Them">
-    <input type="hidden" name="baiId" value="@Model.BaiId" />
-    <div>
-        <label>Noi dung:</label><br />
-        <textarea name="noi_dung" rows="3" required></textarea>
-    </div>
-    <br />
-    <div>
-        <label>Dap an 1:</label><br />
-        <input type="text" name="dap1" required />
-    </div>
-    <div>
-        <label>Dap an 2:</label><br />
-        <input type="text" name="dap2" required />
-    </div>
-    <div>
-        <label>Dap an 3:</label><br />
-        <input type="text" name="dap3" required />
-    </div>
-    <div>
-        <label>Dap an 4:</label><br />
-        <input type="text" name="dap4" required />
-    </div>
-    <div>
-        <label>Dap an dung (1-4):</label><br />
-        <input type="number" name="dap_dung" min="1" max="4" value="1" required />
-    </div>
-    <br />
-    <button type="submit">Them cau hoi</button>
-</form>
-
-<hr />
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Noi Dung</th>
-        <th>Dap An</th>
-        <th>Hanh Dong</th>
-    </tr>
+<h1>Quản lý câu hỏi</h1>
+...
+<table class="table-modern">
+    <thead><tr><th>Nội dung</th><th>Đáp án</th><th></th></tr></thead>
+    <tbody>
     @foreach (var q in Model.CauHois)
     {
         <tr>
@@ -62,21 +14,20 @@
             <td>
                 <ul>
                     @foreach (var a in q.dap_ans)
-                    {
-                        <li>@a.noi_dung @(a.la_dap_an_dung ? "(Dung)" : "")</li>
-                    }
+                    { <li>@a.noi_dung @(a.la_dap_an_dung ? "(Đúng)" : "")</li> }
                 </ul>
             </td>
-            <td>
-                <a href="/teacher/sua_cau_hoi?cauHoiId=@q.ma_cau_hoi&baiId=@Model.BaiId">Sua</a> |
-                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+            <td class="table-actions">
+                <a class="btn-table secondary" href="/teacher/sua_cau_hoi?cauHoiId=@q.ma_cau_hoi&baiId=@Model.BaiId"><i class="bi bi-pencil"></i>Sửa</a>
+                <form method="post" asp-page-handler="Xoa">
                     <input type="hidden" name="cauHoiId" value="@q.ma_cau_hoi" />
                     <input type="hidden" name="baiId" value="@Model.BaiId" />
-                    <button type="submit">Xoa</button>
+                    <button class="btn-table danger" type="submit"><i class="bi bi-trash"></i>Xóa</button>
                 </form>
             </td>
         </tr>
     }
+    </tbody>
 </table>
 <br>
-<a href="/teacher/tong_quan">Quay lai</a>
+<a class="btn-solid outline" href="/teacher/tong_quan">Quay lại</a>

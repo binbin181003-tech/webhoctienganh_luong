@@ -1,31 +1,49 @@
 @page "/student/ket_qua_kiem_tra"
 @model webhoctienganh.Pages.student.ket_qua_kiem_traModel
+@section Styles { <link rel="stylesheet" href="~/css/ket_qua_kiem_tra.css" asp-append-version="true" /> }
 
-<h1>Ket Qua Kiem Tra</h1>
-<hr>
+<div class="page-shell">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h4 class="mb-1">Kết quả kiểm tra</h4>
+            <p class="text-muted mb-0">Điểm các bài bạn đã làm.</p>
+        </div>
+        <a class="btn btn-outline-dark btn-sm" href="/student/danh_sach_bai_kiem_tra">
+            <i class="bi bi-ui-checks-grid me-1"></i> Làm thêm bài
+        </a>
+    </div>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Bai Kiem Tra</th>
-        <th>Khoa Hoc</th>
-        <th>Diem</th>
-        <th>Ngay Lam</th>
-    </tr>
-    @foreach (var k in Model.DanhSach)
+    @if (!Model.DanhSach.Any())
     {
-        <tr>
-            <td>@k.TieuDe</td>
-            <td>@k.TenKhoaHoc</td>
-            <td>@k.DiemSo</td>
-            <td>@k.NgayLam.ToString("dd/MM/yyyy")</td>
-        </tr>
+        <div class="card-soft empty-state text-center text-muted">
+            <p class="mb-2">Chưa có kết quả nào.</p>
+            <a class="btn btn-primary" href="/student/danh_sach_bai_kiem_tra">Bắt đầu làm bài</a>
+        </div>
     }
-</table>
-
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co ket qua nao.</p>
-}
-
-<br>
-<a href="/trang_chu">Quay lai</a>
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table table-modern mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Bài kiểm tra</th>
+                        <th>Khoá học</th>
+                        <th>Điểm</th>
+                        <th>Ngày làm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var k in Model.DanhSach)
+                {
+                    <tr>
+                        <td class="fw-semibold">@k.TieuDe</td>
+                        <td><span class="tag">@k.TenKhoaHoc</span></td>
+                        <td><span class="score-pill">@k.DiemSo</span></td>
+                        <td>@k.NgayLam.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,53 +1,67 @@
 @page "/admin/quan_ly_lop_hoc"
 @model webhoctienganh.Pages.admin.quan_ly_lop_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" /> }
 
-<h1>Quan Ly Lop Hoc</h1>
-<hr>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Lớp học</p>
+            <h4 class="mb-0">Quản lý lớp học</h4>
+        </div>
+        <a class="btn btn-brand" href="/admin/tao_lop_hoc"><i class="bi bi-plus-lg me-1"></i>Tạo lớp học</a>
+    </div>
 
-<a href="/admin/tao_lop_hoc"><button>+ Tao Lop Hoc Moi</button></a>
-<br><br>
-
-@if (Model.ThongBao != "")
-{
-    <p style="color:green;">@Model.ThongBao</p>
-}
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma Lop</th>
-        <th>Khoa Hoc</th>
-        <th>Giao Vien</th>
-        <th>Bat Dau</th>
-        <th>Ket Thuc</th>
-        <th>Si So Toi Da</th>
-        <th>Trang Thai</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var lh in Model.DanhSach)
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <tr>
-            <td>@lh.ma_lop_hoc</td>
-            <td>@lh.khoa_hoc?.ten_khoa_hoc</td>
-            <td>@lh.giao_vien?.ho_ten</td>
-            <td>@lh.ngay_bat_dau.ToString("dd/MM/yyyy")</td>
-            <td>@lh.ngay_ket_thuc.ToString("dd/MM/yyyy")</td>
-            <td>@lh.so_luong_toi_da</td>
-            <td>@lh.trang_thai</td>
-            <td>
-                <a href="/admin/danh_sach_hoc_vien?lop=@lh.ma_lop_hoc">Xem HV</a> |
-                <form method="post" asp-page-handler="Xoa" style="display:inline;">
-                    <input type="hidden" name="id" value="@lh.ma_lop_hoc" />
-                    <button type="submit" onclick="return confirm('Xoa lop hoc nay?')">Xoa</button>
-                </form>
-            </td>
-        </tr>
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
     }
-</table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co lop hoc nao.</p>
-}
-
-<br>
-<a href="/admin/tong_quan">Quay lai</a>
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">Chưa có lớp học nào.</div>
+    }
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table-modern mb-0 align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>Mã lớp</th>
+                    <th>Khóa học</th>
+                    <th>Giáo viên</th>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+                    <th>Sĩ số</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var lh in Model.DanhSach)
+                {
+                    <tr>
+                        <td>#@lh.ma_lop_hoc</td>
+                        <td class="fw-semibold">@lh.khoa_hoc?.ten_khoa_hoc</td>
+                        <td>@lh.giao_vien?.ho_ten</td>
+                        <td>@lh.ngay_bat_dau.ToString("dd/MM/yyyy")</td>
+                        <td>@lh.ngay_ket_thuc.ToString("dd/MM/yyyy")</td>
+                        <td>@lh.so_luong_toi_da</td>
+                        <td><span class="badge-soft info">@lh.trang_thai</span></td>
+                        <td class="text-end">
+                            <div class="table-actions">
+                                <a class="btn-table outline" href="/admin/danh_sach_hoc_vien?lop=@lh.ma_lop_hoc"><i class="bi bi-people"></i>Học viên</a>
+                                <form method="post" asp-page-handler="Xoa" class="d-inline">
+                                    <input type="hidden" name="id" value="@lh.ma_lop_hoc" />
+                                    <button class="btn-table danger" type="submit" onclick="return confirm('Xóa lớp học này?')">
+                                        <i class="bi bi-trash"></i>Xóa
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

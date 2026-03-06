@@ -1,35 +1,36 @@
 @page "/khoa_hoc"
 @model webhoctienganh.Pages.khoa_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/public_khoa_hoc.css" asp-append-version="true" /> }
 
-<h1>Danh Sach Khoa Hoc</h1>
-<hr>
+<div class="page-shell">
+    <div class="hero-course mb-3">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+                <p class="text-muted mb-1">Danh sách khoá học</p>
+                <h4 class="fw-bold mb-0">Lộ trình tiếng Anh cho mọi cấp độ</h4>
+            </div>
+            <a class="btn btn-brand" href="/dang_ky"><i class="bi bi-rocket-takeoff"></i> Bắt đầu miễn phí</a>
+        </div>
+    </div>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma</th>
-        <th>Ten Khoa Hoc</th>
-        <th>Trinh Do</th>
-        <th>Hoc Phi</th>
-        <th>Danh Gia</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var kh in Model.DanhSach)
+    @if (!Model.DanhSach.Any())
     {
-        <tr>
-            <td>@kh.MaKhoaHoc</td>
-            <td>@kh.TenKhoaHoc</td>
-            <td>@kh.TrinhDo</td>
-            <td>@kh.HocPhi.ToString("N0")</td>
-            <td>@kh.DiemTrungBinh (@kh.SoLuongDanhGia)</td>
-            <td><a href="/chi_tiet_khoa_hoc?id=@kh.MaKhoaHoc">Xem</a></td>
-        </tr>
+        <div class="card-soft p-4 text-center text-muted">Chưa có khoá học nào.</div>
     }
-</table>
-
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co khoa hoc nao.</p>
-}
-
-<br>
-<a href="/trang_vang_lai">Quay lai</a>
+    else
+    {
+        <div class="course-grid">
+            @foreach (var kh in Model.DanhSach)
+            {
+                <div class="course-card">
+                    <div class="title">@kh.TenKhoaHoc</div>
+                    <div class="meta mb-1 text-uppercase small">Trình độ: @kh.TrinhDo</div>
+                    <div class="meta mb-2">Số bài học: đang cập nhật</div>
+                    <div class="price mb-2">@kh.HocPhi.ToString("N0") VND</div>
+                    <div class="meta mb-2 text-muted">Đánh giá: @kh.DiemTrungBinh (@kh.SoLuongDanhGia)</div>
+                    <a class="btn btn-outline-primary btn-sm" href="/chi_tiet_khoa_hoc?id=@kh.MaKhoaHoc">Xem chi tiết</a>
+                </div>
+            }
+        </div>
+    }
+</div>

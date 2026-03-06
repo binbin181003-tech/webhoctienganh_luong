@@ -1,84 +1,105 @@
 @page "/admin/tao_lop_hoc"
 @model webhoctienganh.Pages.admin.tao_lop_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" /> }
 
-<h1>Tao Lop Hoc Moi</h1>
-<hr>
+<div class="page-shell narrow">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Lớp học</p>
+            <h4 class="mb-0">Tạo lớp học mới</h4>
+        </div>
+        <a class="btn btn-outline-dark" href="/admin/quan_ly_lop_hoc"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-@if (Model.ThongBao != "")
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
+    }
 
-<form method="post">
-    <div>
-        <label>Khoa Hoc:</label><br>
-        <select name="ma_khoa_hoc" required>
-            <option value="">-- Chon Khoa Hoc --</option>
-            @foreach (var kh in Model.DsKhoaHoc)
-            {
-                <option value="@kh.ma_khoa_hoc">@kh.ten_khoa_hoc (@kh.trinh_do)</option>
-            }
-        </select>
-    </div>
-    <br>
-    <div>
-        <label>Giao Vien:</label><br>
-        <select name="ma_giao_vien" required>
-            <option value="">-- Chon Giao Vien --</option>
-            @foreach (var gv in Model.DsGiaoVien)
-            {
-                <option value="@gv.ma_nguoi_dung">@gv.ho_ten (@gv.email)</option>
-            }
-        </select>
-    </div>
-    <br>
-    <div>
-        <label>Ngay Bat Dau:</label><br>
-        <input type="date" name="ngay_bat_dau" required />
-    </div>
-    <br>
-    <div>
-        <label>Ngay Ket Thuc:</label><br>
-        <input type="date" name="ngay_ket_thuc" required />
-    </div>
-    <br>
-    <div>
-        <label>So Luong Toi Da:</label><br>
-        <input type="number" name="so_luong_toi_da" min="1" required />
-    </div>
-    <hr>
-    <h3>Lich Hoc (Tuan)</h3>
-    <div>
-        <label>Thu:</label><br>
-        <select name="thu_trong_tuan" required>
-            <option value="">-- Chon --</option>
-            <option value="Mon">Thu 2</option>
-            <option value="Tue">Thu 3</option>
-            <option value="Wed">Thu 4</option>
-            <option value="Thu">Thu 5</option>
-            <option value="Fri">Thu 6</option>
-            <option value="Sat">Thu 7</option>
-            <option value="Sun">Chu Nhat</option>
-        </select>
-    </div>
-    <br>
-    <div>
-        <label>Gio Bat Dau:</label><br>
-        <input type="time" name="gio_bat_dau" required />
-    </div>
-    <br>
-    <div>
-        <label>Gio Ket Thuc:</label><br>
-        <input type="time" name="gio_ket_thuc" required />
-    </div>
-    <br>
-    <div>
-        <label>Link hoc online:</label><br>
-        <input type="text" name="phong_hoc" placeholder="https://meet.google.com/..." required />
-    </div>
-    <br>
-    <button type="submit">Tao Lop Hoc</button>
-</form>
+    <div class="card-soft p-4">
+        <form method="post" class="vstack gap-3">
+            <div class="form-floating">
+                <select name="ma_khoa_hoc" class="form-select" required>
+                    <option value="">-- Chọn khóa học --</option>
+                    @foreach (var kh in Model.DsKhoaHoc)
+                    {
+                        <option value="@kh.ma_khoa_hoc">@kh.ten_khoa_hoc (@kh.trinh_do)</option>
+                    }
+                </select>
+                <label>Khóa học</label>
+            </div>
 
-<br>
-<a href="/admin/quan_ly_lop_hoc">Quay lai</a>
+            <div class="form-floating">
+                <select name="ma_giao_vien" class="form-select" required>
+                    <option value="">-- Chọn giáo viên --</option>
+                    @foreach (var gv in Model.DsGiaoVien)
+                    {
+                        <option value="@gv.ma_nguoi_dung">@gv.ho_ten (@gv.email)</option>
+                    }
+                </select>
+                <label>Giáo viên</label>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="date" name="ngay_bat_dau" class="form-control" required />
+                        <label>Ngày bắt đầu</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="date" name="ngay_ket_thuc" class="form-control" required />
+                        <label>Ngày kết thúc</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <input type="number" name="so_luong_toi_da" min="1" class="form-control" required />
+                <label>Sĩ số tối đa</label>
+            </div>
+
+            <div class="card-soft bg-light p-3">
+                <p class="fw-semibold mb-2">Lịch học hàng tuần</p>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select name="thu_trong_tuan" class="form-select" required>
+                                <option value="">-- Chọn --</option>
+                                <option value="Mon">Thứ 2</option>
+                                <option value="Tue">Thứ 3</option>
+                                <option value="Wed">Thứ 4</option>
+                                <option value="Thu">Thứ 5</option>
+                                <option value="Fri">Thứ 6</option>
+                                <option value="Sat">Thứ 7</option>
+                                <option value="Sun">Chủ nhật</option>
+                            </select>
+                            <label>Thứ</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input type="time" name="gio_bat_dau" class="form-control" required />
+                            <label>Giờ bắt đầu</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input type="time" name="gio_ket_thuc" class="form-control" required />
+                            <label>Giờ kết thúc</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input type="text" name="phong_hoc" class="form-control" placeholder="Link hoặc phòng học" required />
+                            <label>Link/Phòng học</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-brand w-100" type="submit"><i class="bi bi-save me-1"></i>Tạo lớp</button>
+        </form>
+    </div>
+</div>

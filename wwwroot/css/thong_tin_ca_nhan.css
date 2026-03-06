@@ -1,0 +1,23 @@
+.page-shell { max-width: 900px; margin: 0 auto; padding: 20px 0; }
+.card-soft { background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.06);padding:20px; }
+.profile-card { padding:20px; }
+.avatar img, .avatar-placeholder {
+  width:96px; height:96px; border-radius:50%; object-fit:cover;
+  display:grid; place-items:center; background:#e0f2fe; color:#0ea5e9; font-weight:800; font-size:22px;
+}
+.avatar-placeholder { text-transform:uppercase; }
+.field-row { display:grid; grid-template-columns: 160px 1fr auto; gap:12px; padding:12px 0; border-bottom:1px solid #f1f5f9; align-items:center; }
+.field-row:last-child { border-bottom:none; }
+.label { font-weight:700; color:#0f172a; }
+.value { color:#334155; }
+.action .btn { white-space:nowrap; }
+.text-muted { color:#6b7280; }
+.btn-upload-delete{
+height:40px;
+width: 120px;
+padding:0 16px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+

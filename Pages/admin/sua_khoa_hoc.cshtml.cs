@@ -22,6 +22,7 @@ namespace webhoctienganh.Pages.admin
             if (check != null) return check;
 
             KhoaHoc = _db.khoa_hoc.Find(id);
+            if (KhoaHoc == null) ThongBao = "Khóa học không tồn tại!";
             return Page();
         }
 

@@ -1,63 +1,66 @@
 @page "/student/lam_bai_kiem_tra"
 @model webhoctienganh.Pages.student.lam_bai_kiem_traModel
+@section Styles { <link rel="stylesheet" href="~/css/lam_bai_kiem_tra.css" asp-append-version="true" /> }
 
 @if (!string.IsNullOrEmpty(Model.ThongBao))
 {
-    <p style="color:red;">@Model.ThongBao</p>
-    <br>
-    <a href="/student/danh_sach_bai_kiem_tra">Quay lai</a>
+    <div class="alert alert-danger rounded-3">@Model.ThongBao</div>
+    <a class="btn btn-outline-dark mt-2" href="/student/danh_sach_bai_kiem_tra">Quay lại</a>
 }
 else if (Model.BaiKiemTra != null)
 {
-    <h1>@Model.BaiKiemTra.tieu_de</h1>
-    <p><b>Thoi luong:</b> @Model.BaiKiemTra.thoi_luong_phut phut</p>
-    <hr>
+    <div class="card-soft p-4 mb-3">
+        <div class="d-flex justify-content-between flex-wrap gap-2">
+            <div>
+                <h4 class="mb-1">@Model.BaiKiemTra.tieu_de</h4>
+                <span class="badge-soft info">Thời lượng: @Model.BaiKiemTra.thoi_luong_phut phút</span>
+            </div>
+            @if (Model.DaNop)
+            {
+                <div class="score-pill"><span>@Model.DiemSo</span>/10</div>
+            }
+        </div>
+    </div>
 
     @if (!Model.DaNop)
     {
-        <form method="post">
+        <form method="post" class="vstack gap-3">
             <input type="hidden" name="id" value="@Model.BaiKiemTra.ma_bai_kiem_tra" />
-
             @foreach (var q in Model.CauHois)
             {
-                <div style="margin-bottom:15px;">
-                    <b>@q.noi_dung</b>
-                    <br>
+                <div class="question card-soft p-3">
+                    <div class="fw-semibold mb-2">@q.noi_dung</div>
                     @foreach (var a in q.dap_ans)
                     {
-                        <label>
+                        <label class="option">
                             <input type="radio" name="answer_@q.ma_cau_hoi" value="@a.ma_dap_an" />
-                            @a.noi_dung
+                            <span>@a.noi_dung</span>
                         </label>
-                        <br>
                     }
                 </div>
             }
-
-            <button type="submit">Nop Bai</button>
+            <button class="btn btn-brand align-self-start" type="submit">Nộp bài</button>
         </form>
     }
     else
     {
-        <h3>Ket Qua: @Model.DiemSo / 10</h3>
-
-        <table border="1" cellpadding="5">
-            <tr>
-                <th>Cau Hoi</th>
-                <th>Ban Chon</th>
-                <th>Dap An Dung</th>
-            </tr>
-            @foreach (var k in Model.ChiTiet)
-            {
-                <tr>
-                    <td>@k.NoiDung</td>
-                    <td>@k.DapAnChon</td>
-                    <td>@k.DapAnDung</td>
-                </tr>
-            }
-        </table>
-
-        <br>
-        <a href="/student/danh_sach_bai_kiem_tra">Quay lai</a>
+        <div class="table-responsive card-soft p-0">
+            <table class="table table-modern mb-0">
+                <thead class="table-light">
+                    <tr><th>Câu hỏi</th><th>Bạn chọn</th><th>Đáp án đúng</th></tr>
+                </thead>
+                <tbody>
+                @foreach (var k in Model.ChiTiet)
+                {
+                    <tr>
+                        <td>@k.NoiDung</td>
+                        <td>@k.DapAnChon</td>
+                        <td>@k.DapAnDung</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <a class="btn btn-outline-dark mt-3" href="/student/danh_sach_bai_kiem_tra">Quay lại</a>
     }
 }

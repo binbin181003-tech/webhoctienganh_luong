@@ -1,0 +1,4 @@
+.page-shell { max-width: 1100px; margin: 0 auto; padding: 20px; }
+.section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+.section-title .eyebrow { text-transform:uppercase; letter-spacing:.08em; color:#94a3b8; font-size:12px; margin-bottom:2px; }
+.empty-state { text-align:center; padding:28px; color:#6b7280; }

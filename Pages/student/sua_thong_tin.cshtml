@@ -1,32 +1,37 @@
 @page "/student/sua_thong_tin"
 @model webhoctienganh.Pages.student.sua_thong_tinModel
+@section Styles { <link rel="stylesheet" href="~/css/hoa_don.css" asp-append-version="true" /> }
 
-<h1>Sua Thong Tin</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
-
-<form method="post">
-    <input type="hidden" name="field" value="@Model.Field" />
-
-    <div>
-        <label>Nhap lai du lieu cu:</label><br>
-        <input type="text" name="gia_tri_cu" required />
+<div class="page-shell narrow">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <p class="eyebrow">Hồ sơ</p>
+            <h4 class="mb-0">Sửa thông tin</h4>
+        </div>
+        <a class="btn btn-outline-dark btn-sm" href="/student/thong_tin_ca_nhan"><i class="bi bi-arrow-left me-1"></i>Quay lại</a>
     </div>
-    <br>
-    <div>
-        <label>Nhap du lieu moi:</label><br>
-        <input type="text" name="gia_tri_moi" required />
+
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert alert-danger rounded-3 mb-3">@Model.ThongBao</div>
+    }
+
+    <div class="card-soft p-4">
+        <form method="post" class="vstack gap-3">
+            <input type="hidden" name="field" value="@Model.Field" />
+            <div class="form-floating">
+                <input type="text" name="gia_tri_cu" class="form-control" required />
+                <label>Nhập lại dữ liệu cũ</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" name="gia_tri_moi" class="form-control" required />
+                <label>Dữ liệu mới</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" name="xac_nhan" class="form-control" required />
+                <label>Xác nhận dữ liệu mới</label>
+            </div>
+            <button class="btn btn-brand w-100" type="submit"><i class="bi bi-save me-1"></i>Lưu thay đổi</button>
+        </form>
     </div>
-    <br>
-    <div>
-        <label>Xac nhan du lieu moi:</label><br>
-        <input type="text" name="xac_nhan" required />
-    </div>
-    <br>
-    <button type="submit">Xac nhan</button>
-    <a href="/student/thong_tin_ca_nhan"><button type="button">Quay lai</button></a>
-</form>
+</div>

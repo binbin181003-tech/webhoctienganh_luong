@@ -1,0 +1,51 @@
+:root {
+  --brand: #ff7a1a;
+  --brand-dark: #d9650f;
+  --indigo: #4338ca;
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --radius: 16px;
+  --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* Ẩn nhãn beta nếu còn xuất hiện */
+.badge-beta { display: none !important; }
+
+/* Nút chữ có màu nền */
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  box-shadow: 0 10px 24px rgba(255,122,26,0.25);
+}
+.btn-solid:hover { filter: brightness(1.05); }
+.btn-solid.secondary { background: #0f172a; }
+.btn-solid.success { background: #16a34a; }
+.btn-solid.danger { background: #ef4444; }
+.btn-solid.outline {
+  color: #0f172a;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+/* Đổi màu 3 nút trên header */
+header .nav-link {
+  color: var(--brand);
+  font-weight: 700;
+}
+header .nav-link:hover {
+  color: var(--brand-dark);
+  text-decoration: none;
+}

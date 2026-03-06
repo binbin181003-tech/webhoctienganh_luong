@@ -1,18 +1,142 @@
 @page "/teacher/tong_quan"
 @model webhoctienganh.Pages.teacher.tong_quanModel
+@section Styles {
+    <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/teacher_tongquan.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/teacher_profile.css" asp-append-version="true" />
+}
 
-<h1>Teacher Dashboard</h1>
-<p>Xin chao: @Model.HoTen</p>
-<hr>
+<div class="page-shell">
+    <div class="header">
+        <div>
+            <h4 class="mb-1">Tổng quan giảng dạy</h4>
+            <p class="text-muted">Xin chào, @Model.HoTen. Đây là bảng điều khiển trong tuần.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a class="btn-solid" href="/teacher/lich_day"><i class="bi bi-calendar-week"></i>Lịch dạy</a>
+            <a class="btn-solid secondary" href="/teacher/quan_ly_bai_hoc"><i class="bi bi-journal-text"></i>Bài học</a>
+            <a class="btn-solid outline" href="/teacher/quan_ly_bai_kiem_tra"><i class="bi bi-ui-checks-grid"></i>Bài kiểm tra</a>
+        </div>
+    </div>
 
-<a href="/teacher/quan_ly_bai_hoc"><button>Quan Ly Bai Hoc</button></a>
-<a href="/teacher/quan_ly_bai_kiem_tra"><button>Quan Ly Bai Kiem Tra</button></a>
-<a href="/teacher/lop_dang_day"><button>Lop Dang Day</button></a>
-<a href="/teacher/ket_qua_hoc_vien"><button>Ket Qua Hoc Vien</button></a>
-<a href="/teacher/lich_day"><button>Lich Day</button></a>
-<a href="/teacher/thong_tin_ca_nhan"><button>Thong Tin Ca Nhan</button></a>
+    <div class="profile-row card-soft">
+        @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
+        {
+            <img src="@Model.AnhDaiDien" alt="Avatar giáo viên" class="avatar-img" />
+        }
+        else
+        {
+            <div class="avatar-lg">@(!string.IsNullOrEmpty(Model.HoTen) ? Model.HoTen[0] : 'G')</div>
+        }
+        <div class="profile-info">
+            <div class="fw-bold fs-5">@Model.HoTen</div>
+            <div class="text-muted small">@Model.Email</div>
+            <div class="d-flex gap-2 flex-wrap mt-2">
+                <span class="badge-soft info">Teacher</span>
+                <a class="btn btn-sm btn-outline-primary" href="/teacher/thong_tin_ca_nhan">
+                    <i class="bi bi-person-lines-fill"></i> Thông tin cá nhân
+                </a>
+            </div>
+        </div>
+    </div>
 
-<br><br>
-<form method="post" asp-page-handler="DangXuat">
-    <button type="submit">Dang Xuat</button>
-</form>
+    <div class="row g-3 mb-3">
+        <div class="col-md-3"><div class="kpi kpi-blue"><div class="label">Lớp đang dạy</div><span class="value">@Model.TongLop</span></div></div>
+        <div class="col-md-3"><div class="kpi kpi-green"><div class="label">Học viên</div><span class="value">@Model.TongHocVien</span></div></div>
+        <div class="col-md-3"><div class="kpi kpi-orange"><div class="label">Bài kiểm tra</div><span class="value">@Model.TongBaiKiemTra</span></div></div>
+        <div class="col-md-3"><div class="kpi kpi-purple"><div class="label">Bài học</div><span class="value">@Model.TongBaiHoc</span></div></div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="card-soft p-3 mb-3">
+                <div class="section-title mb-2">
+                    <div>
+                        <h6 class="fw-bold mb-0">Lịch dạy sắp tới</h6>
+                        <small class="text-muted">3 buổi gần nhất</small>
+                    </div>
+                    <a class="btn-solid outline btn-xs" href="/teacher/lich_day">Xem lịch</a>
+                </div>
+                <ul class="timeline">
+                    @foreach (var l in Model.LopGanDay)
+                    {
+                        <li class="timeline-item">
+                            <div class="time">@l.NgayBatDau:dd/MM</div>
+                            <div>
+                                <div class="title">@l.TenKhoaHoc - Lớp #@l.MaLop</div>
+                                <div class="meta">@l.TrangThai • @l.NgayBatDau.ToString("HH:mm") - @l.NgayKetThuc.ToString("HH:mm")</div>
+                            </div>
+                            <a class="btn-solid btn-xs" href="/teacher/lich_day">Chi tiết</a>
+                        </li>
+                    }
+                    @if (!Model.LopGanDay.Any())
+                    {
+                        <li class="timeline-item"><div class="time">—</div><div class="title">Chưa có lịch sắp tới</div></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="card-soft p-3">
+                <div class="section-title mb-2">
+                    <h6 class="fw-bold mb-0">Bài kiểm tra mới tạo</h6>
+                    <a class="btn-solid outline btn-xs" href="/teacher/quan_ly_bai_kiem_tra">Quản lý</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-modern mb-0">
+                        <thead><tr><th>Tiêu đề</th><th>Khóa</th><th>Thời lượng</th></tr></thead>
+                        <tbody>
+                        @foreach (var b in Model.BaiKiemTraGanDay)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@b.TieuDe</td>
+                                <td>@b.KhoaHoc</td>
+                                <td>@b.ThoiLuong phút</td>
+                            </tr>
+                        }
+                        @if (!Model.BaiKiemTraGanDay.Any())
+                        {
+                            <tr><td colspan="3" class="text-muted">Chưa có bài kiểm tra.</td></tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card-soft p-3 mb-3">
+                <div class="section-title mb-2">
+                    <h6 class="fw-bold mb-0">Tắt bật nhanh</h6>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn-solid outline btn-xs" href="/teacher/quan_ly_bai_hoc">Bài học</a>
+                    <a class="btn-solid outline btn-xs" href="/teacher/quan_ly_bai_kiem_tra">Bài kiểm tra</a>
+                    <a class="btn-solid outline btn-xs" href="/teacher/lop_dang_day">Lớp đang dạy</a>
+                    <a class="btn-solid outline btn-xs" href="/teacher/ket_qua_hoc_vien">Kết quả</a>
+                </div>
+            </div>
+
+            <div class="card-soft p-3">
+                <div class="section-title mb-2">
+                    <h6 class="fw-bold mb-0">Hồ sơ giáo viên</h6>
+                    <a class="btn btn-sm btn-outline-primary" href="/teacher/thong_tin_ca_nhan">Chỉnh sửa</a>
+                </div>
+                <div class="profile-mini">
+                    @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
+                    {
+                        <img src="@Model.AnhDaiDien" alt="Avatar" class="avatar-mini" />
+                    }
+                    else
+                    {
+                        <div class="avatar">@(!string.IsNullOrEmpty(Model.HoTen) ? Model.HoTen[0] : 'G')</div>
+                    }
+                    <div>
+                        <div class="fw-semibold">@Model.HoTen</div>
+                        <div class="text-muted small">@Model.Email</div>
+                        <div class="text-muted small">Role: Teacher</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

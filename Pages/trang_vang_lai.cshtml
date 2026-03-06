@@ -1,8 +1,54 @@
 @page "/trang_vang_lai"
 @model webhoctienganh.Pages.trang_vang_laiModel
+@section Styles { <link rel="stylesheet" href="~/css/trang_vang_lai.css" asp-append-version="true" /> }
+@{
+    ViewData["Title"] = "Trang chủ";
+}
 
-<h1>Trang Vang Lai</h1>
-<hr>
-<a href="/khoa_hoc"><button>Xem Khoa Hoc</button></a>
-<a href="/dang_ky"><button>Dang Ky</button></a>
-<a href="/dang_nhap"><button>Dang Nhap</button></a>
+<div class="hero card-soft p-4 p-md-5">
+    <div class="row g-4 align-items-center">
+        <div class="col-md-6">
+            <span class="badge-soft info">Học mọi lúc, mọi nơi</span>
+            <h1 class="display-6 fw-bold mt-3">Phát triển tiếng Anh nhanh hơn với lộ trình cá nhân hoá</h1>
+            <p class="text-muted">Video tương tác, bài tập chấm tự động và giáo viên kèm cặp.</p>
+            <div class="d-flex gap-3 flex-wrap mt-3">
+                <a class="btn btn-brand" href="/dang_ky"><i class="bi bi-rocket-takeoff me-2"></i>Bắt đầu miễn phí</a>
+                <a class="btn btn-outline-dark" href="/khoa_hoc">Xem khoá học</a>
+            </div>
+            <div class="d-flex gap-3 mt-4 small text-muted">
+                <div><i class="bi bi-check-circle-fill text-success me-1"></i>Chuẩn CEFR A1–C1</div>
+                <div><i class="bi bi-check-circle-fill text-success me-1"></i>Ôn tập SRS</div>
+                <div><i class="bi bi-check-circle-fill text-success me-1"></i>Chấm bài viết/nói</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="hero-visual shadow-soft rounded-16">
+                <img src="~/images/trang_vang_lai_1.webp" alt="Học tiếng Anh" class="w-100 h-100 object-fit-cover rounded-16">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-4">
+    <div class="col-md-4">
+        <div class="card-soft h-100 p-3">
+            <div class="icon-bubble bg-primary-subtle text-primary"><i class="bi bi-play-btn-fill"></i></div>
+            <h5 class="mt-3 mb-1">Bài học tương tác</h5>
+            <p class="text-muted mb-0">Video, flashcard, quiz và tài liệu kèm theo.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-soft h-100 p-3">
+            <div class="icon-bubble bg-warning-subtle text-warning"><i class="bi bi-graph-up"></i></div>
+            <h5 class="mt-3 mb-1">Theo dõi tiến độ</h5>
+            <p class="text-muted mb-0">Dashboard cá nhân, kết quả kiểm tra, lịch học.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card-soft h-100 p-3">
+            <div class="icon-bubble bg-success-subtle text-success"><i class="bi bi-people-fill"></i></div>
+            <h5 class="mt-3 mb-1">Cộng đồng học viên</h5>
+            <p class="text-muted mb-0">Thảo luận, nhận feedback, chia sẻ kinh nghiệm.</p>
+        </div>
+    </div>
+</div>

@@ -1,32 +1,36 @@
 @page "/teacher/sua_bai_kiem_tra"
 @model webhoctienganh.Pages.teacher.sua_bai_kiem_traModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher-quiz.css" asp-append-version="true" /> }
 
-<h1>Sua Bai Kiem Tra</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
-
-@if (Model.BaiKiemTra != null)
-{
-    <form method="post">
-        <input type="hidden" name="id" value="@Model.BaiKiemTra.ma_bai_kiem_tra" />
-
+<div class="page-shell narrow">
+    <div class="section-title">
         <div>
-            <label>Tieu de:</label><br>
-            <input type="text" name="tieu_de" value="@Model.BaiKiemTra.tieu_de" required />
+            <p class="eyebrow">Bài kiểm tra</p>
+            <h4 class="mb-0">Sửa bài kiểm tra</h4>
         </div>
-        <br>
-        <div>
-            <label>Thoi luong (phut):</label><br>
-            <input type="number" name="thoi_luong_phut" min="1" value="@Model.BaiKiemTra.thoi_luong_phut" required />
-        </div>
-        <br>
-        <button type="submit">Luu</button>
-    </form>
-}
+        <a class="btn btn-outline-dark" href="/teacher/quan_ly_bai_kiem_tra"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-<br>
-<a href="/teacher/quan_ly_bai_kiem_tra">Quay lai</a>
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
+    }
+
+    @if (Model.BaiKiemTra != null)
+    {
+        <div class="card-soft p-4">
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="id" value="@Model.BaiKiemTra.ma_bai_kiem_tra" />
+                <div class="form-floating">
+                    <input type="text" name="tieu_de" class="form-control" value="@Model.BaiKiemTra.tieu_de" required />
+                    <label>Tiêu đề</label>
+                </div>
+                <div class="form-floating">
+                    <input type="number" name="thoi_luong_phut" min="1" class="form-control" value="@Model.BaiKiemTra.thoi_luong_phut" required />
+                    <label>Thời lượng (phút)</label>
+                </div>
+                <button class="btn btn-brand w-100" type="submit"><i class="bi bi-save me-1"></i>Lưu thay đổi</button>
+            </form>
+        </div>
+    }
+</div>

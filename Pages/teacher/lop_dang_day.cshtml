@@ -1,19 +1,17 @@
 @page "/teacher/lop_dang_day"
 @model webhoctienganh.Pages.teacher.lop_dang_dayModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" /> }
 
-<h1>Danh Sach Lop Dang Day</h1>
+<h1>Danh sách lớp đang dạy</h1>
 <hr>
 
-<table border="1" cellpadding="5">
+<table class="table-modern">
+    <thead>
     <tr>
-        <th>Ma Lop</th>
-        <th>Khoa Hoc</th>
-        <th>Bat Dau</th>
-        <th>Ket Thuc</th>
-        <th>Si So</th>
-        <th>Trang Thai</th>
-        <th>Hanh Dong</th>
+        <th>Mã Lớp</th><th>Khóa Học</th><th>Bắt Đầu</th><th>Kết Thúc</th><th>Sĩ Số</th><th>Trạng Thái</th><th></th>
     </tr>
+    </thead>
+    <tbody>
     @foreach (var l in Model.DanhSach)
     {
         <tr>
@@ -23,15 +21,15 @@
             <td>@l.NgayKetThuc.ToString("dd/MM/yyyy")</td>
             <td>@l.SoLuongDangKy / @l.SoLuongToiDa</td>
             <td>@l.TrangThai</td>
-            <td><a href="/teacher/danh_sach_hoc_vien?lop=@l.MaLop">Xem hoc vien</a></td>
+            <td class="table-actions">
+                <a class="btn-table" href="/teacher/danh_sach_hoc_vien?lop=@l.MaLop"><i class="bi bi-people"></i>Học viên</a>
+            </td>
         </tr>
     }
+    </tbody>
 </table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co lop nao.</p>
-}
+@if (!Model.DanhSach.Any()) { <p>Chưa có lớp nào.</p> }
 
 <br>
-<a href="/teacher/tong_quan">Quay lai</a>
+<a class="btn-solid outline" href="/teacher/tong_quan">Quay lại</a>

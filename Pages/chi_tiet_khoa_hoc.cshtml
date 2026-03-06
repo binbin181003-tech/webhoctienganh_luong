@@ -1,73 +1,84 @@
 @page "/chi_tiet_khoa_hoc"
 @model webhoctienganh.Pages.chi_tiet_khoa_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/public_khoa_hoc.css" asp-append-version="true" /> }
 
 @if (!string.IsNullOrEmpty(Model.ThongBao))
 {
-    <p style="color:red;">@Model.ThongBao</p>
-    <a href="/khoa_hoc">Quay lai</a>
+    <div class="page-shell">
+        <div class="alert alert-danger rounded-3">@Model.ThongBao</div>
+        <a class="btn btn-outline-dark mt-2" href="/khoa_hoc">Quay lại</a>
+    </div>
 }
 else if (Model.KhoaHoc != null)
 {
-    <h1>@Model.KhoaHoc.ten_khoa_hoc</h1>
-    <p><b>Trinh do:</b> @Model.KhoaHoc.trinh_do</p>
-    <p><b>Hoc phi:</b> @Model.KhoaHoc.hoc_phi.ToString("N0")</p>
-    <p><b>Mo ta:</b> @Model.KhoaHoc.mo_ta</p>
+    <div class="page-shell">
+        <div class="hero-course mb-3">
+            <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
+                <div>
+                    <h4 class="fw-bold mb-1">@Model.KhoaHoc.ten_khoa_hoc</h4>
+                    <div class="text-muted">Trình độ: @Model.KhoaHoc.trinh_do • @Model.KhoaHoc.thoi_luong_tuan tuần</div>
+                </div>
+                <div class="text-end">
+                    <div class="h4 fw-bold mb-1">@Model.KhoaHoc.hoc_phi.ToString("N0") VND</div>
+                    <a class="btn btn-brand" href="/student/dang_ky_khoa_hoc?khoaHocId=@Model.KhoaHoc.ma_khoa_hoc">Đăng ký ngay</a>
+                </div>
+            </div>
+        </div>
 
-    <hr>
-    <h3>Danh Gia Khoa Hoc</h3>
+        <div class="detail-grid">
+            <div class="card-soft p-3">
+                <h6 class="fw-bold mb-2">Mô tả</h6>
+                <p class="mb-2">@Model.KhoaHoc.mo_ta</p>
+                <h6 class="fw-bold mt-3 mb-2">Đánh giá (@Model.SoLuongDanhGia)</h6>
+                <p class="mb-1 fw-semibold">Điểm trung bình: @Model.DiemTrungBinh</p>
+                @if (!Model.DanhGia.Any())
+                {
+                    <p class="text-muted mb-0">Chưa có đánh giá.</p>
+                }
+                else
+                {
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var dg in Model.DanhGia)
+                        {
+                            <li class="mb-2">
+                                <div class="fw-semibold">@dg.HoTen</div>
+                                <div class="text-warning"><i class="bi bi-star-fill"></i> @dg.SoSao</div>
+                                <div class="text-muted">@dg.NoiDung</div>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
 
-    <p><b>Diem trung binh:</b> @Model.DiemTrungBinh (@Model.SoLuongDanhGia danh gia)</p>
-
-    <ul>
-        @foreach (var dg in Model.DanhGia)
-        {
-            <li>
-                <b>@dg.HoTen</b> - @dg.SoSao sao<br />
-                @dg.NoiDung
-            </li>
-        }
-    </ul>
-
-    @if (!Model.DanhGia.Any())
-    {
-        <p>Chua co danh gia.</p>
-    }
-
-    <p>
-        <a href="/student/danh_gia_khoa_hoc?khoaHocId=@Model.KhoaHoc.ma_khoa_hoc">Danh gia khoa hoc</a>
-    </p>
-
-    <hr>
-    <h3>Danh sach lop dang mo</h3>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>Ma Lop</th>
-            <th>Giao Vien</th>
-            <th>Bat Dau</th>
-            <th>Ket Thuc</th>
-            <th>Si So Toi Da</th>
-            <th>Trang Thai</th>
-        </tr>
-        @foreach (var l in Model.LopMo)
-        {
-            <tr>
-                <td>@l.MaLop</td>
-                <td>@l.TenGiaoVien</td>
-                <td>@l.NgayBatDau.ToString("dd/MM/yyyy")</td>
-                <td>@l.NgayKetThuc.ToString("dd/MM/yyyy")</td>
-                <td>@l.SoLuongToiDa</td>
-                <td>@l.TrangThai</td>
-            </tr>
-        }
-    </table>
-
-    @if (!Model.LopMo.Any())
-    {
-        <p>Chua co lop nao dang mo.</p>
-    }
-
-    <br>
-    <a href="/student/dang_ky_khoa_hoc?khoaHocId=@Model.KhoaHoc.ma_khoa_hoc">Dang ky lop</a>
-    <br><br>
-    <a href="/khoa_hoc">Quay lai</a>
+            <div class="card-soft p-3">
+                <h6 class="fw-bold mb-2">Lớp đang mở</h6>
+                @if (!Model.LopMo.Any())
+                {
+                    <p class="text-muted mb-0">Chưa có lớp nào.</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-modern mb-0">
+                            <thead class="table-light">
+                                <tr><th>Mã lớp</th><th>Giáo viên</th><th>Bắt đầu</th><th>Sĩ số</th><th></th></tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var l in Model.LopMo)
+                            {
+                                <tr>
+                                    <td>@l.MaLop</td>
+                                    <td>@l.TenGiaoVien</td>
+                                    <td>@l.NgayBatDau.ToString("dd/MM")</td>
+                                    <td>@l.SoLuongToiDa</td>
+                                    <td><a class="btn btn-sm btn-outline-primary" href="/student/dang_ky_khoa_hoc?khoaHocId=@Model.KhoaHoc.ma_khoa_hoc">Đăng ký</a></td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 }

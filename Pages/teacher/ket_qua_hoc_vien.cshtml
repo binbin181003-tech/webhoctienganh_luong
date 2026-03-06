@@ -1,87 +1,172 @@
 @page "/teacher/ket_qua_hoc_vien"
 @model webhoctienganh.Pages.teacher.ket_qua_hoc_vienModel
-
-<h1>Ket Qua Hoc Vien</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ket_qua_hoc_vien.css" asp-append-version="true" />
 }
 
-<!-- Chon lop -->
-<form method="get">
-    <label>Chon lop:</label>
-    <select name="classId" onchange="this.form.submit()">
-        <option value="">-- Chon lop --</option>
-        @foreach (var lop in Model.DsLop)
-        {
-            <option value="@lop.MaLop" selected="@(Model.ClassId == lop.MaLop)">
-                @lop.MaLop - @lop.TenKhoaHoc (@lop.TrangThai)
-            </option>
-        }
-    </select>
-    <noscript><button type="submit">Xem</button></noscript>
-</form>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Báo cáo lớp học</p>
+            <h4 class="mb-0">Kết quả học viên</h4>
+            <p class="text-muted mb-0 small">Xem điểm và tiến độ theo từng lớp.</p>
+        </div>
+        <div class="pill-info">Giáo viên: @Model.HoTen</div>
+    </div>
 
-@if (Model.ClassId.HasValue)
-{
-    <hr />
-    <h3>Hoc vien cua lop @Model.ClassId</h3>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>Ho ten</th>
-            <th>Email</th>
-            <th>So dien thoai</th>
-            <th>Trang thai DK</th>
-            <th>Hanh dong</th>
-        </tr>
-        @foreach (var hv in Model.DsHocVien)
-        {
-            <tr>
-                <td>@hv.HoTen</td>
-                <td>@hv.Email</td>
-                <td>@hv.SoDienThoai</td>
-                <td>@hv.TrangThai</td>
-                <td>
-                    <a href="/teacher/ket_qua_hoc_vien?classId=@Model.ClassId&studentId=@hv.MaHocVien">Xem ket qua</a>
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="stats-row">
+        <div class="stat-card card-soft">
+            <div class="icon bg-primary-subtle text-primary"><i class="bi bi-journal-check"></i></div>
+            <div>
+                <div class="label">Lớp đang dạy</div>
+                <div class="value">@Model.DsLop.Count</div>
+            </div>
+        </div>
+        <div class="stat-card card-soft">
+            <div class="icon bg-success-subtle text-success"><i class="bi bi-people"></i></div>
+            <div>
+                <div class="label">Học viên trong lớp</div>
+                <div class="value">@((Model.DsHocVien?.Count ?? 0))</div>
+            </div>
+        </div>
+        <div class="stat-card card-soft">
+            <div class="icon bg-warning-subtle text-warning"><i class="bi bi-clipboard-data"></i></div>
+            <div>
+                <div class="label">Bài kiểm tra đã chấm</div>
+                <div class="value">@((Model.DsKetQua?.Count ?? 0))</div>
+            </div>
+        </div>
+    </div>
 
-    @if (!Model.DsHocVien.Any())
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <p>Chua co hoc vien (hoac chua thanh toan).</p>
+        <div class="alert-soft error">@Model.ThongBao</div>
     }
-}
 
-@if (!string.IsNullOrEmpty(Model.StudentId))
-{
-    <hr />
-    <h3>Ket qua bai kiem tra - Hoc vien: @Model.StudentInfo</h3>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>Bai kiem tra</th>
-            <th>Khoa hoc</th>
-            <th>Diem</th>
-            <th>Ngay lam</th>
-        </tr>
-        @foreach (var kq in Model.DsKetQua)
-        {
-            <tr>
-                <td>@kq.TieuDe</td>
-                <td>@kq.TenKhoaHoc</td>
-                <td>@kq.DiemSo</td>
-                <td>@kq.NgayLam.ToString("dd/MM/yyyy")</td>
-            </tr>
-        }
-    </table>
+    <!-- Bộ lọc lớp & học viên -->
+    <div class="filter-bar card-soft">
+        <form method="get" class="d-flex flex-wrap gap-3 align-items-center">
+            <div class="flex-1">
+                <label class="small text-muted mb-1 d-block">Chọn lớp</label>
+                <select name="classId" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Chọn lớp --</option>
+                    @foreach (var lop in Model.DsLop)
+                    {
+                        <option value="@lop.MaLop" selected="@(Model.ClassId == lop.MaLop)">
+                            @lop.MaLop - @lop.TenKhoaHoc (@lop.TrangThai)
+                        </option>
+                    }
+                </select>
+            </div>
 
-    @if (!Model.DsKetQua.Any())
+            @if (Model.ClassId.HasValue)
+            {
+                <div class="flex-1">
+                    <label class="small text-muted mb-1 d-block">Học viên</label>
+                    <select name="studentId" class="form-select" onchange="this.form.submit()">
+                        <option value="">-- Tất cả học viên --</option>
+                        @foreach (var hv in Model.DsHocVien ?? Enumerable.Empty<webhoctienganh.Pages.teacher.ket_qua_hoc_vienModel.HocVienView>())
+                        {
+                            <option value="@hv.MaHocVien" selected="@(Model.StudentId == hv.MaHocVien)">
+                                @hv.HoTen (@hv.Email)
+                            </option>
+                        }
+                    </select>
+                </div>
+            }
+            <noscript><button class="btn btn-primary" type="submit">Lọc</button></noscript>
+        </form>
+    </div>
+
+    @if (Model.ClassId.HasValue)
     {
-        <p>Hoc vien chua co ket qua bai kiem tra.</p>
+        <div class="card-soft mb-3">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Danh sách học viên</h6>
+            </div>
+
+            @if (!(Model.DsHocVien?.Any() ?? false))
+            {
+                <div class="empty-state">Chưa có học viên (hoặc chưa thanh toán).</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table-modern">
+                        <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var hv in Model.DsHocVien ?? Enumerable.Empty<webhoctienganh.Pages.teacher.ket_qua_hoc_vienModel.HocVienView>())
+                        {
+                            <tr>
+                                <td class="fw-semibold">@hv.HoTen</td>
+                                <td>@hv.Email</td>
+                                <td>@hv.SoDienThoai</td>
+                                <td><span class="badge-soft info">@hv.TrangThai</span></td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       href="/teacher/ket_qua_hoc_vien?classId=@Model.ClassId&studentId=@hv.MaHocVien">
+                                        Xem kết quả
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
     }
-}
-<br />
-<a href="/teacher/tong_quan">Quay lai</a>
+
+    @if (!string.IsNullOrEmpty(Model.StudentId))
+    {
+        <div class="card-soft">
+            <div class="section-title mb-2">
+                <div>
+                    <p class="eyebrow mb-1">Học viên</p>
+                    <h6 class="mb-0">@Model.StudentInfo</h6>
+                </div>
+                <span class="badge-soft warning">Kết quả chi tiết</span>
+            </div>
+
+            @if (!(Model.DsKetQua?.Any() ?? false))
+            {
+                <div class="empty-state">Học viên chưa có kết quả bài kiểm tra.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table-modern">
+                        <thead>
+                        <tr>
+                            <th>Bài kiểm tra</th>
+                            <th>Khoá học</th>
+                            <th>Điểm</th>
+                            <th>Ngày làm</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var kq in Model.DsKetQua ?? Enumerable.Empty<webhoctienganh.Pages.teacher.ket_qua_hoc_vienModel.KetQuaView>())
+                        {
+                            <tr>
+                                <td class="fw-semibold">@kq.TieuDe</td>
+                                <td><span class="tag">@kq.TenKhoaHoc</span></td>
+                                <td><span class="score-pill">@kq.DiemSo</span></td>
+                                <td>@kq.NgayLam.ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    }
+</div>

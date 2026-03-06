@@ -1,45 +1,49 @@
 @page "/teacher/sua_cau_hoi"
 @model webhoctienganh.Pages.teacher.sua_cau_hoiModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher-quiz.css" asp-append-version="true" /> }
 
-<h1>Sua Cau Hoi</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
-
-@if (Model.CauHoi != null)
-{
-    <form method="post">
-        <input type="hidden" name="cauHoiId" value="@Model.CauHoi.ma_cau_hoi" />
-        <input type="hidden" name="baiId" value="@Model.BaiId" />
-
+<div class="page-shell narrow">
+    <div class="section-title">
         <div>
-            <label>Noi dung cau hoi:</label><br>
-            <textarea name="noi_dung" rows="3" required>@Model.CauHoi.noi_dung</textarea>
+            <p class="eyebrow">Câu hỏi</p>
+            <h4 class="mb-0">Sửa câu hỏi</h4>
         </div>
-        <br>
+        <a class="btn btn-outline-dark" href="/teacher/quan_ly_cau_hoi?baiId=@Model.BaiId"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-        @for (int i = 0; i < Model.DapAns.Count; i++)
-        {
-            <input type="hidden" name="dap_an_id_@i" value="@Model.DapAns[i].MaDapAn" />
-            <div>
-                <label>Dap an @(i + 1):</label><br>
-                <input type="text" name="dap_an_noi_dung_@i" value="@Model.DapAns[i].NoiDung" required />
-            </div>
-            <br>
-        }
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
+    }
 
-        <div>
-            <label>Dap an dung (1-@Model.DapAns.Count):</label><br>
-            <input type="number" name="dap_dung" min="1" max="@Model.DapAns.Count" value="@Model.DapDungIndex" required />
+    @if (Model.CauHoi != null)
+    {
+        <div class="card-soft p-4">
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="cauHoiId" value="@Model.CauHoi.ma_cau_hoi" />
+                <input type="hidden" name="baiId" value="@Model.BaiId" />
+
+                <div class="form-floating">
+                    <textarea name="noi_dung" class="form-control" style="height:120px" required>@Model.CauHoi.noi_dung</textarea>
+                    <label>Nội dung câu hỏi</label>
+                </div>
+
+                @for (int i = 0; i < (Model.DapAns?.Count ?? 0); i++)
+                {
+                    <input type="hidden" name="dap_an_id_@i" value="@Model.DapAns![i].MaDapAn" />
+                    <div class="form-floating">
+                        <input type="text" name="dap_an_noi_dung_@i" class="form-control" value="@Model.DapAns![i].NoiDung" required />
+                        <label>Đáp án @(i + 1)</label>
+                    </div>
+                }
+
+                <div class="form-floating">
+                    <input type="number" name="dap_dung" min="1" max="@(Model.DapAns?.Count ?? 1)" class="form-control" value="@Model.DapDungIndex" required />
+                    <label>Đáp án đúng (1-@(Model.DapAns?.Count ?? 1))</label>
+                </div>
+
+                <button class="btn btn-brand" type="submit"><i class="bi bi-save me-1"></i>Lưu câu hỏi</button>
+            </form>
         </div>
-
-        <br>
-        <button type="submit">Luu</button>
-    </form>
-}
-
-<br>
-<a href="/teacher/quan_ly_cau_hoi?baiId=@Model.BaiId">Quay lai</a>
+    }
+</div>

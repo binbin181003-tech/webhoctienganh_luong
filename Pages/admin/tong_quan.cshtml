@@ -1,20 +1,167 @@
 @page "/admin/tong_quan"
 @model webhoctienganh.Pages.admin.tong_quanModel
+@section Styles { <link rel="stylesheet" href="~/css/tong_quan.css" asp-append-version="true" /> }
 
-<h1>Admin Dashboard</h1>
-<p>Xin chao: @Model.HoTen</p>
-<hr>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Dashboard</p>
+            <h4 class="mb-0">Tổng quan hệ thống</h4>
+            <p class="text-muted mb-0 small">Số liệu nhanh & thao tác quản trị.</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn-brand" href="/admin/quan_ly_khoa_hoc"><i class="bi bi-journal-bookmark"></i> Khoá học</a>
+            <a class="btn btn-outline-dark" href="/admin/duyet_dang_ky"><i class="bi bi-ui-checks-grid"></i> Duyệt đăng ký</a>
+            <a class="btn btn-outline-dark" href="/admin/quan_ly_lop_hoc"><i class="bi bi-easel"></i> Lớp học</a>
+            <a class="btn btn-outline-dark" href="/admin/quan_ly_vai_tro"><i class="bi bi-shield-lock"></i> Quản lý vai trò</a>
+            <a class="btn btn-outline-dark" href="/admin/quan_ly_giao_vien"><i class="bi bi-person-badge"></i> Quản lý giáo viên</a>
+            <a class="btn btn-outline-dark" href="/admin/quan_ly_hoc_vien"><i class="bi bi-people"></i> Quản lý học viên</a>
+            <a class="btn btn-outline-dark" href="/admin/quan_ly_lich_hoc"><i class="bi bi-calendar-week"></i> Quản lý lịch học</a>
+    </div>
+            <form method="post" asp-page-handler="DangXuat">
+                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right"></i> Đăng xuất</button>
+            </form>
+        </div>
+    </div>
 
-<a href="/admin/quan_ly_khoa_hoc"><button>Quan Ly Khoa Hoc</button></a>
-<a href="/admin/quan_ly_lop_hoc"><button>Quan Ly Lop Hoc</button></a>
-<a href="/admin/duyet_dang_ky"><button>Duyet Dang Ky</button></a>
-<a href="/admin/quan_ly_hoc_vien"><button>Quan Ly Hoc Vien</button></a>
-<a href="/admin/quan_ly_giao_vien"><button>Quan Ly Giao Vien</button></a>
-<a href="/admin/quan_ly_vai_tro"><button>Quan Ly Vai Tro</button></a>
-<a href="/admin/quan_ly_lich_hoc"><button>Quan Ly Lich Hoc</button></a>
-<a href="/admin/thong_ke"><button>Thong Ke</button></a>
+    <!-- KPI -->
+    <div class="kpi-grid">
+        <div class="kpi card-soft">
+            <div class="icon bg-warning-subtle text-warning"><i class="bi bi-people-fill"></i></div>
+            <div>
+                <div class="label">Học viên</div>
+                <div class="value">+245</div>
+                <div class="mini-text">Tăng 12% so với tháng trước</div>
+            </div>
+        </div>
+        <div class="kpi card-soft">
+            <div class="icon bg-success-subtle text-success"><i class="bi bi-cash-coin"></i></div>
+            <div>
+                <div class="label">Doanh thu</div>
+                <div class="value">₫120M</div>
+                <div class="progress-wrap">
+                    <div class="progress"><div class="progress-bar bg-success" style="width: 68%"></div></div>
+                    <span class="mini-text">68% mục tiêu tháng</span>
+                </div>
+            </div>
+        </div>
+        <div class="kpi card-soft">
+            <div class="icon bg-primary-subtle text-primary"><i class="bi bi-journal-text"></i></div>
+            <div>
+                <div class="label">Khoá học</div>
+                <div class="value">32</div>
+                <div class="mini-text">4 khoá mới trong tuần</div>
+            </div>
+        </div>
+        <div class="kpi card-soft">
+            <div class="icon bg-danger-subtle text-danger"><i class="bi bi-exclamation-circle"></i></div>
+            <div>
+                <div class="label">Đăng ký chờ</div>
+                <div class="value">7</div>
+                <div class="mini-text">Cần duyệt ngay</div>
+            </div>
+        </div>
+    </div>
 
-<br><br>
-<form method="post" asp-page-handler="DangXuat">
-    <button type="submit">Dang Xuat</button>
-</form>
+    <div class="grid-2">
+        <div class="card-soft h-100">
+            <div class="section-title mb-3">
+                <h6 class="mb-0">Hoạt động gần đây</h6>
+                <span class="badge-soft info">Live</span>
+            </div>
+            <ul class="timeline">
+                <li class="timeline-item">
+                    <div class="time">09:10</div>
+                    <div class="title">HV Minh Anh thanh toán ₫2.000.000</div>
+                    <div class="meta">Khoá IELTS Foundation</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="time">08:40</div>
+                    <div class="title">Admin duyệt 3 đăng ký</div>
+                    <div class="meta">Lớp TOEIC 500+</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="time">Hôm qua</div>
+                    <div class="title">Tạo khoá học “Speaking Sprint”</div>
+                    <div class="meta">GV: Mr. John</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-soft h-100">
+            <div class="section-title mb-3">
+                <h6 class="mb-0">Top khoá theo đăng ký</h6>
+                <a class="small link-primary" href="/admin/thong_ke">Xem thống kê</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table-modern mb-0">
+                    <thead><tr><th>Khoá học</th><th>Đăng ký</th><th>Doanh thu</th></tr></thead>
+                    <tbody>
+                        <tr><td>IELTS Foundation</td><td>68</td><td>₫136,000,000</td></tr>
+                        <tr><td>TOEIC 500+</td><td>54</td><td>₫108,000,000</td></tr>
+                        <tr><td>Pronunciation Lab</td><td>39</td><td>₫78,000,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2 mt-3">
+        <div class="card-soft">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Đơn chờ duyệt</h6>
+                <a class="btn btn-sm btn-outline-primary" href="/admin/duyet_dang_ky">Duyệt ngay</a>
+            </div>
+            <div class="pill-list">
+                <div class="pill">
+                    <div>
+                        <div class="fw-semibold">Nguyễn Lan</div>
+                        <div class="text-muted small">Khoá: Business English • Lớp 12A</div>
+                    </div>
+                    <span class="badge-soft warning">Pending</span>
+                </div>
+                <div class="pill">
+                    <div>
+                        <div class="fw-semibold">Trần Hữu Đức</div>
+                        <div class="text-muted small">Khoá: TOEIC 500+ • Lớp 08B</div>
+                    </div>
+                    <span class="badge-soft warning">Pending</span>
+                </div>
+                <div class="pill">
+                    <div>
+                        <div class="fw-semibold">Lê Quỳnh</div>
+                        <div class="text-muted small">Khoá: IELTS Foundation • Lớp 02C</div>
+                    </div>
+                    <span class="badge-soft warning">Pending</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-soft">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Tài chính nhanh</h6>
+                <span class="badge-soft success">Tháng 3</span>
+            </div>
+            <div class="finance">
+                <div class="row-item">
+                    <span>Doanh thu đã thu</span>
+                    <strong>₫120,000,000</strong>
+                </div>
+                <div class="row-item">
+                    <span>Hoá đơn chờ</span>
+                    <strong>₫18,500,000</strong>
+                </div>
+                <div class="row-item">
+                    <span>Tỷ lệ thanh toán</span>
+                    <div class="progress w-100" style="height:10px;">
+                        <div class="progress-bar bg-success" style="width:82%"></div>
+                    </div>
+                </div>
+                <div class="quick-links">
+                    <a class="btn btn-sm btn-outline-dark" href="/admin/quan_ly_thanh_toan"><i class="bi bi-receipt-cutoff"></i> Thanh toán</a>
+                    <a class="btn btn-sm btn-outline-dark" href="/admin/quan_ly_hoa_don"><i class="bi bi-wallet2"></i> Hoá đơn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

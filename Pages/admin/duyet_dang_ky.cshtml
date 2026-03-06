@@ -1,72 +1,88 @@
 @page "/admin/duyet_dang_ky"
 @model webhoctienganh.Pages.admin.duyet_dang_kyModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" /> }
 
-<h1>Duyet Dang Ky</h1>
-<hr>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Đăng ký</p>
+            <h4 class="mb-0">Duyệt đăng ký lớp học</h4>
+            <p class="text-muted small mb-0">Xác nhận / hủy các yêu cầu đang chờ.</p>
+        </div>
+    </div>
 
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:green;">@Model.ThongBao</p>
-}
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma DK</th>
-        <th>Hoc Vien</th>
-        <th>Email</th>
-        <th>Lop</th>
-        <th>Khoa Hoc</th>
-        <th>Ngay DK</th>
-        <th>Trang Thai</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var d in Model.DanhSach)
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <tr>
-            <td>@d.MaDangKy</td>
-            <td>@d.HoTen</td>
-            <td>@d.Email</td>
-            <td>@d.MaLop</td>
-            <td>@d.TenKhoaHoc</td>
-            <td>@d.NgayDangKy.ToString("dd/MM/yyyy")</td>
-            <td>@d.TrangThai</td>
-            <td>
-                @if (d.TrangThai == "Pending")
-                {
-                    <form method="post" asp-page-handler="Duyet" style="display:inline;">
-                        <input type="hidden" name="id" value="@d.MaDangKy" />
-                        <button type="submit">Duyet</button>
-                    </form>
-                    <form method="post" asp-page-handler="Huy" style="display:inline;">
-                        <input type="hidden" name="id" value="@d.MaDangKy" />
-                        <button type="submit">Huy</button>
-                    </form>
-                }
-                else if (d.TrangThai == "ChoThanhToan")
-                {
-                    <span>Cho thanh toan</span>
-                    <form method="post" asp-page-handler="Huy" style="display:inline;">
-                        <input type="hidden" name="id" value="@d.MaDangKy" />
-                        <button type="submit">Huy</button>
-                    </form>
-                }
-                else if (d.TrangThai == "DaThanhToan")
-                {
-                    <span>Da thanh toan</span>
-                }
-                else if (d.TrangThai == "Cancelled")
-                {
-                    <span>Da huy</span>
-                }
-            </td>
-        </tr>
+        <div class="alert-soft success mb-3">@Model.ThongBao</div>
     }
-</table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co dang ky nao.</p>
-}
-
-<br>
-<a href="/admin/tong_quan">Quay lai</a>
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">Chưa có đăng ký nào.</div>
+    }
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table-modern mb-0 align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>Mã DK</th>
+                    <th>Học viên</th>
+                    <th>Lớp</th>
+                    <th>Khóa học</th>
+                    <th>Ngày ĐK</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var d in Model.DanhSach)
+                {
+                    <tr>
+                        <td>#@d.MaDangKy</td>
+                        <td>
+                            <div class="fw-semibold">@d.HoTen</div>
+                            <div class="text-muted small">@d.Email</div>
+                        </td>
+                        <td>@d.MaLop</td>
+                        <td>@d.TenKhoaHoc</td>
+                        <td>@d.NgayDangKy.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <span class="badge-soft @(d.TrangThai=="Pending"?"warning":d.TrangThai=="ChoThanhToan"?"info":"success")">
+                                @d.TrangThai
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            <div class="table-actions">
+                                @if (d.TrangThai == "Pending")
+                                {
+                                    <form method="post" asp-page-handler="Duyet" class="d-inline">
+                                        <input type="hidden" name="id" value="@d.MaDangKy" />
+                                        <button class="btn-table success" type="submit"><i class="bi bi-check2"></i>Duyệt</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="Huy" class="d-inline">
+                                        <input type="hidden" name="id" value="@d.MaDangKy" />
+                                        <button class="btn-table danger" type="submit"><i class="bi bi-x"></i>Hủy</button>
+                                    </form>
+                                }
+                                else if (d.TrangThai == "ChoThanhToan")
+                                {
+                                    <span class="text-muted small me-2">Chờ thanh toán</span>
+                                    <form method="post" asp-page-handler="Huy" class="d-inline">
+                                        <input type="hidden" name="id" value="@d.MaDangKy" />
+                                        <button class="btn-table danger" type="submit"><i class="bi bi-x"></i>Hủy</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">Đã xử lý</span>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

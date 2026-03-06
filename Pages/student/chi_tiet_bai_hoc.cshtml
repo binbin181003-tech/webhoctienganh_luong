@@ -1,35 +1,62 @@
 @page "/student/chi_tiet_bai_hoc"
 @model webhoctienganh.Pages.student.chi_tiet_bai_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/student-lesson-detail.css" asp-append-version="true" /> }
 
 @if (!string.IsNullOrEmpty(Model.ThongBao))
 {
-    <p style="color:red;">@Model.ThongBao</p>
-    <a href="/student/bai_hoc">Quay lai</a>
+    <div class="page-shell">
+        <div class="alert alert-danger rounded-3">@Model.ThongBao</div>
+        <a class="btn btn-outline-dark mt-2" href="/student/bai_hoc">Quay lại</a>
+    </div>
 }
 else if (Model.BaiHoc != null)
 {
-    <h1>@Model.BaiHoc.tieu_de</h1>
-    <p><b>Khoa hoc:</b> @Model.BaiHoc.khoa_hoc?.ten_khoa_hoc</p>
-    <p><b>Ngay tao:</b> @Model.BaiHoc.ngay_tao.ToString("dd/MM/yyyy")</p>
-    <hr>
-    <p>@Model.BaiHoc.noi_dung</p>
+    <div class="page-shell">
+        <div class="hero-card card-soft">
+            <div>
+                <p class="eyebrow">Bài học</p>
+                <h4 class="mb-1">@Model.BaiHoc.tieu_de</h4>
+                <div class="meta">
+                    <span><i class="bi bi-journal-text me-1"></i>Mã: @Model.BaiHoc.ma_bai_hoc</span>
+                    <span><i class="bi bi-mortarboard me-1"></i>@Model.BaiHoc.khoa_hoc?.ten_khoa_hoc</span>
+                    <span><i class="bi bi-calendar3 me-1"></i>@Model.BaiHoc.ngay_tao.ToString("dd/MM/yyyy")</span>
+                </div>
+            </div>
+            <a class="btn btn-outline-dark" href="/student/bai_hoc"><i class="bi bi-arrow-left"></i> Danh sách</a>
+        </div>
 
-    <hr>
-    <h3>Tai Lieu Dinh Kem</h3>
-    <ul>
-        @foreach (var tl in Model.DsTaiLieu)
-        {
-            <li>
-                <a href="@tl.duong_dan_file" download>@tl.duong_dan_file</a> (@tl.loai_tai_lieu)
-            </li>
-        }
-    </ul>
+        <div class="card-soft p-4 mb-3">
+            <h6 class="fw-bold mb-2">Nội dung bài học</h6>
+            <p class="lesson-body mb-0">@Model.BaiHoc.noi_dung</p>
+        </div>
 
-    @if (!Model.DsTaiLieu.Any())
-    {
-        <p>Khong co tai lieu.</p>
-    }
-
-    <br>
-    <a href="/student/bai_hoc">Quay lai</a>
+        <div class="card-soft p-4">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Tài liệu đính kèm</h6>
+                <span class="badge-soft info">@((Model.DsTaiLieu?.Count ?? 0)) file</span>
+            </div>
+            @if (!(Model.DsTaiLieu?.Any() ?? false))
+            {
+                <p class="text-muted mb-0">Không có tài liệu.</p>
+            }
+            else
+            {
+                <ul class="attach list-unstyled mb-0">
+                    @foreach (var tl in Model.DsTaiLieu ?? Enumerable.Empty<webhoctienganh.Models.tai_lieu>())
+                    {
+                        <li class="attach-item">
+                            <div class="left">
+                                <div class="thumb"><i class="bi bi-paperclip"></i></div>
+                                <div>
+                                    <a href="@tl.duong_dan_file" class="fw-semibold" download>@tl.duong_dan_file</a>
+                                    <div class="text-muted small">@tl.loai_tai_lieu</div>
+                                </div>
+                            </div>
+                            <a class="btn btn-sm btn-outline-primary" href="@tl.duong_dan_file" download>Tải</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
 }

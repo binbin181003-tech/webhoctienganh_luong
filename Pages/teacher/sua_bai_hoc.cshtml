@@ -1,72 +1,87 @@
 @page "/teacher/sua_bai_hoc"
 @model webhoctienganh.Pages.teacher.sua_bai_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher-bai-hoc-form.css" asp-append-version="true" /> }
 
-<h1>Sua Bai Hoc</h1>
-<hr>
-
-@if (Model.ThongBao != "")
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
-
-@if (Model.BaiHoc != null)
-{
-    <form method="post">
-        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+<div class="page-shell">
+    <div class="section-title">
         <div>
-            <label>Tieu De:</label><br>
-            <input type="text" name="tieu_de" value="@Model.BaiHoc.tieu_de" required />
+            <p class="eyebrow">Bài học</p>
+            <h4 class="mb-0">Sửa bài học</h4>
         </div>
-        <br>
-        <div>
-            <label>Noi Dung:</label><br>
-            <textarea name="noi_dung" rows="6">@Model.BaiHoc.noi_dung</textarea>
+        <a class="btn btn-outline-dark" href="/teacher/quan_ly_bai_hoc"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
+    }
+
+    @if (Model.BaiHoc != null)
+    {
+        <div class="card-soft p-4 mb-3">
+            <form method="post" class="vstack gap-3">
+                <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+                <div class="form-floating">
+                    <input type="text" name="tieu_de" class="form-control" value="@Model.BaiHoc.tieu_de" required />
+                    <label>Tiêu đề</label>
+                </div>
+                <div class="form-floating">
+                    <textarea name="noi_dung" class="form-control" style="height:160px">@Model.BaiHoc.noi_dung</textarea>
+                    <label>Nội dung</label>
+                </div>
+                <button class="btn btn-brand" type="submit"><i class="bi bi-save me-1"></i>Lưu</button>
+            </form>
         </div>
-        <br>
-        <button type="submit">Luu</button>
-    </form>
 
-    <hr>
-    <h3>Tai Lieu Dinh Kem</h3>
+        <div class="card-soft p-4">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Tài liệu đính kèm</h6>
+                <span class="badge-soft info">@((Model.DsTaiLieu?.Count ?? 0)) file</span>
+            </div>
 
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>Duong Dan</th>
-            <th>Loai</th>
-            <th>Hanh Dong</th>
-        </tr>
-        @foreach (var tl in Model.DsTaiLieu)
-        {
-            <tr>
-                <td>@tl.duong_dan_file</td>
-                <td>@tl.loai_tai_lieu</td>
-                <td>
-                    <form method="post" asp-page-handler="XoaTaiLieu" style="display:inline;">
-                        <input type="hidden" name="taiLieuId" value="@tl.ma_tai_lieu" />
-                        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
-                        <button type="submit">Xoa</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </table>
+            @if (!(Model.DsTaiLieu?.Any() ?? false))
+            {
+                <p class="text-muted">Chưa có tài liệu.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table-modern mb-3">
+                        <thead><tr><th>Đường dẫn</th><th>Loại</th><th></th></tr></thead>
+                        <tbody>
+                        @foreach (var tl in Model.DsTaiLieu ?? Enumerable.Empty<webhoctienganh.Models.tai_lieu>())
+                        {
+                            <tr>
+                                <td class="fw-semibold">@tl.duong_dan_file</td>
+                                <td>@tl.loai_tai_lieu</td>
+                                <td class="text-end">
+                                    <form method="post" asp-page-handler="XoaTaiLieu" class="d-inline">
+                                        <input type="hidden" name="taiLieuId" value="@tl.ma_tai_lieu" />
+                                        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+                                        <button class="btn-table danger" type="submit"><i class="bi bi-trash"></i>Xóa</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
 
-    <br>
-    <form method="post" asp-page-handler="ThemTaiLieu">
-        <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
-        <div>
-            <label>Duong Dan File:</label><br>
-            <input type="text" name="duong_dan_file" required />
+            <hr class="my-3" />
+            <h6 class="fw-bold mb-2">Thêm tài liệu</h6>
+            <form method="post" asp-page-handler="ThemTaiLieu" class="vstack gap-3">
+                <input type="hidden" name="id" value="@Model.BaiHoc.ma_bai_hoc" />
+                <div class="form-floating">
+                    <input type="text" name="duong_dan_file" class="form-control" placeholder="URL hoặc path" required />
+                    <label>Đường dẫn file</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="loai_tai_lieu" class="form-control" placeholder="pdf, video, audio..." required />
+                    <label>Loại tài liệu</label>
+                </div>
+                <button class="btn btn-outline-primary align-self-start" type="submit"><i class="bi bi-plus-lg me-1"></i>Thêm</button>
+            </form>
         </div>
-        <br>
-        <div>
-            <label>Loai Tai Lieu:</label><br>
-            <input type="text" name="loai_tai_lieu" placeholder="pdf, video, audio..." required />
-        </div>
-        <br>
-        <button type="submit">Them Tai Lieu</button>
-    </form>
-}
-
-<br>
-<a href="/teacher/quan_ly_bai_hoc">Quay lai</a>
+    }
+</div>

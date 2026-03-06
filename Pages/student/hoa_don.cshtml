@@ -1,47 +1,83 @@
 @page "/student/hoa_don"
 @model webhoctienganh.Pages.student.hoa_donModel
+@section Styles { <link rel="stylesheet" href="~/css/hoa_don.css" asp-append-version="true" /> }
 
-<h1>Hoa Don Cua Toi</h1>
-<hr>
+<div class="page-shell">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h4 class="mb-1">Hóa đơn của bạn</h4>
+            <p class="text-muted mb-0">Thanh toán để hoàn tất đăng ký khoá học.</p>
+        </div>
+        <a class="btn btn-outline-dark btn-sm" href="/student/lich_su_thanh_toan">
+            <i class="bi bi-clock-history me-1"></i>Lịch sử thanh toán
+        </a>
+    </div>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Khoa Hoc</th>
-        <th>So Tien</th>
-        <th>Trang Thai</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var h in Model.DanhSach)
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <tr>
-            <td>@h.TenKhoaHoc</td>
-            <td>@h.SoTien.ToString("N0")</td>
-            <td>@h.TrangThai</td>
-            <td>
-                @if (h.TrangThai == "ChuaThanhToan")
-                {
-                    <form method="post" asp-page-handler="ThanhToan" style="display:inline;">
-                        <input type="hidden" name="hoaDonId" value="@h.MaHoaDon" />
-                        <select name="phuong_thuc_thanh_toan">
-                            <option value="TienMat">Tien Mat</option>
-                            <option value="ChuyenKhoan">Chuyen Khoan</option>
-                        </select>
-                        <button type="submit">Thanh Toan</button>
-                    </form>
-                }
-                else
-                {
-                    <span>Da thanh toan</span>
-                }
-            </td>
-        </tr>
+        <div class="alert alert-info rounded-3">@Model.ThongBao</div>
     }
-</table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co hoa don nao.</p>
-}
-
-<br>
-<a href="/trang_chu">Quay lai</a>
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">
+            <p class="mb-2">Chưa có hóa đơn nào.</p>
+            <a class="btn btn-primary" href="/student/dang_ky_khoa_hoc">Đăng ký khoá học</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table table-modern mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Khoá học</th>
+                        <th>Số tiền</th>
+                        <th>Trạng thái</th>
+                        <th class="text-end">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var h in Model.DanhSach)
+                {
+                    <tr>
+                        <td class="fw-semibold">@h.TenKhoaHoc</td>
+                        <td>@h.SoTien.ToString("N0") VND</td>
+                        <td>
+                            @if (h.TrangThai == "ChuaThanhToan")
+                            {
+                                <span class="badge-soft warning">Chưa thanh toán</span>
+                            }
+                            else if (h.TrangThai == "DaThanhToan")
+                            {
+                                <span class="badge-soft success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="badge-soft muted">@h.TrangThai</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if (h.TrangThai == "ChuaThanhToan")
+                            {
+                                <form method="post" asp-page-handler="ThanhToan" class="d-inline-flex gap-2 align-items-center">
+                                    <input type="hidden" name="hoaDonId" value="@h.MaHoaDon" />
+                                    <select name="phuong_thuc_thanh_toan" class="form-select form-select-sm w-auto">
+                                        <option value="TienMat">Tiền mặt</option>
+                                        <option value="ChuyenKhoan">Chuyển khoản</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-brand">Thanh toán</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Không cần thao tác</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

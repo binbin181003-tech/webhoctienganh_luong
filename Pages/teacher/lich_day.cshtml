@@ -1,51 +1,51 @@
 @page "/teacher/lich_day"
 @model webhoctienganh.Pages.teacher.lich_dayModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" /><link rel="stylesheet" href="~/css/lich_day.css" asp-append-version="true" /> }
 
-<h1>Lich Day</h1>
-<p><b>Tuan:</b> @Model.TuanBatDau.ToString("dd/MM/yyyy") - @Model.TuanKetThuc.ToString("dd/MM/yyyy")</p>
-<hr>
+<h4 class="mb-1">Lịch dạy</h4>
+<p class="text-muted">Tuần: @Model.TuanBatDau.ToString("dd/MM/yyyy") - @Model.TuanKetThuc.ToString("dd/MM/yyyy")</p>
 
-<a href="/teacher/lich_day?week=@(Model.WeekOffset - 1)">← Tuan truoc</a> |
-<a href="/teacher/lich_day?week=@(Model.WeekOffset + 1)">Tuan sau →</a>
+<div class="d-flex gap-2 mb-3">
+    <a class="btn-solid outline btn-xs" href="/teacher/lich_day?week=@(Model.WeekOffset - 1)"><i class="bi bi-arrow-left"></i> Trước</a>
+    <a class="btn-solid outline btn-xs" href="/teacher/lich_day?week=@(Model.WeekOffset + 1)">Sau <i class="bi bi-arrow-right"></i></a>
+</div>
 
-<br /><br />
-
-<table border="1" cellpadding="10">
-    <tr>
-        @foreach (var d in Model.Tuan)
-        {
-            <th>
-                @d.ThuLabel<br />
-                @d.Ngay.ToString("dd/MM")
-            </th>
-        }
-    </tr>
-    <tr>
-        @foreach (var d in Model.Tuan)
-        {
-            <td style="vertical-align:top; min-width:160px;">
-                @if (d.LichHoc.Count == 0)
-                {
-                    <i>Khong co lop</i>
-                }
-                else
-                {
-                    <ul>
+<div class="calendar-wrapper">
+    <table class="calendar-table">
+        <tr>
+            @foreach (var d in Model.Tuan)
+            {
+                <th>
+                    @d.ThuLabel<br />
+                    @d.Ngay.ToString("dd/MM")
+                </th>
+            }
+        </tr>
+        <tr>
+            @foreach (var d in Model.Tuan)
+            {
+                <td>
+                    @if (d.LichHoc.Count == 0)
+                    {
+                        <span class="text-muted small">Không có lớp</span>
+                    }
+                    else
+                    {
                         @foreach (var l in d.LichHoc)
                         {
-                            <li>
-                                <b>@l.TenKhoaHoc</b><br />
-                                Lop: @l.MaLop<br />
-                                @l.GioBatDau - @l.GioKetThuc<br />
-                                <a href="@l.LinkHoc" target="_blank">Mo link hoc</a>
-                            </li>
+                            <div class="class-slot">
+                                <div class="fw-semibold">@l.TenKhoaHoc</div>
+                                <div class="small text-muted">Lớp: @l.MaLop</div>
+                                <div class="small text-muted">@l.GioBatDau - @l.GioKetThuc</div>
+                                <a class="link-primary small" href="@l.LinkHoc" target="_blank">Mở link</a>
+                            </div>
                         }
-                    </ul>
-                }
-            </td>
-        }
-    </tr>
-</table>
+                    }
+                </td>
+            }
+        </tr>
+    </table>
+</div>
 
 <br>
-<a href="/teacher/tong_quan">Quay lai</a>
+<a class="btn btn-outline-dark" href="/teacher/tong_quan">Quay lại</a>

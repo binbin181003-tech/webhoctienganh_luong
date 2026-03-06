@@ -1,51 +1,67 @@
 @page "/admin/quan_ly_giao_vien"
 @model webhoctienganh.Pages.admin.quan_ly_giao_vienModel
-
-<h1>Quan Ly Giao Vien</h1>
-<hr>
-
-<a href="/admin/tao_giao_vien"><button>+ Tao Tai Khoan Giao Vien</button></a>
-<br /><br />
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ho Ten</th>
-        <th>Email</th>
-        <th>So Dien Thoai</th>
-        <th>Trang Thai</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var u in Model.DanhSach)
-    {
-        <tr>
-            <td>@u.HoTen</td>
-            <td>@u.Email</td>
-            <td>@u.SoDienThoai</td>
-            <td>@u.TrangThai</td>
-            <td>
-                @if (u.TrangThai == "active")
-                {
-                    <form method="post" asp-page-handler="Khoa" style="display:inline;">
-                        <input type="hidden" name="id" value="@u.MaNguoiDung" />
-                        <button type="submit">Vo hieu</button>
-                    </form>
-                }
-                else
-                {
-                    <form method="post" asp-page-handler="MoKhoa" style="display:inline;">
-                        <input type="hidden" name="id" value="@u.MaNguoiDung" />
-                        <button type="submit">Khoi phuc</button>
-                    </form>
-                }
-            </td>
-        </tr>
-    }
-</table>
-
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co giao vien.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-manage.css" asp-append-version="true" />
 }
 
-<br>
-<a href="/admin/tong_quan">Quay lai</a>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Người dùng</p>
+            <h4 class="mb-0">Quản lý giáo viên</h4>
+            <p class="text-muted small mb-0">Kích hoạt, vô hiệu hoặc tạo tài khoản giáo viên.</p>
+        </div>
+        <a class="btn btn-brand" href="/admin/tao_giao_vien"><i class="bi bi-plus-lg me-1"></i> Tạo giáo viên</a>
+    </div>
+
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">Chưa có giáo viên.</div>
+    }
+    else
+    {
+        <div class="card-soft p-3">
+            <div class="table-responsive">
+                <table class="table-modern align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th class="text-end">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var u in Model.DanhSach)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@u.HoTen</td>
+                            <td>@u.Email</td>
+                            <td>@u.SoDienThoai</td>
+                            <td><span class="badge-soft @(u.TrangThai=="active"?"success":"danger")">@u.TrangThai</span></td>
+                            <td class="text-end">
+                                @if (u.TrangThai == "active")
+                                {
+                                    <form method="post" asp-page-handler="Khoa" class="d-inline">
+                                        <input type="hidden" name="id" value="@u.MaNguoiDung" />
+                                        <button type="submit" class="btn-table danger"><i class="bi bi-slash-circle"></i> Vô hiệu</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-page-handler="MoKhoa" class="d-inline">
+                                        <input type="hidden" name="id" value="@u.MaNguoiDung" />
+                                        <button type="submit" class="btn-table success"><i class="bi bi-shield-check"></i> Khôi phục</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

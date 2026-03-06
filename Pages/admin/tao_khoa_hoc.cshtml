@@ -1,47 +1,57 @@
 @page "/admin/tao_khoa_hoc"
 @model webhoctienganh.Pages.admin.tao_khoa_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" /> }
 
-<h1>Tao Khoa Hoc Moi</h1>
-<hr>
+<div class="page-shell narrow">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Khóa học</p>
+            <h4 class="mb-0">Tạo khóa học mới</h4>
+        </div>
+        <a class="btn btn-outline-dark" href="/admin/quan_ly_khoa_hoc"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-@if (Model.ThongBao != "")
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
+    }
 
-<form method="post">
-    <div>
-        <label>Ten Khoa Hoc:</label><br>
-        <input type="text" name="ten_khoa_hoc" required />
+    <div class="card-soft p-4">
+        <form method="post" class="vstack gap-3">
+            <div class="form-floating">
+                <input name="ten_khoa_hoc" class="form-control" placeholder="Tên khóa" required />
+                <label>Tên khóa học</label>
+            </div>
+            <div class="form-floating">
+                <textarea name="mo_ta" class="form-control" style="height:120px" placeholder="Mô tả"></textarea>
+                <label>Mô tả</label>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="number" name="hoc_phi" min="0" class="form-control" placeholder="Học phí" required />
+                        <label>Học phí (VND)</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select name="trinh_do" class="form-select" required>
+                            <option value="">-- Chọn --</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                        <label>Trình độ</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="number" name="thoi_luong_tuan" min="1" class="form-control" placeholder="Thời lượng" required />
+                        <label>Thời lượng (tuần)</label>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-brand w-100" type="submit"><i class="bi bi-save me-1"></i>Lưu khóa học</button>
+        </form>
     </div>
-    <br>
-    <div>
-        <label>Mo Ta:</label><br>
-        <textarea name="mo_ta" rows="3"></textarea>
-    </div>
-    <br>
-    <div>
-        <label>Hoc Phi (VND):</label><br>
-        <input type="number" name="hoc_phi" min="0" required />
-    </div>
-    <br>
-    <div>
-        <label>Trinh Do:</label><br>
-        <select name="trinh_do" required>
-            <option value="">-- Chon --</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-        </select>
-    </div>
-    <br>
-    <div>
-        <label>Thoi Luong (tuan):</label><br>
-        <input type="number" name="thoi_luong_tuan" min="1" required />
-    </div>
-    <br>
-    <button type="submit">Tao Khoa Hoc</button>
-</form>
-
-<br>
-<a href="/admin/quan_ly_khoa_hoc">Quay lai</a>
+</div>

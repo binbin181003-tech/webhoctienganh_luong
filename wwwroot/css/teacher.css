@@ -1,0 +1,48 @@
+/* Bảng kiểu “card row” */
+.table-modern { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+.table-modern th {
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: 12px;
+  color: #94a3b8;
+  background: transparent;
+  padding: 12px 14px;
+}
+.table-modern tbody tr {
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+  border-radius: 14px;
+}
+.table-modern td { padding: 12px 14px; vertical-align: middle; }
+.table-modern tbody tr:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+
+.table-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn-table,
+.table-actions a,
+.table-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+  background: #2563eb;
+}
+.btn-table.secondary { background: #0f172a; }
+.btn-table.warning  { background: #f59e0b; }
+.btn-table.danger   { background: #ef4444; }
+.table-actions a:hover,
+.table-actions button:hover { filter: brightness(1.06); }
+.table-actions form { margin: 0; display: inline-block; }
+
+.card-soft { background:#fff; border:1px solid #e5e7eb; border-radius:14px; box-shadow:0 12px 32px rgba(0,0,0,0.06); }
+.badge-soft { border-radius:999px; padding:6px 10px; font-weight:700; }
+.badge-soft.info { background:#e0f2fe; color:#0369a1; }
+.badge-soft.warning { background:#fef3c7; color:#92400e; }
+.section-title { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.section-title .actions { display:flex; gap:8px; }

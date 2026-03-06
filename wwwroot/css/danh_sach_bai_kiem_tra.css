@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap');
+.page-shell{max-width:1100px;margin:0 auto;padding:20px;}
+.card-soft{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,0.04);}
+.table-modern{width:100%;border-collapse:separate;border-spacing:0 10px;}
+.table-modern th{color:#94a3b8;text-transform:uppercase;font-size:12px;letter-spacing:.04em;}
+.table-modern tbody tr{background:#fff;box-shadow:0 8px 22px rgba(0,0,0,0.04);}
+.table-modern td,.table-modern th{padding:12px 14px;}
+.badge-soft.info{background:#dbeafe;color:#2563eb;border-radius:999px;padding:4px 10px;font-weight:600;font-size:12px;}
+.text-muted{color:#6b7280;}

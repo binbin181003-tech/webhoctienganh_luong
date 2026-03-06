@@ -1,42 +1,54 @@
 @page "/admin/danh_sach_hoc_vien"
 @model webhoctienganh.Pages.admin.danh_sach_hoc_vienModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-analytics.css" asp-append-version="true" /> }
 
-<h1>Danh Sach Hoc Vien - Lop @Model.MaLop</h1>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Lớp @Model.MaLop</p>
+            <h4 class="mb-0">Danh sách học viên</h4>
+            @if (!string.IsNullOrEmpty(Model.TenKhoaHoc))
+            {
+                <p class="text-muted small mb-0">@Model.TenKhoaHoc — GV: @Model.TenGiaoVien</p>
+            }
+        </div>
+        <a class="btn btn-outline-dark" href="/admin/quan_ly_lop_hoc"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-@if (Model.TenLop != "")
-{
-    <p><b>Khoa hoc:</b> @Model.TenKhoaHoc | <b>Giao vien:</b> @Model.TenGiaoVien</p>
-}
-<hr>
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>STT</th>
-        <th>Ho Ten</th>
-        <th>Email</th>
-        <th>So Dien Thoai</th>
-        <th>Ngay Dang Ky</th>
-        <th>Trang Thai</th>
-    </tr>
-    @{ int stt = 0; }
-    @foreach (var hv in Model.DanhSach)
+    @if (!(Model.DanhSach?.Any() ?? false))
     {
-        stt++;
-        <tr>
-            <td>@stt</td>
-            <td>@hv.HoTen</td>
-            <td>@hv.Email</td>
-            <td>@hv.SoDienThoai</td>
-            <td>@hv.NgayDangKy.ToString("dd/MM/yyyy")</td>
-            <td>@hv.TrangThai</td>
-        </tr>
+        <div class="card-soft empty-state">Chưa có học viên nào đăng ký lớp này.</div>
     }
-</table>
-
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co hoc vien nao dang ky lop nay.</p>
-}
-
-<br>
-<a href="/admin/quan_ly_lop_hoc">Quay lai</a>
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table-modern mb-0 align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày đăng ký</th>
+                    <th>Trạng thái</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{ int stt = 0; }
+                @foreach (var hv in Model.DanhSach ?? Enumerable.Empty<webhoctienganh.Pages.admin.danh_sach_hoc_vienModel.HocVienView>())
+                {
+                    stt++;
+                    <tr>
+                        <td>@stt</td>
+                        <td class="fw-semibold">@hv.HoTen</td>
+                        <td>@hv.Email</td>
+                        <td>@hv.SoDienThoai</td>
+                        <td>@hv.NgayDangKy.ToString("dd/MM/yyyy")</td>
+                        <td><span class="badge-soft info">@hv.TrangThai</span></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

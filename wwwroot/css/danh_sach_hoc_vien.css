@@ -1,0 +1,7 @@
+.page-shell { max-width: 1100px; margin: 0 auto; padding: 16px; }
+.section-title { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.eyebrow { text-transform:uppercase; letter-spacing:.08em; font-size:12px; color:#94a3b8; margin:0; }
+.class-meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; padding:16px; }
+.class-meta .label { font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:.04em; }
+.class-meta .value { font-weight:800; color:#0f172a; }
+.empty-state { padding:24px; text-align:center; color:#94a3b8; }

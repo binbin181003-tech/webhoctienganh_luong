@@ -1,26 +1,286 @@
 @page "/trang_chu"
 @model webhoctienganh.Pages.trang_chuModel
+@section Styles { <link rel="stylesheet" href="~/css/trang_chu.css" asp-append-version="true" /> }
 
-<h1>Trang Chu</h1>
-<p>Xin chao: @Model.HoTen</p>
-<hr>
+<div class="page-shell">
+    <!-- Hồ sơ tóm tắt -->
+    <div class="card-soft profile-hero mb-3">
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div class="avatar-lg overflow-hidden">
+                @if (!string.IsNullOrWhiteSpace(Model.Avatar))
+                {
+                    <img src="@Model.Avatar" alt="@Model.HoTen" class="w-100 h-100 object-fit-cover" />
+                }
+                else
+                {
+                    <span>@Model.Initials</span>
+                }
+            </div>
+            <div class="flex-grow-1">
+                <p class="text-muted mb-1">Xin chào,</p>
+                <h4 class="fw-bold mb-1">@Model.HoTen</h4>
+                <div class="d-flex flex-wrap gap-2 small text-muted">
+                    <span class="badge-soft info">Vai trò: @Model.Role</span>
+                    <span><i class="bi bi-envelope me-1"></i>@Model.Email</span>
+                </div>
+            </div>
+            <div class="text-end">
+                <a class="btn btn-outline-primary btn-sm" href="/student/thong_tin_ca_nhan">
+                    <i class="bi bi-person-gear me-1"></i>Cập nhật hồ sơ
+                </a>
+            </div>
+        </div>
+    </div>
 
-<form method="post" asp-page-handler="DangXuat" style="display:inline;">
-    <button type="submit">Dang Xuat</button>
-</form>
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="card-soft p-4 hero-card">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div>
+                        <p class="text-muted mb-1">Tiến độ học tập</p>
+                        <h5 class="fw-bold mb-1">Đang theo dõi</h5>
+                    </div>
+                    <div class="progress-box text-end text-muted small">
+                        <div class="d-flex align-items-center justify-content-end gap-2">
+                            <span class="fw-semibold text-dark">Tiến độ khóa</span>
+                            <span class="pill pill-warning">45%</span>
+                        </div>
+                        <div class="progress mt-2" style="height: 10px;">
+                            <div class="progress-bar bg-warning" style="width: 45%"></div>
+                        </div>
+                        <div class="tiny-text">Cập nhật lần cuối: hôm nay</div>
+                    </div>
+                </div>
 
-<br><br>
+                <div class="row g-3 mt-4 quick-links">
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/bai_hoc">
+                            <i class="bi bi-journal-text"></i>
+                            <span>Bài học</span>
+                            <small class="text-muted">Tất cả bài đã mở</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/danh_sach_bai_kiem_tra">
+                            <i class="bi bi-ui-checks-grid"></i>
+                            <span>Kiểm tra</span>
+                            <small class="text-muted">Luyện tập & thi</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/hoa_don">
+                            <i class="bi bi-wallet2"></i>
+                            <span>Hóa đơn</span>
+                            <small class="text-muted">Thanh toán nhanh</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/lich_hoc">
+                            <i class="bi bi-calendar-week"></i>
+                            <span>Lịch học</span>
+                            <small class="text-muted">Zoom / phòng học</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/ket_qua_kiem_tra">
+                            <i class="bi bi-clipboard2-data"></i>
+                            <span>Kết quả</span>
+                            <small class="text-muted">Điểm & nhận xét</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/thong_tin_ca_nhan">
+                            <i class="bi bi-person-circle"></i>
+                            <span>Hồ sơ</span>
+                            <small class="text-muted">Cập nhật thông tin</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/dang_ky_khoa_hoc">
+                            <i class="bi bi-journal-plus"></i>
+                            <span>Đăng ký khóa</span>
+                            <small class="text-muted">Chọn lớp, đóng phí</small>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a class="ql card-soft p-3 d-block text-center" href="/student/danh_gia_khoa_hoc">
+                            <i class="bi bi-star-half"></i>
+                            <span>Đánh giá khóa</span>
+                            <small class="text-muted">Gửi phản hồi</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- phần còn lại giữ nguyên ... -->
+            @* giữ nguyên các khối stat-card, timeline, resource, support *@
+            <div class="row g-3 mt-3">
+                <div class="col-md-4">
+                    <div class="stat-card card-soft">
+                        <div class="icon-bubble bg-primary-subtle text-primary"><i class="bi bi-book"></i></div>
+                        <div>
+                            <div class="label">Khoá đang học</div>
+                            <div class="value">3 khoá</div>
+                            <small class="text-muted">Đang active</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card card-soft">
+                        <div class="icon-bubble bg-success-subtle text-success"><i class="bi bi-check2-circle"></i></div>
+                        <div>
+                            <div class="label">Bài kiểm tra đã làm</div>
+                            <div class="value">12 bài</div>
+                            <small class="text-muted">Điểm TB 8.2</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card card-soft">
+                        <div class="icon-bubble bg-warning-subtle text-warning"><i class="bi bi-cash-coin"></i></div>
+                        <div>
+                            <div class="label">Hóa đơn chờ</div>
+                            <div class="value">02</div>
+                            <small class="text-muted">Xử lý ngay</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<a href="/student/danh_sach_bai_kiem_tra"><button>Lam Bai Test</button></a>
-<button disabled>Danh Gia</button>
-<a href="/student/dang_ky_khoa_hoc"><button>Dang Ky Khoa Hoc</button></a>
-<button disabled>Thong Tin Ca Nhan</button>
-<button disabled>Thong Bao</button>
-<button disabled>Huong Dan Su Dung Web</button>
-<button disabled>Thu Vien</button>
-<a href="/student/bai_hoc"><button>Bai Hoc</button></a>
-<a href="/student/ket_qua_kiem_tra"><button>Ket Qua</button></a>
-<a href="/student/hoa_don"><button>Thanh Toan</button></a>
-<a href="/student/lich_su_thanh_toan"><button>Lich Su Thanh Toan</button></a>
-<a href="/student/lich_hoc"><button>Xem Lich Hoc</button></a>
-<a href="/student/thong_tin_ca_nhan"><button>Thong Tin Ca Nhan</button></a>
+            <div class="card-soft mt-3 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h6 class="fw-bold mb-0">Hoạt động hôm nay</h6>
+                    <span class="badge-soft warning">Live</span>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time">18:30</div>
+                        <div class="content">
+                            <div class="title">Luyện phát âm 20 phút</div>
+                            <div class="meta">Zoom • Giáo viên Anna</div>
+                        </div>
+                        <a class="btn btn-xs btn-outline-primary" href="/student/lich_hoc">Mở link</a>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">20:00</div>
+                        <div class="content">
+                            <div class="title">Ôn tập flashcard Unit 3</div>
+                            <div class="meta">Thuật ngữ & ví dụ</div>
+                        </div>
+                        <a class="btn btn-xs btn-outline-primary" href="/student/bai_hoc">Xem</a>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time">21:00</div>
+                        <div class="content">
+                            <div class="title">Làm bài kiểm tra ngắn</div>
+                            <div class="meta">Ngữ pháp thì quá khứ</div>
+                        </div>
+                        <a class="btn btn-xs btn-outline-primary" href="/student/danh_sach_bai_kiem_tra">Bắt đầu</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-soft mt-3 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h6 class="fw-bold mb-0">Tài nguyên đề xuất</h6>
+                    <a class="link-primary small" href="/student/bai_hoc">Xem tất cả</a>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="resource">
+                            <div class="thumb bg-indigo text-white"><i class="bi bi-play-btn"></i></div>
+                            <div class="info">
+                                <div class="title">Video: Pronunciation Basics</div>
+                                <div class="meta">10 phút • Beginner</div>
+                            </div>
+                            <a class="btn btn-xs btn-outline-primary" href="/student/chi_tiet_bai_hoc?id=1">Mở</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="resource">
+                            <div class="thumb bg-success text-white"><i class="bi bi-file-earmark-pdf"></i></div>
+                            <div class="info">
+                                <div class="title">PDF: 50 Phrasal Verbs</div>
+                                <div class="meta">Từ vựng • Intermediate</div>
+                            </div>
+                            <a class="btn btn-xs btn-outline-primary" href="/student/bai_hoc">Tải</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="resource">
+                            <div class="thumb bg-warning text-white"><i class="bi bi-mic"></i></div>
+                            <div class="info">
+                                <div class="title">Speaking challenge</div>
+                                <div class="meta">Gửi ghi âm • 5 câu hỏi</div>
+                            </div>
+                            <a class="btn btn-xs btn-outline-primary" href="/student/bai_hoc">Thực hành</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="resource">
+                            <div class="thumb bg-primary text-white"><i class="bi bi-lightbulb"></i></div>
+                            <div class="info">
+                                <div class="title">Mẹo học nhanh</div>
+                                <div class="meta">Daily tips • 3 phút</div>
+                            </div>
+                            <a class="btn btn-xs btn-outline-primary" href="/student/bai_hoc">Đọc</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card-soft p-4 mb-3">
+                <h6 class="fw-bold mb-3">Nhắc lịch hôm nay</h6>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-3 bg-warning-subtle text-warning p-3">
+                        <i class="bi bi-clock-history fs-4"></i>
+                    </div>
+                    <div class="small">
+                        <div class="fw-semibold">Luyện phát âm 20 phút</div>
+                        <div class="text-muted">18:30 - 18:50 (Zoom)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-soft p-4 mb-3">
+                <h6 class="fw-bold mb-3">Cột mốc</h6>
+                <ul class="list-unstyled mb-0 small text-muted milestone">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Hoàn thành 5 bài học</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Điểm trung bình 8.2</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i>Thanh toán 2 khóa</li>
+                </ul>
+            </div>
+
+            <div class="card-soft p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="fw-bold mb-0">Hỗ trợ nhanh</h6>
+                    <span class="badge-soft success">Online</span>
+                </div>
+                <div class="support">
+                    <div class="support-item">
+                        <div>
+                            <div class="title">Chat với trợ giảng</div>
+                            <div class="meta">Trong giờ hành chính</div>
+                        </div>
+                        <a class="btn btn-xs btn-outline-primary" href="mailto:support@web.com">Gửi email</a>
+                    </div>
+                    <div class="support-item">
+                        <div>
+                            <div class="title">FAQ & Hướng dẫn</div>
+                            <div class="meta">Cách nộp bài, thanh toán</div>
+                        </div>
+                        <a class="btn btn-xs btn-outline-primary" href="/trang_vang_lai">Xem ngay</a>
+                    </div>
+                    <div class="support-item">
+                        <div>
+                            <div class="title">Đặt lịch 1:1</div>
+                            <div class="meta">Tư vấn lộ trình</div>
+                        </div>
+                        <a class="btn btn-xs btn-outline-primary" href="/student/lich_hoc">Chọn lịch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

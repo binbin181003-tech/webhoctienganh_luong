@@ -1,25 +1,21 @@
 @page "/teacher/quan_ly_bai_hoc"
 @model webhoctienganh.Pages.teacher.quan_ly_bai_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" /> }
 
-<h1>Quan Ly Bai Hoc</h1>
+<h1>Quản lý bài học</h1>
 <hr>
 
-<a href="/teacher/tao_bai_hoc"><button>+ Tao Bai Hoc Moi</button></a>
+<a class="btn-solid" href="/teacher/tao_bai_hoc"><i class="bi bi-plus-lg"></i> Tạo bài học mới</a>
 <br><br>
 
 @if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:green;">@Model.ThongBao</p>
-}
+{ <p style="color:green;">@Model.ThongBao</p> }
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma</th>
-        <th>Tieu De</th>
-        <th>Khoa Hoc</th>
-        <th>Ngay Tao</th>
-        <th>Hanh Dong</th>
-    </tr>
+<table class="table-modern">
+    <thead>
+    <tr><th>Mã</th><th>Tiêu đề</th><th>Khóa học</th><th>Ngày tạo</th><th></th></tr>
+    </thead>
+    <tbody>
     @foreach (var b in Model.DanhSach)
     {
         <tr>
@@ -27,21 +23,19 @@
             <td>@b.tieu_de</td>
             <td>@b.khoa_hoc?.ten_khoa_hoc</td>
             <td>@b.ngay_tao.ToString("dd/MM/yyyy")</td>
-            <td>
-                <a href="/teacher/sua_bai_hoc?id=@b.ma_bai_hoc">Sua</a> |
-                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+            <td class="table-actions">
+                <a class="btn-table secondary" href="/teacher/sua_bai_hoc?id=@b.ma_bai_hoc"><i class="bi bi-pencil"></i>Sửa</a>
+                <form method="post" asp-page-handler="Xoa">
                     <input type="hidden" name="id" value="@b.ma_bai_hoc" />
-                    <button type="submit" onclick="return confirm('Xoa bai hoc nay?')">Xoa</button>
+                    <button class="btn-table danger" type="submit" onclick="return confirm('Xóa bài học này?')"><i class="bi bi-trash"></i>Xóa</button>
                 </form>
             </td>
         </tr>
     }
+    </tbody>
 </table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co bai hoc nao.</p>
-}
+@if (!Model.DanhSach.Any()) { <p>Chưa có bài học nào.</p> }
 
 <br>
-<a href="/teacher/tong_quan">Quay lai</a>
+<a class="btn-solid outline" href="/teacher/tong_quan">Quay lại</a>

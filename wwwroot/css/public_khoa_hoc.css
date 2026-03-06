@@ -1,0 +1,26 @@
+.page-shell { max-width: 1080px; margin: 0 auto; padding: 18px 12px 32px; }
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+.course-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+.course-card .title { font-weight: 800; font-size: 18px; margin-bottom: 6px; }
+.course-card .meta { color:#6b7280; font-size: 14px; }
+.course-card .price { font-weight: 800; color: #0f172a; }
+.course-card .btn { margin-top: 10px; }
+.hero-course {
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:20px;
+  background:linear-gradient(135deg,#fff,#f8fafc);
+  box-shadow:0 14px 36px rgba(0,0,0,0.07);
+}
+.detail-grid { display:grid; grid-template-columns: 2fr 1fr; gap:14px; }
+@media(max-width:768px){ .detail-grid{grid-template-columns:1fr;} }

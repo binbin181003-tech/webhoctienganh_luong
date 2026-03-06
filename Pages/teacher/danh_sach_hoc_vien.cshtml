@@ -1,42 +1,61 @@
 @page "/teacher/danh_sach_hoc_vien"
 @model webhoctienganh.Pages.teacher.danh_sach_hoc_vienModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/teacher_students.css" asp-append-version="true" /> }
 
-<h1>Danh Sach Hoc Vien - Lop @Model.MaLop</h1>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Lớp @Model.MaLop</p>
+            <h4 class="mb-0">Danh sách học viên</h4>
+            @if (!string.IsNullOrEmpty(Model.TenKhoaHoc))
+            {
+                <p class="text-muted small mb-0">Khóa học: @Model.TenKhoaHoc</p>
+            }
+        </div>
+        <a class="btn btn-outline-dark" href="/teacher/lop_dang_day"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-@if (Model.TenLop != "")
-{
-    <p><b>Khoa hoc:</b> @Model.TenKhoaHoc</p>
-}
-<hr>
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>STT</th>
-        <th>Ho Ten</th>
-        <th>Email</th>
-        <th>So Dien Thoai</th>
-        <th>Ngay Dang Ky</th>
-        <th>Trang Thai</th>
-    </tr>
-    @{ int stt = 0; }
-    @foreach (var hv in Model.DanhSach)
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        stt++;
-        <tr>
-            <td>@stt</td>
-            <td>@hv.HoTen</td>
-            <td>@hv.Email</td>
-            <td>@hv.SoDienThoai</td>
-            <td>@hv.NgayDangKy.ToString("dd/MM/yyyy")</td>
-            <td>@hv.TrangThai</td>
-        </tr>
+        <div class="alert-soft error mb-3">@Model.ThongBao</div>
     }
-</table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co hoc vien nao dang ky lop nay.</p>
-}
-
-<br>
-<a href="/teacher/lop_dang_day">Quay lai</a>
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">
+            <p class="mb-2">Chưa có học viên nào đăng ký lớp này.</p>
+            <a class="btn btn-primary" href="/teacher/lop_dang_day">Xem lớp khác</a>
+        </div>
+    }
+    else
+    {
+        <div class="card-soft p-3">
+            <div class="table-responsive">
+                <table class="table-modern mb-0">
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Ngày đăng ký</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var hv in Model.DanhSach)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@hv.HoTen</td>
+                            <td>@hv.Email</td>
+                            <td>@hv.SoDienThoai</td>
+                            <td>@hv.NgayDangKy.ToString("dd/MM/yyyy")</td>
+                            <td><span class="badge-soft info">@hv.TrangThai</span></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

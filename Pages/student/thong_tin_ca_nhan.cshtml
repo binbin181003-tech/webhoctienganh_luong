@@ -1,67 +1,66 @@
 @page "/student/thong_tin_ca_nhan"
 @model webhoctienganh.Pages.student.thong_tin_ca_nhanModel
+@section Styles { <link rel="stylesheet" href="~/css/thong_tin_ca_nhan.css" asp-append-version="true" /> }
 
-<h1>Thong Tin Ca Nhan (Hoc Vien)</h1>
-<hr>
+<div class="page-shell">
+    <h4 class="mb-3">Hồ sơ cá nhân</h4>
 
-<div>
-    @if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
+    <div class="profile-card card-soft mb-3">
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <div class="avatar">
+                @if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
+                {
+                    <img src="@Model.CurrentUser.anh_dai_dien" alt="Ảnh đại diện">
+                }
+                else
+                {
+                    <span class="avatar-placeholder">WE</span>
+                }
+            </div>
+            <div class="flex-grow-1">
+                <div class="fw-bold fs-5 mb-1">@Model.CurrentUser.ho_ten</div>
+                <div class="text-muted small">@Model.CurrentUser.email</div>
+                <div class="mt-2 d-flex gap-2 flex-wrap">
+                    <form method="post" asp-page-handler="UploadAvatar" enctype="multipart/form-data" class="d-flex gap-2 align-items-center">
+                        <input type="file" name="anh_dai_dien" accept="image/*" required class="form-control form-control-sm" />
+                        <button class="btn btn-sm btn-primary btn-upload-delete" type="submit">Tải ảnh</button>
+                    </form>
+                    @if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
+                    {
+                        <form method="post" asp-page-handler="DeleteAvatar">
+                            <button class="btn btn-sm btn-outline-danger btn-upload-delete" type="submit">Xóa ảnh</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <img src="@Model.CurrentUser.anh_dai_dien" alt="Anh dai dien"
-             style="width:120px;height:120px;border-radius:50%;object-fit:cover;" />
+        <div class="alert alert-danger rounded-3 mb-3">@Model.ThongBao</div>
     }
-    else
-    {
-        <p><i>Chua co anh dai dien</i></p>
-    }
-    <div style="margin-top:10px;">
-        <form method="post" asp-page-handler="UploadAvatar" enctype="multipart/form-data" style="display:inline;">
-            <input type="file" name="anh_dai_dien" accept="image/*" required />
-            <button type="submit">Tai anh</button>
-        </form>
-        @if (!string.IsNullOrEmpty(Model.CurrentUser.anh_dai_dien))
-        {
-            <form method="post" asp-page-handler="DeleteAvatar" style="display:inline;margin-left:6px;">
-                <button type="submit">Xoa anh</button>
-            </form>
-        }
+
+    <div class="card-soft">
+        <div class="field-row">
+            <div class="label">Họ tên</div>
+            <div class="value">@Model.CurrentUser.ho_ten</div>
+            <div class="action"><a class="btn btn-sm btn-outline-primary" href="/student/sua_thong_tin?field=ho_ten">Chỉnh sửa</a></div>
+        </div>
+        <div class="field-row">
+            <div class="label">Email</div>
+            <div class="value">@Model.CurrentUser.email</div>
+            <div class="action"><span class="text-muted small">Không thay đổi</span></div>
+        </div>
+        <div class="field-row">
+            <div class="label">Số điện thoại</div>
+            <div class="value">@Model.CurrentUser.so_dien_thoai</div>
+            <div class="action"><a class="btn btn-sm btn-outline-primary" href="/student/sua_thong_tin?field=so_dien_thoai">Chỉnh sửa</a></div>
+        </div>
+        <div class="field-row">
+            <div class="label">Mật khẩu</div>
+            <div class="value">******</div>
+            <div class="action"><a class="btn btn-sm btn-outline-primary" href="/student/sua_thong_tin?field=mat_khau">Đổi mật khẩu</a></div>
+        </div>
     </div>
 </div>
-
-<br>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
-}
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Thong tin</th>
-        <th>Gia tri</th>
-        <th>Hanh dong</th>
-    </tr>
-    <tr>
-        <td>Ho ten</td>
-        <td>@Model.CurrentUser.ho_ten</td>
-        <td><a href="/student/sua_thong_tin?field=ho_ten">Sua</a></td>
-    </tr>
-    <tr>
-        <td>Email (khong doi)</td>
-        <td>@Model.CurrentUser.email</td>
-        <td>-</td>
-    </tr>
-    <tr>
-        <td>So dien thoai</td>
-        <td>@Model.CurrentUser.so_dien_thoai</td>
-        <td><a href="/student/sua_thong_tin?field=so_dien_thoai">Sua</a></td>
-    </tr>
-    <tr>
-        <td>Mat khau</td>
-        <td>******</td>
-        <td><a href="/student/sua_thong_tin?field=mat_khau">Doi</a></td>
-    </tr>
-</table>
-
-<br>
-<a href="/trang_chu">Quay lai</a>

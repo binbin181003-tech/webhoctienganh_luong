@@ -1,0 +1,130 @@
+@page "/admin/sua_khoa_hoc"
+@model webhoctienganh.Pages.admin.sua_khoa_hocModel
+@{
+    ViewData["Title"] = "Sửa khóa học";
+    Layout = "_Layout";
+}
+
+<style>
+    .page-wrapper{
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 28px 18px 42px;
+    }
+    .card{
+        background:#fff;
+        border:1px solid #e5e7eb;
+        border-radius:16px;
+        box-shadow:0 18px 45px rgba(15,23,42,0.08);
+        padding:24px 28px;
+    }
+    .card-header{
+        display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;
+    }
+    .title{font-size:22px;font-weight:800;margin:0;}
+    .subtitle{color:#6b7280;font-size:14px;margin:0;}
+    .badge{
+        padding:6px 10px;border-radius:10px;font-size:12px;font-weight:700;
+        background:#eff6ff;color:#2563eb;
+    }
+    .alert{
+        margin:10px 0 16px;padding:12px 14px;border-radius:12px;font-size:14px;
+        border:1px solid #fecaca;color:#b91c1c;background:#fff1f2;
+    }
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px 18px;}
+    label{font-weight:700;font-size:14px;color:#0f172a;margin-bottom:6px;display:block;}
+    input[type="text"], input[type="number"], textarea, select{
+        width:100%;padding:12px 13px;border-radius:12px;border:1px solid #e5e7eb;
+        background:#f9fafb;font-size:15px;transition:border-color .15s, box-shadow .15s;
+    }
+    textarea{min-height:120px;resize:vertical;}
+    input:focus, textarea:focus, select:focus{
+        border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.12);outline:none;background:#fff;
+    }
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;}
+    .btn{
+        border:none;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer;
+        transition:transform .1s, opacity .1s;
+    }
+    .btn:active{transform:translateY(1px);}
+    .btn-primary{background:#2563eb;color:#fff;}
+    .btn-secondary{background:#e5e7eb;color:#111827;}
+    .small-hint{font-size:12px;color:#6b7280;margin-top:4px;}
+</style>
+
+<div class="page-wrapper">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <p class="title">Sửa khóa học</p>
+                <p class="subtitle">Chỉnh thông tin và lưu lại để cập nhật.</p>
+            </div>
+            @if (Model.KhoaHoc != null)
+            {
+                <span class="badge">ID: @Model.KhoaHoc.ma_khoa_hoc</span>
+            }
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ThongBao))
+        {
+            <div class="alert">@Model.ThongBao</div>
+        }
+
+        @if (Model.KhoaHoc != null)
+        {
+            <form method="post">
+                <input type="hidden" name="id" value="@Model.KhoaHoc.ma_khoa_hoc" />
+
+                <div class="form-grid">
+                    <div>
+                        <label for="ten_khoa_hoc">Tên khóa học</label>
+                        <input id="ten_khoa_hoc" type="text" name="ten_khoa_hoc" value="@Model.KhoaHoc.ten_khoa_hoc" required />
+                    </div>
+
+                    <div>
+                        <label for="trinh_do">Trình độ</label>
+                        <select id="trinh_do" name="trinh_do" required>
+                            @{
+                                var levels = new[] { "beginner", "intermediate", "advanced" };
+                                foreach (var lv in levels)
+                                {
+                                    <option value="@lv" selected="@(Model.KhoaHoc.trinh_do == lv ? "selected" : null)">
+                                        @lv
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <p class="small-hint">Ví dụ: beginner / intermediate / advanced</p>
+                    </div>
+
+                    <div>
+                        <label for="hoc_phi">Học phí (VND)</label>
+                        <input id="hoc_phi" type="number" step="1000" min="0" name="hoc_phi" value="@Model.KhoaHoc.hoc_phi" required />
+                    </div>
+
+                    <div>
+                        <label for="thoi_luong_tuan">Thời lượng (tuần)</label>
+                        <input id="thoi_luong_tuan" type="number" min="1" name="thoi_luong_tuan" value="@Model.KhoaHoc.thoi_luong_tuan" required />
+                    </div>
+                </div>
+
+                <div style="margin-top:14px;">
+                    <label for="mo_ta">Mô tả</label>
+                    <textarea id="mo_ta" name="mo_ta" placeholder="Tóm tắt nội dung khóa học">@Model.KhoaHoc.mo_ta</textarea>
+                </div>
+
+                <div class="actions">
+                    <a class="btn btn-secondary" href="/admin/quan_ly_khoa_hoc">Hủy</a>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <p class="alert">Không tìm thấy khóa học.</p>
+            <div class="actions">
+                <a class="btn btn-secondary" href="/admin/quan_ly_khoa_hoc">Quay lại danh sách</a>
+            </div>
+        }
+    </div>
+</div>

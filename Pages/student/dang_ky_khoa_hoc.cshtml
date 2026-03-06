@@ -1,85 +1,104 @@
 @page "/student/dang_ky_khoa_hoc"
 @model webhoctienganh.Pages.student.dang_ky_khoa_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/hoa_don.css" asp-append-version="true" /> }
 
-<h1>Dang Ky Khoa Hoc</h1>
-<hr>
+<div class="page-shell">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <div>
+            <h4 class="mb-1">Đăng ký khóa học</h4>
+            <p class="text-muted mb-0">Chọn lớp đang mở, xem sĩ số và đăng ký.</p>
+        </div>
+        <a class="btn btn-outline-dark btn-sm" href="/trang_chu"><i class="bi bi-arrow-left me-1"></i>Trang chủ</a>
+    </div>
 
-<form method="get">
-    <label>Loc theo khoa hoc:</label>
-    <select name="khoaHocId">
-        <option value="">-- Tat ca --</option>
-        @foreach (var kh in Model.DsKhoaHoc)
-        {
-            <option value="@kh.ma_khoa_hoc" selected="@(Model.KhoaHocIdFilter == kh.ma_khoa_hoc)">
-                @kh.ten_khoa_hoc (@kh.trinh_do)
-            </option>
-        }
-    </select>
-    <button type="submit">Loc</button>
-</form>
+    <div class="card-soft p-3 mb-3">
+        <form method="get" class="row g-2 align-items-end">
+            <div class="col-md-6">
+                <label class="small text-muted mb-1">Lọc theo khóa học</label>
+                <select name="khoaHocId" class="form-select">
+                    <option value="">-- Tất cả --</option>
+                    @foreach (var kh in Model.DsKhoaHoc)
+                    {
+                        <option value="@kh.ma_khoa_hoc" selected="@(Model.KhoaHocIdFilter == kh.ma_khoa_hoc)">
+                            @kh.ten_khoa_hoc (@kh.trinh_do)
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-auto">
+                <button class="btn btn-brand" type="submit"><i class="bi bi-funnel me-1"></i>Lọc</button>
+            </div>
+        </form>
+    </div>
 
-<br>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:green;">@Model.ThongBao</p>
-}
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma Lop</th>
-        <th>Khoa Hoc</th>
-        <th>Trinh Do</th>
-        <th>Giao Vien</th>
-        <th>Bat Dau</th>
-        <th>Ket Thuc</th>
-        <th>Hoc Phi</th>
-        <th>Si So</th>
-        <th>Trang Thai DK</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var item in Model.DanhSach)
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <tr>
-            <td>@item.MaLop</td>
-            <td>@item.TenKhoaHoc</td>
-            <td>@item.TrinhDo</td>
-            <td>@item.TenGiaoVien</td>
-            <td>@item.NgayBatDau.ToString("dd/MM/yyyy")</td>
-            <td>@item.NgayKetThuc.ToString("dd/MM/yyyy")</td>
-            <td>@item.HocPhi.ToString("N0")</td>
-            <td>@item.SoLuongDaDangKy / @item.SoLuongToiDa</td>
-            <td>@item.TrangThaiDangKy</td>
-            <td>
-                @if (item.TrangThaiDangKy == "Chua dang ky" || item.TrangThaiDangKy == "Cancelled")
-                {
-                    <form method="post" asp-page-handler="DangKy" style="display:inline;">
-                        <input type="hidden" name="lopId" value="@item.MaLop" />
-                        <input type="hidden" name="khoaHocId" value="@Model.KhoaHocIdFilter" />
-                        <button type="submit">Dang Ky</button>
-                    </form>
-                }
-                else if (item.TrangThaiDangKy == "Pending" || item.TrangThaiDangKy == "ChoThanhToan")
-                {
-                    <form method="post" asp-page-handler="Huy" style="display:inline;">
-                        <input type="hidden" name="lopId" value="@item.MaLop" />
-                        <input type="hidden" name="khoaHocId" value="@Model.KhoaHocIdFilter" />
-                        <button type="submit">Huy Dang Ky</button>
-                    </form>
-                }
-                else
-                {
-                    <span>-</span>
-                }
-            </td>
-        </tr>
+        <div class="alert alert-info rounded-3">@Model.ThongBao</div>
     }
-</table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co lop hoc nao dang mo.</p>
-}
-
-<br>
-<a href="/trang_chu">Quay lai</a>
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">
+            <p class="mb-2">Chưa có lớp học nào đang mở.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table table-modern mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Mã lớp</th>
+                        <th>Khóa học</th>
+                        <th>Trình độ</th>
+                        <th>Giáo viên</th>
+                        <th>Bắt đầu</th>
+                        <th>Kết thúc</th>
+                        <th>Học phí</th>
+                        <th>Sĩ số</th>
+                        <th>Trạng thái</th>
+                        <th class="text-end">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.DanhSach)
+                {
+                    <tr>
+                        <td class="fw-semibold">#@item.MaLop</td>
+                        <td>@item.TenKhoaHoc</td>
+                        <td>@item.TrinhDo</td>
+                        <td>@item.TenGiaoVien</td>
+                        <td>@item.NgayBatDau.ToString("dd/MM/yyyy")</td>
+                        <td>@item.NgayKetThuc.ToString("dd/MM/yyyy")</td>
+                        <td>@item.HocPhi.ToString("N0")</td>
+                        <td>@item.SoLuongDaDangKy / @item.SoLuongToiDa</td>
+                        <td><span class="badge-soft info">@item.TrangThaiDangKy</span></td>
+                        <td class="text-end">
+                            @if (item.TrangThaiDangKy == "Chua dang ky" || item.TrangThaiDangKy == "Cancelled")
+                            {
+                                <form method="post" asp-page-handler="DangKy" class="d-inline">
+                                    <input type="hidden" name="lopId" value="@item.MaLop" />
+                                    <input type="hidden" name="khoaHocId" value="@Model.KhoaHocIdFilter" />
+                                    <button type="submit" class="btn btn-sm btn-brand"><i class="bi bi-plus-lg me-1"></i>Đăng ký</button>
+                                </form>
+                            }
+                            else if (item.TrangThaiDangKy == "Pending" || item.TrangThaiDangKy == "ChoThanhToan")
+                            {
+                                <form method="post" asp-page-handler="Huy" class="d-inline">
+                                    <input type="hidden" name="lopId" value="@item.MaLop" />
+                                    <input type="hidden" name="khoaHocId" value="@Model.KhoaHocIdFilter" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg me-1"></i>Hủy</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Đã đăng ký</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

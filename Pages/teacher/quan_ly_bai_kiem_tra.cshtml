@@ -1,48 +1,42 @@
 @page "/teacher/quan_ly_bai_kiem_tra"
 @model webhoctienganh.Pages.teacher.quan_ly_bai_kiem_traModel
+@section Styles { <link rel="stylesheet" href="~/css/teacher.css" asp-append-version="true" /> }
 
-<h1>Quan Ly Bai Kiem Tra</h1>
+<h1>Quản lý bài kiểm tra</h1>
 <hr>
 
-<a href="/teacher/tao_bai_kiem_tra"><button>+ Tao Bai Kiem Tra</button></a>
+<a class="btn-solid" href="/teacher/tao_bai_kiem_tra"><i class="bi bi-plus-lg"></i> Tạo bài kiểm tra</a>
 <br><br>
 
 @if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:green;">@Model.ThongBao</p>
-}
+{ <p style="color:green;">@Model.ThongBao</p> }
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma</th>
-        <th>Tieu De</th>
-        <th>Khoa Hoc</th>
-        <th>Thoi Luong</th>
-        <th>Hanh Dong</th>
-    </tr>
+<table class="table-modern">
+    <thead>
+    <tr><th>Mã</th><th>Tiêu đề</th><th>Khóa học</th><th>Thời lượng</th><th></th></tr>
+    </thead>
+    <tbody>
     @foreach (var b in Model.DanhSach)
     {
         <tr>
             <td>@b.ma_bai_kiem_tra</td>
             <td>@b.tieu_de</td>
             <td>@b.khoa_hoc?.ten_khoa_hoc</td>
-            <td>@b.thoi_luong_phut phut</td>
-            <td>
-                <a href="/teacher/sua_bai_kiem_tra?id=@b.ma_bai_kiem_tra">Sua</a> |
-                <a href="/teacher/quan_ly_cau_hoi?baiId=@b.ma_bai_kiem_tra">Cau hoi</a> |
-                <form method="post" asp-page-handler="Xoa" style="display:inline;">
+            <td>@b.thoi_luong_phut phút</td>
+            <td class="table-actions">
+                <a class="btn-table secondary" href="/teacher/sua_bai_kiem_tra?id=@b.ma_bai_kiem_tra"><i class="bi bi-pencil"></i>Sửa</a>
+                <a class="btn-table outline" style="background:#0ea5e9;color:#fff;" href="/teacher/quan_ly_cau_hoi?baiId=@b.ma_bai_kiem_tra"><i class="bi bi-list-check"></i>Câu hỏi</a>
+                <form method="post" asp-page-handler="Xoa">
                     <input type="hidden" name="id" value="@b.ma_bai_kiem_tra" />
-                    <button type="submit" onclick="return confirm('Xoa bai kiem tra nay?')">Xoa</button>
+                    <button class="btn-table danger" type="submit" onclick="return confirm('Xóa bài kiểm tra này?')"><i class="bi bi-trash"></i>Xóa</button>
                 </form>
             </td>
         </tr>
     }
+    </tbody>
 </table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co bai kiem tra nao.</p>
-}
+@if (!Model.DanhSach.Any()) { <p>Chưa có bài kiểm tra nào.</p> }
 
 <br>
-<a href="/teacher/tong_quan">Quay lai</a>
+<a class="btn-solid outline" href="/teacher/tong_quan">Quay lại</a>

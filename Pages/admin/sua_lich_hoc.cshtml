@@ -1,42 +1,86 @@
 @page "/admin/sua_lich_hoc"
 @model webhoctienganh.Pages.admin.sua_lich_hocModel
-
-<h1>Sua Lich Hoc</h1>
-<hr>
-
-@if (!string.IsNullOrEmpty(Model.ThongBao))
-{
-    <p style="color:red;">@Model.ThongBao</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-manage.css" asp-append-version="true" />
 }
 
-@if (Model.LichHoc != null)
-{
-    <form method="post">
-        <input type="hidden" name="id" value="@Model.LichHoc.ma_lich_hoc" />
-
-        <div>
-            <label>Thu:</label><br>
-            <input type="text" name="thu_trong_tuan" value="@Model.LichHoc.thu_trong_tuan" required />
-        </div>
-        <br>
-        <div>
-            <label>Gio bat dau:</label><br>
-            <input type="time" name="gio_bat_dau" value="@Model.LichHoc.gio_bat_dau" required />
-        </div>
-        <br>
-        <div>
-            <label>Gio ket thuc:</label><br>
-            <input type="time" name="gio_ket_thuc" value="@Model.LichHoc.gio_ket_thuc" required />
-        </div>
-        <br>
-        <div>
-            <label>Phong hoc / Link:</label><br>
-            <input type="text" name="phong_hoc" value="@Model.LichHoc.phong_hoc" required />
-        </div>
-        <br>
-        <button type="submit">Luu</button>
-    </form>
+@{
+    // Tự tạo nguồn dữ liệu cho dropdown thứ trong tuần (tránh cần Model.DsThu)
+    var thuTuan = new List<(string Value, string Text)>
+    {
+        ("Mon","Thứ 2"), ("Tue","Thứ 3"), ("Wed","Thứ 4"), ("Thu","Thứ 5"),
+        ("Fri","Thứ 6"), ("Sat","Thứ 7"), ("Sun","Chủ nhật")
+    };
 }
 
-<br>
-<a href="/admin/quan_ly_lich_hoc">Quay lai</a>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Lịch học</p>
+            <h4 class="mb-0">Chỉnh sửa lịch học</h4>
+            <p class="text-muted small mb-0">Cập nhật ca dạy theo tuần, giờ và phòng/link học.</p>
+        </div>
+        <a class="btn btn-outline-dark" href="/admin/quan_ly_lich_hoc">
+            <i class="bi bi-arrow-left"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
+    {
+        <div class="alert-soft @(Model.ThongBao.Contains("thành công") ? "success" : "error") mb-3">
+            <i class="bi bi-info-circle me-1"></i>@Model.ThongBao
+        </div>
+    }
+
+    <div class="card-soft p-4">
+        <form method="post" class="form-grid gap-3">
+            <input type="hidden" name="id" value="@Model.LichHoc?.ma_lich_hoc" />
+
+            <div class="form-field">
+                <label class="form-label">Mã lớp</label>
+                <input type="number" name="ma_lop_hoc" class="form-control" value="@Model.LichHoc?.ma_lop_hoc" required />
+                <small class="text-muted">Nhập đúng mã lớp đã tạo.</small>
+            </div>
+
+            <div class="form-row-two">
+                <div class="form-field">
+                    <label class="form-label">Thứ trong tuần</label>
+                    <select name="thu_trong_tuan" class="form-select" required>
+                        @foreach (var thu in thuTuan)
+                        {
+                            <option value="@thu.Value" selected="@(Model.LichHoc?.thu_trong_tuan == thu.Value)">
+                                @thu.Text
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Phòng / Link học</label>
+                    <input type="text" name="phong_hoc" class="form-control"
+                           value="@Model.LichHoc?.phong_hoc" placeholder="Phòng A1 hoặc link Zoom/Meet" required />
+                </div>
+            </div>
+
+            <div class="form-row-two">
+                <div class="form-field">
+                    <label class="form-label">Giờ bắt đầu</label>
+                    <input type="time" name="gio_bat_dau" class="form-control"
+                           value="@Model.LichHoc?.gio_bat_dau" required />
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Giờ kết thúc</label>
+                    <input type="time" name="gio_ket_thuc" class="form-control"
+                           value="@Model.LichHoc?.gio_ket_thuc" required />
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-brand">
+                    <i class="bi bi-save"></i> Lưu thay đổi
+                </button>
+                <a class="btn btn-ghost" href="/admin/quan_ly_lich_hoc">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>

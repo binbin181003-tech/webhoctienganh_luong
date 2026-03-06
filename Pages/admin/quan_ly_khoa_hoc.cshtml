@@ -1,49 +1,64 @@
 @page "/admin/quan_ly_khoa_hoc"
 @model webhoctienganh.Pages.admin.quan_ly_khoa_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-ui.css" asp-append-version="true" /> }
 
-<h1>Quan Ly Khoa Hoc</h1>
-<hr>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Hệ thống</p>
+            <h4 class="mb-0">Quản lý khóa học</h4>
+            <p class="text-muted small mb-0">Tạo, cập nhật và theo dõi các khóa đang mở.</p>
+        </div>
+        <a class="btn btn-brand" href="/admin/tao_khoa_hoc"><i class="bi bi-plus-lg me-1"></i>Tạo khóa học</a>
+    </div>
 
-<a href="/admin/tao_khoa_hoc"><button>+ Tao Khoa Hoc Moi</button></a>
-<br><br>
-
-@if (Model.ThongBao != "")
-{
-    <p style="color:green;">@Model.ThongBao</p>
-}
-
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma</th>
-        <th>Ten Khoa Hoc</th>
-        <th>Trinh Do</th>
-        <th>Hoc Phi</th>
-        <th>Thoi Luong (tuan)</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var kh in Model.DanhSach)
+    @if (!string.IsNullOrEmpty(Model.ThongBao))
     {
-        <tr>
-            <td>@kh.ma_khoa_hoc</td>
-            <td>@kh.ten_khoa_hoc</td>
-            <td>@kh.trinh_do</td>
-            <td>@kh.hoc_phi.ToString("N0") VND</td>
-            <td>@kh.thoi_luong_tuan</td>
-            <td>
-                <a href="/admin/sua_khoa_hoc?id=@kh.ma_khoa_hoc">Sua</a> |
-                <form method="post" asp-page-handler="Xoa" style="display:inline;">
-                    <input type="hidden" name="id" value="@kh.ma_khoa_hoc" />
-                    <button type="submit" onclick="return confirm('Xoa khoa hoc nay?')">Xoa</button>
-                </form>
-            </td>
-        </tr>
+        <div class="alert-soft success mb-3">@Model.ThongBao</div>
     }
-</table>
 
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co khoa hoc nao.</p>
-}
-
-<br>
-<a href="/admin/tong_quan">Quay lai</a>
+    @if (!Model.DanhSach.Any())
+    {
+        <div class="card-soft empty-state">Chưa có khóa học nào.</div>
+    }
+    else
+    {
+        <div class="table-responsive card-soft p-0">
+            <table class="table-modern mb-0 align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>Mã</th>
+                    <th>Tên khóa</th>
+                    <th>Trình độ</th>
+                    <th>Học phí</th>
+                    <th>Thời lượng</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var kh in Model.DanhSach)
+                {
+                    <tr>
+                        <td>#@kh.ma_khoa_hoc</td>
+                        <td class="fw-semibold">@kh.ten_khoa_hoc</td>
+                        <td><span class="tag">@kh.trinh_do</span></td>
+                        <td>@kh.hoc_phi.ToString("N0") VND</td>
+                        <td>@kh.thoi_luong_tuan tuần</td>
+                        <td class="text-end">
+                            <div class="table-actions">
+                                <a class="btn-table secondary" href="/admin/sua_khoa_hoc?id=@kh.ma_khoa_hoc"><i class="bi bi-pencil"></i>Sửa</a>
+                                <form method="post" asp-page-handler="Xoa" class="d-inline">
+                                    <input type="hidden" name="id" value="@kh.ma_khoa_hoc" />
+                                    <button class="btn-table danger" type="submit" onclick="return confirm('Xóa khóa học này?')">
+                                        <i class="bi bi-trash"></i>Xóa
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,33 +1,53 @@
 @page "/student/bai_hoc"
 @model webhoctienganh.Pages.student.bai_hocModel
+@section Styles { <link rel="stylesheet" href="~/css/bai_hoc.css" asp-append-version="true" /> }
 
-<h1>Bai Hoc</h1>
-<hr>
+<div class="page-shell">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h4 class="mb-1">Bài học của bạn</h4>
+            <p class="text-muted mb-0">Tất cả bài học thuộc những khoá bạn đã thanh toán.</p>
+        </div>
+        <span class="badge-soft info">Cập nhật hàng ngày</span>
+    </div>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma</th>
-        <th>Tieu De</th>
-        <th>Khoa Hoc</th>
-        <th>Ngay Tao</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var b in Model.DanhSach)
+    @if (!Model.DanhSach.Any())
     {
-        <tr>
-            <td>@b.ma_bai_hoc</td>
-            <td>@b.tieu_de</td>
-            <td>@b.khoa_hoc?.ten_khoa_hoc</td>
-            <td>@b.ngay_tao.ToString("dd/MM/yyyy")</td>
-            <td><a href="/student/chi_tiet_bai_hoc?id=@b.ma_bai_hoc">Xem</a></td>
-        </tr>
+        <div class="card-soft empty-state">
+            <p>Ban chưa đăng ký lớp nào có bài học.</p>
+            <a class="btn btn-primary" href="/student/dang_ky_khoa_hoc">Đăng ký ngay</a>
+        </div>
     }
-</table>
-
-@if (!Model.DanhSach.Any())
-{
-    <p>Ban chua dang ky lop nao co bai hoc.</p>
-}
-
-<br>
-<a href="/trang_chu">Quay lai</a>
+    else
+    {
+        <div class="table-responsive">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Tiêu đề</th>
+                        <th>Khoá học</th>
+                        <th>Ngày tạo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var b in Model.DanhSach)
+                {
+                    <tr>
+                        <td>#@b.ma_bai_hoc</td>
+                        <td class="fw-semibold">@b.tieu_de</td>
+                        <td><span class="tag">@b.khoa_hoc?.ten_khoa_hoc</span></td>
+                        <td>@b.ngay_tao.ToString("dd/MM/yyyy")</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary" href="/student/chi_tiet_bai_hoc?id=@b.ma_bai_hoc">
+                                Xem chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

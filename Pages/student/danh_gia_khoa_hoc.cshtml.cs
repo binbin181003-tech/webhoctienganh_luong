@@ -15,40 +15,26 @@ namespace webhoctienganh.Pages.student
         }
 
         public khoa_hoc? KhoaHoc { get; set; }
+        public List<khoa_hoc> KhoaHocHopLe { get; set; } = new();
         public string ThongBao { get; set; } = "";
         public bool DaCoDanhGia { get; set; }
         public int SoSao { get; set; } = 5;
         public string NoiDung { get; set; } = "";
 
-        public IActionResult OnGet(int khoaHocId)
+        public IActionResult OnGet(int? khoaHocId)
         {
             var check = KiemTraQuyen();
             if (check != null) return check;
 
-            if (!KiemTraQuyenDanhGia(khoaHocId))
+            LoadKhoaHopLe();
+
+            if (!khoaHocId.HasValue)
             {
-                ThongBao = "Ban khong du dieu kien danh gia khoa hoc nay!";
+                // chỉ hiển thị danh sách chọn, không báo lỗi
                 return Page();
             }
 
-            KhoaHoc = _db.khoa_hoc.Find(khoaHocId);
-            if (KhoaHoc == null)
-            {
-                ThongBao = "Khoa hoc khong ton tai!";
-                return Page();
-            }
-
-            var maHocVien = HttpContext.Session.GetString("ma_nguoi_dung") ?? "";
-            var dg = _db.danh_gia.FirstOrDefault(d => d.ma_khoa_hoc == khoaHocId && d.ma_hoc_vien == maHocVien);
-
-            if (dg != null)
-            {
-                DaCoDanhGia = true;
-                SoSao = dg.so_sao;
-                NoiDung = dg.noi_dung;
-            }
-
-            return Page();
+            return LoadKhoaHocVaDanhGia(khoaHocId.Value);
         }
 
         public IActionResult OnPost(int khoaHocId, int so_sao, string noi_dung)
@@ -56,22 +42,24 @@ namespace webhoctienganh.Pages.student
             var check = KiemTraQuyen();
             if (check != null) return check;
 
+            LoadKhoaHopLe();
+
             if (!KiemTraQuyenDanhGia(khoaHocId))
             {
-                ThongBao = "Ban khong du dieu kien danh gia khoa hoc nay!";
+                ThongBao = "Bạn không đủ điều kiện đánh giá khóa học này!";
                 return Page();
             }
 
             if (so_sao < 1 || so_sao > 5)
             {
-                ThongBao = "So sao khong hop le!";
-                return Page();
+                ThongBao = "Số sao không hợp lệ!";
+                return LoadKhoaHocVaDanhGia(khoaHocId);
             }
 
             if (string.IsNullOrWhiteSpace(noi_dung))
             {
-                ThongBao = "Noi dung khong duoc de trong!";
-                return Page();
+                ThongBao = "Nội dung không được để trống!";
+                return LoadKhoaHocVaDanhGia(khoaHocId);
             }
 
             var maHocVien = HttpContext.Session.GetString("ma_nguoi_dung") ?? "";
@@ -96,8 +84,7 @@ namespace webhoctienganh.Pages.student
             }
 
             _db.SaveChanges();
-
-            ThongBao = "Da luu danh gia!";
+            ThongBao = "Đã lưu đánh giá!";
             return RedirectToPage("/student/danh_gia_khoa_hoc", new { khoaHocId });
         }
 
@@ -118,7 +105,29 @@ namespace webhoctienganh.Pages.student
             return RedirectToPage("/student/danh_gia_khoa_hoc", new { khoaHocId });
         }
 
-        private bool KiemTraQuyenDanhGia(int khoaHocId)
+        private IActionResult LoadKhoaHocVaDanhGia(int khoaHocId)
+        {
+            KhoaHoc = _db.khoa_hoc.Find(khoaHocId);
+            if (KhoaHoc == null)
+            {
+                ThongBao = "Khóa học không tồn tại!";
+                return Page();
+            }
+
+            var maHocVien = HttpContext.Session.GetString("ma_nguoi_dung") ?? "";
+            var dg = _db.danh_gia.FirstOrDefault(d => d.ma_khoa_hoc == khoaHocId && d.ma_hoc_vien == maHocVien);
+
+            if (dg != null)
+            {
+                DaCoDanhGia = true;
+                SoSao = dg.so_sao;
+                NoiDung = dg.noi_dung;
+            }
+
+            return Page();
+        }
+
+        private void LoadKhoaHopLe()
         {
             var maHocVien = HttpContext.Session.GetString("ma_nguoi_dung") ?? "";
 
@@ -129,7 +138,14 @@ namespace webhoctienganh.Pages.student
                 .Distinct()
                 .ToList();
 
-            return khoaHocIds.Contains(khoaHocId);
+            KhoaHocHopLe = _db.khoa_hoc
+                .Where(k => khoaHocIds.Contains(k.ma_khoa_hoc))
+                .ToList();
+        }
+
+        private bool KiemTraQuyenDanhGia(int khoaHocId)
+        {
+            return KhoaHocHopLe.Any(k => k.ma_khoa_hoc == khoaHocId);
         }
     }
 }

@@ -1,0 +1,41 @@
+/* Lịch dạy của giáo viên */
+.calendar-wrapper {
+  overflow-x: auto;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  table-layout: fixed; /* Giữ 7 cột trên cùng 1 hàng */
+  min-width: 980px;    /* Nếu màn hình nhỏ hơn, sẽ cuộn ngang */
+}
+
+.calendar-table th,
+.calendar-table td {
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  vertical-align: top;
+}
+
+.calendar-table th {
+  text-align: center;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-weight: 700;
+}
+
+.class-slot {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+.class-slot:last-child { margin-bottom: 0; }
+
+.text-muted { color: #6b7280; }
+.link-primary { color: #2563eb; text-decoration: none; }
+.link-primary:hover { text-decoration: underline; }

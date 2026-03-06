@@ -1,31 +1,103 @@
 @page "/admin/thong_ke"
 @model webhoctienganh.Pages.admin.thong_keModel
+@section Styles { <link rel="stylesheet" href="~/css/admin-analytics.css" asp-append-version="true" /> }
 
-<h1>Thong Ke He Thong</h1>
-<hr>
+<div class="page-shell">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Báo cáo</p>
+            <h4 class="mb-0">Thống kê hệ thống</h4>
+            <p class="text-muted small mb-0">Tổng quan người dùng, doanh thu và top khóa học.</p>
+        </div>
+        <a class="btn btn-outline-dark" href="/admin/tong_quan"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
 
-<ul>
-    <li><b>So hoc vien:</b> @Model.SoHocVien</li>
-    <li><b>So giao vien:</b> @Model.SoGiaoVien</li>
-    <li><b>So khoa hoc:</b> @Model.SoKhoaHoc</li>
-    <li><b>So lop mo:</b> @Model.SoLopMo</li>
-    <li><b>Doanh thu:</b> @Model.DoanhThu.ToString("N0")</li>
-</ul>
+    <div class="kpi-grid">
+        <div class="kpi card-soft">
+            <div class="icon bg-primary-subtle text-primary"><i class="bi bi-people"></i></div>
+            <div>
+                <div class="label">Học viên</div>
+                <div class="value">@Model.SoHocVien</div>
+            </div>
+        </div>
+        <div class="kpi card-soft">
+            <div class="icon bg-indigo-subtle text-indigo"><i class="bi bi-mortarboard"></i></div>
+            <div>
+                <div class="label">Giáo viên</div>
+                <div class="value">@Model.SoGiaoVien</div>
+            </div>
+        </div>
+        <div class="kpi card-soft">
+            <div class="icon bg-success-subtle text-success"><i class="bi bi-journal-text"></i></div>
+            <div>
+                <div class="label">Khóa học</div>
+                <div class="value">@Model.SoKhoaHoc</div>
+            </div>
+        </div>
+        <div class="kpi card-soft">
+            <div class="icon bg-warning-subtle text-warning"><i class="bi bi-easel"></i></div>
+            <div>
+                <div class="label">Lớp đang mở</div>
+                <div class="value">@Model.SoLopMo</div>
+            </div>
+        </div>
+        <div class="kpi card-soft wide">
+            <div class="icon bg-danger-subtle text-danger"><i class="bi bi-cash-coin"></i></div>
+            <div class="w-100">
+                <div class="label">Doanh thu đã thu</div>
+                <div class="value">₫@Model.DoanhThu.ToString("N0")</div>
+                <div class="progress mt-2" style="height:8px;">
+                    <div class="progress-bar bg-danger" style="width: 72%"></div>
+                </div>
+                <div class="mini-text">Ước tính đạt 72% mục tiêu tháng</div>
+            </div>
+        </div>
+    </div>
 
-<h3>Top khoa hoc theo so dang ky</h3>
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Khoa Hoc</th>
-        <th>So Dang Ky</th>
-    </tr>
-    @foreach (var t in Model.TopKhoaHoc)
-    {
-        <tr>
-            <td>@t.TenKhoaHoc</td>
-            <td>@t.SoDangKy</td>
-        </tr>
-    }
-</table>
+    <div class="grid-2">
+        <div class="card-soft">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Top khóa theo số đăng ký</h6>
+                <span class="badge-soft info">Top 5</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table-modern mb-0">
+                    <thead><tr><th>Khóa học</th><th>Số đăng ký</th></tr></thead>
+                    <tbody>
+                    @foreach (var t in Model.TopKhoaHoc ?? Enumerable.Empty<webhoctienganh.Pages.admin.thong_keModel.TopKhoaHocView>())
+                    {
+                        <tr>
+                            <td class="fw-semibold">@t.TenKhoaHoc</td>
+                            <td><span class="score-pill">@t.SoDangKy</span></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<br>
-<a href="/admin/tong_quan">Quay lai</a>
+        <div class="card-soft">
+            <div class="section-title mb-2">
+                <h6 class="mb-0">Phân bổ người dùng</h6>
+                <span class="badge-soft success">Realtime</span>
+            </div>
+            <ul class="timeline">
+                <li class="timeline-item">
+                    <div class="time">HV</div>
+                    <div class="title">@Model.SoHocVien học viên</div>
+                    <div class="meta">Đang hoạt động</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="time">GV</div>
+                    <div class="title">@Model.SoGiaoVien giáo viên</div>
+                    <div class="meta">Đã xác thực</div>
+                </li>
+                <li class="timeline-item">
+                    <div class="time">KH</div>
+                    <div class="title">@Model.SoKhoaHoc khóa</div>
+                    <div class="meta">Đang lưu hành</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

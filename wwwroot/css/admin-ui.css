@@ -1,0 +1,34 @@
+.page-shell{max-width:1200px;margin:0 auto;padding:12px 0 32px;}
+.page-shell.narrow{max-width:720px;}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.eyebrow{letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:#94a3b8;margin-bottom:2px;}
+.card-soft{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.06);}
+.alert-soft{border-radius:12px;padding:12px 14px;}
+.alert-soft.success{border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;}
+.alert-soft.error{border:1px solid #fecdd3;background:#fef2f2;color:#b91c1c;}
+.empty-state{padding:22px;text-align:center;color:#94a3b8;font-weight:600;}
+
+.table-modern{width:100%;border-collapse:separate;border-spacing:0 10px;}
+.table-modern thead th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#94a3b8;}
+.table-modern tbody tr{background:#fff;box-shadow:0 8px 22px rgba(0,0,0,0.04);}
+.table-modern td,.table-modern th{padding:12px 14px;vertical-align:middle;}
+.table-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;}
+.btn-table{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:none;font-weight:700;font-size:13px;color:#fff;background:#2563eb;cursor:pointer;text-decoration:none;}
+.btn-table.secondary{background:#0f172a;}
+.btn-table.success{background:#16a34a;}
+.btn-table.danger{background:#ef4444;}
+.btn-table.outline{background:#0ea5e9;}
+.btn-table:hover{filter:brightness(1.06);}
+
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef2ff;color:#4338ca;font-weight:600;font-size:13px;}
+.badge-soft{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px;}
+.badge-soft.info{background:#e0f2fe;color:#0369a1;}
+.badge-soft.warning{background:#fef3c7;color:#92400e;}
+.badge-soft.success{background:#ecfdf3;color:#15803d;}
+
+.form-control,.form-select{border-radius:12px;border:1px solid #e5e7eb;padding:12px 14px;}
+.form-control:focus,.form-select:focus{border-color:#ff7a1a;box-shadow:0 0 0 0.15rem rgba(255,122,26,.2);}
+
+.btn-brand{background:linear-gradient(135deg,#ff7a1a,#d9650f);color:#fff;border:none;border-radius:12px;padding:10px 16px;font-weight:800;box-shadow:0 10px 24px rgba(255,122,26,0.25);}
+.btn-brand:hover{filter:brightness(1.05);}
+.btn-outline-dark{border:1px solid #e5e7eb;color:#0f172a;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;}

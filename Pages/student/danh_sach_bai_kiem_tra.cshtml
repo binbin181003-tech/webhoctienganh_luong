@@ -1,33 +1,48 @@
 @page "/student/danh_sach_bai_kiem_tra"
 @model webhoctienganh.Pages.student.danh_sach_bai_kiem_traModel
+@section Styles { <link rel="stylesheet" href="~/css/danh_sach_bai_kiem_tra.css" asp-append-version="true" /> }
 
-<h1>Danh Sach Bai Kiem Tra</h1>
-<hr>
+<div class="page-shell">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h4 class="mb-1">Bài kiểm tra</h4>
+            <p class="text-muted mb-0">Các bài thuộc khoá bạn đã thanh toán.</p>
+        </div>
+        <span class="badge-soft info">Luyện tập ngay</span>
+    </div>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>Ma</th>
-        <th>Tieu De</th>
-        <th>Khoa Hoc</th>
-        <th>Thoi Luong</th>
-        <th>Hanh Dong</th>
-    </tr>
-    @foreach (var b in Model.DanhSach)
+    @if (!Model.DanhSach.Any())
     {
-        <tr>
-            <td>@b.ma_bai_kiem_tra</td>
-            <td>@b.tieu_de</td>
-            <td>@b.khoa_hoc?.ten_khoa_hoc</td>
-            <td>@b.thoi_luong_phut phut</td>
-            <td><a href="/student/lam_bai_kiem_tra?id=@b.ma_bai_kiem_tra">Lam Bai</a></td>
-        </tr>
+        <div class="card-soft p-4 text-center text-muted">Chưa có bài kiểm tra.</div>
     }
-</table>
-
-@if (!Model.DanhSach.Any())
-{
-    <p>Chua co bai kiem tra nao.</p>
-}
-
-<br>
-<a href="/trang_chu">Quay lai</a>
+    else
+    {
+        <div class="table-responsive">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Tiêu đề</th>
+                        <th>Khoá</th>
+                        <th>Thời lượng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var b in Model.DanhSach)
+                {
+                    <tr>
+                        <td>#@b.ma_bai_kiem_tra</td>
+                        <td class="fw-semibold">@b.tieu_de</td>
+                        <td>@b.khoa_hoc?.ten_khoa_hoc</td>
+                        <td>@b.thoi_luong_phut phút</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-primary" href="/student/lam_bai_kiem_tra?id=@b.ma_bai_kiem_tra">Làm bài</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

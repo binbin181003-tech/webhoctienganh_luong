@@ -1,61 +1,55 @@
 @page "/dang_ky"
 @model webhoctienganh.Pages.dang_kyModel
+@section Styles { <link rel="stylesheet" href="~/css/dang_ky.css" asp-append-version="true" /> }
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Đăng ký";
 }
 
-<link rel="stylesheet" href="~/css/dang_ky.css" asp-append-version="true" />
-
 <div class="auth-wrapper">
-    <div class="auth-card">
-        <div class="auth-header">
-            <div class="brand">
+    <div class="auth-card card-soft">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
                 <div class="brand-logo">WE</div>
-                <div class="brand-text">
-                    <span class="brand-title">Web Học Tiếng Anh</span>
-                    <span class="brand-sub">Tạo tài khoản mới</span>
-                </div>
+                <h5 class="fw-bold mt-2 mb-1">Tạo tài khoản mới</h5>
+                <p class="text-muted small mb-0">Học miễn phí 7 ngày, huỷ bất cứ lúc nào.</p>
             </div>
-            <p class="welcome">Bắt đầu hành trình học tập ngay hôm nay.</p>
+            <a class="small text-muted" href="/dang_nhap">Đã có tài khoản?</a>
         </div>
 
         @if (!string.IsNullOrEmpty(Model.ThongBao))
         {
-            <div class="alert error">@Model.ThongBao</div>
+            <div class="alert alert-danger rounded-3 small">@Model.ThongBao</div>
         }
 
-        <form method="post" class="auth-form">
-            <label class="field">
-                <span>Họ tên</span>
-                <input type="text" name="ho_ten" placeholder="Nguyễn Văn A" required />
-            </label>
-
-            <label class="field">
-                <span>Email</span>
-                <input type="email" name="email" placeholder="email@domain.com" required />
-            </label>
-
-            <label class="field">
-                <span>Số điện thoại</span>
-                <input type="text" name="so_dien_thoai" placeholder="09xxxxxxxx" required />
-            </label>
-
-            <div class="row">
-                <label class="field flex-1">
-                    <span>Mật khẩu</span>
-                    <input type="password" name="mat_khau" placeholder="ít nhất 6 ký tự" required />
-                </label>
-                <label class="field flex-1">
-                    <span>Nhập lại mật khẩu</span>
-                    <input type="password" name="nhap_lai_mat_khau" placeholder="nhập lại mật khẩu" required />
-                </label>
+        <form method="post" class="vstack gap-3">
+            <div class="form-floating">
+                <input name="ho_ten" class="form-control" placeholder="Họ tên" required>
+                <label>Họ tên</label>
             </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn primary">Đăng ký</button>
-                <a class="link" href="/dang_nhap">Đã có tài khoản? Đăng nhập</a>
+            <div class="form-floating">
+                <input type="email" name="email" class="form-control" placeholder="email@domain.com" required>
+                <label>Email</label>
             </div>
+            <div class="form-floating">
+                <input name="so_dien_thoai" class="form-control" placeholder="09xxxxxxxx" required>
+                <label>Số điện thoại</label>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="password" name="mat_khau" class="form-control" placeholder="••••••" required>
+                        <label>Mật khẩu</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="password" name="nhap_lai_mat_khau" class="form-control" placeholder="••••••" required>
+                        <label>Nhập lại mật khẩu</label>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-brand w-100" type="submit">Đăng ký</button>
         </form>
     </div>
 </div>
